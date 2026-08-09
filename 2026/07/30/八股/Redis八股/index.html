@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/redis%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/redis%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.596Z">
-<meta property="article:modified_time" content="2026-08-07T05:40:30.838Z">
+<meta property="article:modified_time" content="2026-08-09T11:44:17.409Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.4k 字
+          4.9k 字
         
       </span>
     
@@ -242,7 +242,7 @@
         
         
         
-          37 分钟
+          41 分钟
         
       </span>
     
@@ -414,7 +414,7 @@
 <li><strong>执行命令和核心数据结构操作采用单线程</strong>，避免了多线程模型中的上下文切换和锁竞争问题</li>
 <li>使用<strong>I&#x2F;O多路复用模型</strong>，非阻塞IO（实现高效的网络请求）</li>
 </ul>
-<h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p><strong>定义</strong>：查询一个不存在的数据时，mysql查询不到数据也不会直接写入缓存，就会导致每次请求都查询数据库</p>
+<h2 id="✨生产问题"><a href="#✨生产问题" class="headerlink" title="✨生产问题"></a>✨生产问题</h2><h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p><strong>定义</strong>：查询一个不存在的数据时，mysql查询不到数据也不会直接写入缓存，就会导致每次请求都查询数据库</p>
 <p><strong>解决方式</strong>：</p>
 <ol>
 <li><p>缓存空数据（消耗内存，可能发送不一致的问题）</p>
@@ -435,7 +435,7 @@
 <li>判断时要对应位置全部为1，才判断元素存在</li>
 <li>可能会因为hash碰撞造成误判</li>
 </ul>
-<h2 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h2><p><strong>定义</strong>：某个key过期的时候，恰好有大量的并发请求在同一时间发过来，所有的请求都打到了数据库上，如果重建缓存时间太长，数据库就有可能崩溃</p>
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p><strong>定义</strong>：某个key过期的时候，恰好有大量的并发请求在同一时间发过来，所有的请求都打到了数据库上，如果重建缓存时间太长，数据库就有可能崩溃</p>
 <p><strong>解决方式</strong>：</p>
 <ol>
 <li><p>互斥锁（强一致，性能差）</p>
@@ -449,7 +449,7 @@
 </blockquote>
 </li>
 </ol>
-<h2 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h2><p><strong>定义</strong>：同一时段大量key同时过期或Redis服务宕机，导致大量请求打到数据库</p>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p><strong>定义</strong>：同一时段大量key同时过期或Redis服务宕机，导致大量请求打到数据库</p>
 <p><strong>解决方式</strong>：</p>
 <ol>
 <li>给key设置不同的TTL</li>
@@ -526,28 +526,27 @@
 <p>AOF 使用 RDB 格式保存基础数据，再使用 AOF 命令保存后续增量数据</p>
 </blockquote>
 <p>混合持久化是<strong>在 AOF 重写时，用 RDB 保存全量基础数据</strong>，用 AOF 保存之后的增量操作，兼顾 RDB 的恢复速度和 AOF的数据安全性。</p>
-<h2 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h2><p><strong>惰性删除</strong>：使用时发现key过期了才删除，占内存</p>
-<p><strong>定期删除</strong>：每隔一段时间检查一批key，把过期的删除</p>
-<p>Redis的过期删除策略是两者结合</p>
-<h2 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h2><p>内存占用太多时删掉一些数据</p>
-<ul>
-<li><p>noeviction：内存满时不淘汰数据，而是不允许写入数据（默认）</p>
-</li>
-<li><p>volatile-ttl：淘汰TTL小的数据</p>
-</li>
-<li><p>allkeys-random：对所有数据随机淘汰</p>
-</li>
-<li><p>volatile-random：对设置了过期时间的数据随机淘汰</p>
-</li>
-<li><p><strong>allkeys-lru</strong>：（Least Recently Used，最近最少使用：最近最少使用的key）</p>
-</li>
-<li><p>volatile-lru</p>
-</li>
-<li><p><strong>allkeys-lfu</strong>：（Least Frequently Used，最少频率使用：一定时间内使用频率最少的key）</p>
-</li>
-<li><p>volatile-lfu</p>
-</li>
+<h2 id="过期策略"><a href="#过期策略" class="headerlink" title="过期策略"></a>过期策略</h2><ul>
+<li><strong>惰性删除</strong>：只在查询&#x2F;使用key的时候才进行过期检查</li>
+<li><strong>定期删除</strong>：周期性地随机从设置了过期时间的 key 中抽查一批，然后逐个检查这些 key 是否过期</li>
+<li><strong>Redis使用两种策略结合的策略</strong></li>
 </ul>
+<blockquote>
+<p>大量key的过期时间设置在同一时间可能会导致缓存雪崩</p>
+</blockquote>
+<h2 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h2><blockquote>
+<p>在运行内存达到了配置的最大内存阈值时触发</p>
+</blockquote>
+<ol>
+<li><strong>volatile-lru（least recently used）</strong>：从已设置过期时间的数据集（<code>server.db[i].expires</code>）中挑选<strong>最近最少使用</strong>的数据淘汰。</li>
+<li><strong>volatile-ttl</strong>：从已设置过期时间的数据集（<code>server.db[i].expires</code>）中挑选<strong>将要过期</strong>的数据淘汰。</li>
+<li><strong>volatile-random</strong>：从已设置过期时间的数据集（<code>server.db[i].expires</code>）中<strong>任意选择</strong>数据淘汰。</li>
+<li><strong>allkeys-lru（least recently used）</strong>：从数据集（<code>server.db[i].dict</code>）中移除<strong>最近最少使用</strong>的数据淘汰。</li>
+<li><strong>allkeys-random</strong>：从数据集（<code>server.db[i].dict</code>）中<strong>任意选择</strong>数据淘汰。</li>
+<li><strong>no-eviction</strong>（<strong>默认</strong>内存淘汰策略）：<strong>禁止驱逐数据</strong>，当内存不足以容纳新写入数据时，新写入操作会报错。</li>
+<li><strong>volatile-lfu（least frequently used）</strong>：从已设置过期时间的数据集（<code>server.db[i].expires</code>）中挑选<strong>最不经常使用</strong>的数据淘汰。</li>
+<li><strong>allkeys-lfu（least frequently used）</strong>：从数据集（<code>server.db[i].dict</code>）中移除<strong>最不经常使用</strong>的数据淘汰。</li>
+</ol>
 <h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><h3 id="使用Redis简单实现"><a href="#使用Redis简单实现" class="headerlink" title="使用Redis简单实现"></a>使用Redis简单实现</h3><blockquote>
 <p>SETNX：SET if Not eXists，如果 key 不存在的话，才会设置 key 的值</p>
 </blockquote>
@@ -601,7 +600,21 @@
 <li>Redis集群有16384个<strong>哈希槽</strong>，每个key通过哈希运算后决定放到哪个槽中。</li>
 <li>每个节点负责一部分hash槽</li>
 </ul>
-<h2 id="Redis-的-I-x2F-O-多路复用模型"><a href="#Redis-的-I-x2F-O-多路复用模型" class="headerlink" title="Redis 的 I&#x2F;O 多路复用模型"></a>Redis 的 I&#x2F;O 多路复用模型</h2><h3 id="1-客户端连接"><a href="#1-客户端连接" class="headerlink" title="1. 客户端连接"></a>1. 客户端连接</h3><p>Redis 服务端监听一个 TCP 端口。</p>
+<h2 id="Redis的多线程"><a href="#Redis的多线程" class="headerlink" title="Redis的多线程"></a>Redis的多线程</h2><blockquote>
+<p>对于Redis来说，CPU 通常不会是瓶颈，因为大多数请求不会是 CPU 密集型的，而是 I&#x2F;O 密集型；</p>
+<p>Redis 真正的性能瓶颈在于<strong>网络 I&#x2F;O</strong>和<strong>内存</strong></p>
+</blockquote>
+<p>在以下场景里Reids会使用到多线程来异步操作：</p>
+<ol>
+<li><p><strong>删除超大的键值对</strong>：删除超大的对象耗时长，为了不阻塞主线程，Redis <strong>v4.0</strong> 之后增加了一些的非阻塞命令如 <code>UNLINK</code>、<code>FLUSHALL ASYNC</code>、<code>FLUSHDB ASYNC</code>。会先将<code>key</code>从<code>keyspace</code>删除，<code>value</code>由后台线程删除</p>
+</li>
+<li><p><strong>读取客户端请求命令和回写响应数据</strong>：Redis 从 <strong>6.0</strong> 开始支持多线程处理客户端网络 I&#x2F;O。I&#x2F;O 线程读取和解析客户端命令而不会真正去执行命令，客户端命令的执行最终还是要在主线程上完成</p>
+ <figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs tex">多个客户端<br>   ↓<br>主线程：事件循环 / epoll<br>   ↓<br>发现多个客户端有数据可读<br>   ↓<br>分配给 I/O 线程<br>   ├── IO线程1：读取客户端A<br>   ├── IO线程2：读取客户端B<br>   └── IO线程3：读取客户端C<br>   ↓<br>主线程<br>   ↓<br>串行执行 Redis 命令<br>   ↓<br>生成响应<br>   ↓<br>分配给 I/O 线程<br>   ├── IO线程1：写回A<br>   ├── IO线程2：写回B<br>   └── IO线程3：写回C<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Redis的-I-x2F-O多路复用"><a href="#Redis的-I-x2F-O多路复用" class="headerlink" title="Redis的 I&#x2F;O多路复用"></a>Redis的 I&#x2F;O多路复用</h2><blockquote>
+<p>使用 I&#x2F;O 多路复用机制<strong>并发</strong>处理来自客户端的多个连接</p>
+</blockquote>
+<h3 id="1-客户端连接"><a href="#1-客户端连接" class="headerlink" title="1. 客户端连接"></a>1. 客户端连接</h3><p>Redis 服务端监听一个 TCP 端口。</p>
 <p>客户端建立连接后，Redis 会：</p>
 <ol>
 <li>接收客户端连接；</li>
