@@ -16,13 +16,14 @@
   <meta name="author" content="xw">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Springrefresh创建IOC容器Spring 容器启动时会创建IOC容器,在创建容器时,会调用 refresh()方法,整个容器就是通过该方法,完成所有的 bean 的创建以及初始化 重要的类&#x2F;对象 ClassPathXmlApplicationContext：使用配置文件的容器 AnnotationConfigApplicationContext：使用配置类的容器 BeanDe">
+    <meta name="description" content="SpringIoC Inversion of Control，控制反转。描述Java开发领域对象的创建以及管理的问题； 从自己控制依赖对象的创建，反转给容器控制对象的创建和依赖关系  IoC的好处：  降低了类之间的耦合度：不是依赖具体的类，而是依赖接口，由容器来DI 统一管理对象：方便替换实现、测试和扩展  DI DI，Dependency Injection，依赖注入。DI 是实现 IoC 的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring八股">
 <meta property="og:url" content="http://xwww12.github.io/2026/07/30/%E5%85%AB%E8%82%A1/Spring%E5%85%AB%E8%82%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Springrefresh创建IOC容器Spring 容器启动时会创建IOC容器,在创建容器时,会调用 refresh()方法,整个容器就是通过该方法,完成所有的 bean 的创建以及初始化 重要的类&#x2F;对象 ClassPathXmlApplicationContext：使用配置文件的容器 AnnotationConfigApplicationContext：使用配置类的容器 BeanDe">
+<meta property="og:description" content="SpringIoC Inversion of Control，控制反转。描述Java开发领域对象的创建以及管理的问题； 从自己控制依赖对象的创建，反转给容器控制对象的创建和依赖关系  IoC的好处：  降低了类之间的耦合度：不是依赖具体的类，而是依赖接口，由容器来DI 统一管理对象：方便替换实现、测试和扩展  DI DI，Dependency Injection，依赖注入。DI 是实现 IoC 的">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://xwww12.github.io/img/else_img/bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/BeanFactory%E5%88%9D%E5%A7%8B%E5%8C%96.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%87%86%E5%A4%87%E4%B8%8A%E4%B8%8B%E6%96%87.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/environment.png">
@@ -32,8 +33,6 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/multicaster.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/finishBeanFactoryInitialozation.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/finishRefersh.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%88%9B%E5%BB%BAbean.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/springMVC%E5%88%9D%E5%A7%8B%E5%8C%96.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/springMVC%E5%8C%B9%E9%85%8D%E9%98%B6%E6%AE%B5.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/SpringMVC%E6%89%A7%E8%A1%8C%E9%98%B6%E6%AE%B5.png">
@@ -50,11 +49,11 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%964.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%965.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.592Z">
-<meta property="article:modified_time" content="2026-07-30T02:41:18.561Z">
+<meta property="article:modified_time" content="2026-08-13T07:16:13.291Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xwww12.github.io/img/else_img/BeanFactory%E5%88%9D%E5%A7%8B%E5%8C%96.png">
+<meta name="twitter:image" content="http://xwww12.github.io/img/else_img/bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
   
   
   
@@ -252,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          3.6k 字
         
       </span>
     
@@ -263,7 +262,7 @@
         
         
         
-          27 分钟
+          31 分钟
         
       </span>
     
@@ -322,8 +321,116 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="refresh创建IOC容器"><a href="#refresh创建IOC容器" class="headerlink" title="refresh创建IOC容器"></a>refresh创建IOC容器</h2><p>Spring 容器启动时会创建IOC容器,在创建容器时,会调用 refresh()方法,整个容器就是通过该方法,完成所有的 bean 的创建以及初始化</p>
-<h3 id="重要的类-x2F-对象"><a href="#重要的类-x2F-对象" class="headerlink" title="重要的类&#x2F;对象"></a>重要的类&#x2F;对象</h3><ul>
+                <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><h2 id="IoC"><a href="#IoC" class="headerlink" title="IoC"></a>IoC</h2><blockquote>
+<p>Inversion of Control，控制反转。描述Java开发领域<strong>对象的创建以及管理的问题</strong>；</p>
+<p>从自己<strong>控制</strong>依赖对象的创建，<strong>反转</strong>给容器控制对象的创建和依赖关系</p>
+</blockquote>
+<p><strong>IoC的好处</strong>：</p>
+<ul>
+<li><strong>降低了类之间的耦合度</strong>：不是依赖具体的类，而是依赖接口，由容器来DI</li>
+<li><strong>统一管理对象</strong>：方便替换实现、测试和扩展</li>
+</ul>
+<h3 id="DI"><a href="#DI" class="headerlink" title="DI"></a>DI</h3><blockquote>
+<p>DI，Dependency Injection，<strong>依赖注入</strong>。DI 是实现 IoC 的主要方式</p>
+</blockquote>
+<p><strong>依赖注入的方式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>注入方式</th>
+<th>示例</th>
+<th>推荐程度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>构造器注入</td>
+<td><code>public UserService(UserDao userDao)</code></td>
+<td><strong>推荐</strong>，所有必需依赖在对象创建时就被注入；有助于创建不可变对象，提高了线程安全性；在单元测试中，可以直接通过构造函数传入模拟的依赖项，而不必依赖 Spring 容器进行注入</td>
+</tr>
+<tr>
+<td>Setter 注入</td>
+<td><code>setUserDao(UserDao userDao)</code></td>
+<td>比较适合<strong>可选依赖</strong>或者确实需要后续修改依赖的情况</td>
+</tr>
+<tr>
+<td>字段注入</td>
+<td><code>@Autowired private UserDao userDao</code></td>
+<td><strong>不推荐</strong>。Spring创建对象后，通过反射给字段赋值。依赖关系隐藏在字段中，不够明确</td>
+</tr>
+</tbody></table>
+<p><strong>注入Bean的注解</strong>：</p>
+<ul>
+<li><code>@Autowired</code>：Spring 内置的注解。<strong>先按类型匹配，若存在多个同类型 Bean，则再尝试按名称筛选</strong>，都不匹配则抛出异常</li>
+<li><code>@Resource</code>：源自 JSR-250 规范。默认取<strong>字段名</strong>去容器中查找，如果没有找到同名的 Bean，尝试根据字段的<strong>类型</strong>去查找，没找到或找到多个则抛出异常</li>
+</ul>
+<h3 id="Bean的作用域"><a href="#Bean的作用域" class="headerlink" title="Bean的作用域"></a>Bean的作用域</h3><ul>
+<li><strong>singleton</strong>：默认，在IoC容器中只有一个实例</li>
+<li><strong>prototype</strong>：每次获取都会创建一个新的实例</li>
+<li><strong>request</strong>： 每一次 HTTP 请求都会产生一个新的 Bean，该 Bean 仅在当前 HTTP request 内有效</li>
+<li><strong>session</strong>： 每一次来自新 Session 的 HTTP 请求都会产生一个新的 Bean，该 Bean 仅在当前 HTTP session 内有效</li>
+<li><strong>global-session</strong>：每个 Web 应用在启动时创建一个 Bean，该 Bean 仅在当前应用启动时间内有效</li>
+<li><strong>websocket</strong> ：每一次 WebSocket 会话产生一个新的 Bean</li>
+</ul>
+<h3 id="Bean是否线程安全"><a href="#Bean是否线程安全" class="headerlink" title="Bean是否线程安全"></a>Bean是否线程安全</h3><p>有状态（<strong>有可变的成员变量</strong>）的Bean会出现共享状态竞争问题；</p>
+<p><strong>解决方式</strong>：</p>
+<ul>
+<li>避免可变成员变量</li>
+<li>使用<code>ThreadLocal</code>：将可变成员变量保存在 <code>ThreadLocal</code> 中，确保线程独立</li>
+<li>使用同步机制：使用锁来进行同步控制</li>
+</ul>
+<h3 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h3><p><img src="/img/else_img/bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" srcset="/img/loading.gif" lazyload></p>
+<p>以下步骤按顺序执行：</p>
+<ol>
+<li><p><strong>读取并注册 BeanDefinition</strong>：对要放入容器的类，Spring会先生成对应的<strong>BeanDefinition</strong>，类似<strong>Bean的创建说明书</strong></p>
+</li>
+<li><p><strong>BeanFactoryPostProcessor 处理 BeanDefinition</strong>：对BeanDefinition进行修改</p>
+</li>
+<li><p><strong>实例化Bean</strong>：Spring会通过反射、构造器、工厂方法等方式创建对象</p>
+</li>
+<li><p><strong>属性&#x2F;依赖注入</strong>：对<code>@Autowired</code>、<code>@Value</code>等成员变量注入对应的值</p>
+</li>
+<li><p><strong>Aware接口回调</strong>：让 Bean <strong>感知 Spring 容器自身的信息</strong>，将容器的信息通过回调函数的方式传入Bean中</p>
+</li>
+<li><p><strong>执行BeanPostProcessor初始化前置处理</strong>：调用后处理器的<code>postProcessBeforeInitialization()</code>函数</p>
+</li>
+<li><p><strong>初始化</strong>：</p>
+<ol>
+<li><strong>执行@PostConstruct</strong>：调用用此注解指定的初始化函数</li>
+<li><strong>InitializingBean</strong>：实现这个接口的<code>afterPropertiesSet()</code>方法会<strong>在依赖注入后被调用</strong></li>
+<li><strong>自定义初始化方法</strong>：通过<code>@Bean(initMethod = &quot;init&quot;)</code>来指定自定义的初始化方法</li>
+</ol>
+</li>
+<li><p><strong>执行BeanPostProcessor初始化后置处理</strong> ：调用后处理器的<code>postProcessAfterInitialization()</code>函数，<strong>AOP代理通常在这产生</strong></p>
+</li>
+<li><p><strong>保存Bean、使用Bean</strong></p>
+</li>
+<li><p><strong>销毁Bean</strong>：Spring应用停止时开始销毁，使用<code>@PreDestroy</code>或实现<code>DisposableBean</code>接口或<code>@Bean(destroyMethod = &quot;close&quot;)</code>来释放资源</p>
+</li>
+</ol>
+<h3 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h3><blockquote>
+<p>Aspect-Oriented Programming，<strong>面向切面编程</strong>。能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码</p>
+</blockquote>
+<p><strong>动态代理</strong>：</p>
+<blockquote>
+<p>Spring不会直接修改源代码，而是通过<strong>创建代理对象</strong>来实现AOP。是否创建代理对象在BeanPostProcessor的初始化后置处理方法中判断</p>
+</blockquote>
+<ul>
+<li><strong>JDK动态代理</strong>：基于<strong>接口</strong>进行代理，代理类会实现相同的接口</li>
+<li><strong>CGLIB代理</strong>：基于<strong>继承</strong>进行代理，生成被代理类的子类</li>
+</ul>
+<p><strong>AOP常用通知</strong>：</p>
+<blockquote>
+<p>多个切面可用<code>Order()</code>定义执行顺序</p>
+</blockquote>
+<ul>
+<li><strong>Before</strong>（前置通知）：目标对象的方法调用之前触发</li>
+<li><strong>After</strong> （后置通知）：目标对象的方法调用之后触发</li>
+<li><strong>AfterReturning</strong>（返回通知）：目标对象的方法调用完成，在返回结果值之后触发</li>
+<li><strong>AfterThrowing</strong>（异常通知）：目标对象的方法运行中抛出 &#x2F; 触发异常后触发。AfterReturning 和 AfterThrowing 两者互斥。如果方法调用成功无异常，则会有返回值；如果方法抛出了异常，则不会有返回值。</li>
+<li><strong>Around</strong> （环绕通知）：编程式控制目标对象的方法调用。环绕通知是所有通知类型中可操作范围最大的一种，因为它可以直接拿到目标对象，以及要执行的方法，所以环绕通知可以任意的在目标对象的方法调用前后搞事，甚至不调用目标对象的方法</li>
+</ul>
+<h3 id="refresh创建IOC容器"><a href="#refresh创建IOC容器" class="headerlink" title="refresh创建IOC容器"></a>refresh创建IOC容器</h3><p>Spring 容器启动时会创建IOC容器,在创建容器时,会调用 refresh()方法,整个容器就是通过该方法,完成所有的 bean 的创建以及初始化</p>
+<h4 id="重要的类-x2F-对象"><a href="#重要的类-x2F-对象" class="headerlink" title="重要的类&#x2F;对象"></a>重要的类&#x2F;对象</h4><ul>
 <li>ClassPathXmlApplicationContext：使用配置文件的容器</li>
 <li>AnnotationConfigApplicationContext：使用配置类的容器</li>
 <li>BeanDefinition：Bean的相关信息。如是否是单例的，Bean的类型，是否是懒加载，依赖哪些类，自动装配的模型</li>
@@ -332,7 +439,7 @@
 <li>BeanFactoryPostProcessor：BeanFactory的后置处理器</li>
 <li>BeanPostProcessor：Bean的后置处理器，通过它可以实现AOP、Bean的创建</li>
 </ul>
-<h3 id="重要步骤"><a href="#重要步骤" class="headerlink" title="重要步骤"></a>重要步骤</h3><p><img src="/img/else_img/BeanFactory%E5%88%9D%E5%A7%8B%E5%8C%96.png" srcset="/img/loading.gif" lazyload alt="BeanFactory初始化"></p>
+<h4 id="重要步骤"><a href="#重要步骤" class="headerlink" title="重要步骤"></a>重要步骤</h4><p><img src="/img/else_img/BeanFactory%E5%88%9D%E5%A7%8B%E5%8C%96.png" srcset="/img/loading.gif" lazyload alt="BeanFactory初始化"></p>
 <p><code>invokeBeanFactoryPostProcessors()</code>会执行所有<code>BeanFactoryPostProcessor</code></p>
 <ul>
 <li>Spring内置的BeanFactory后处理器：<code>ConfigurationClassPostProcessor</code>，会解析出所有交由Spring管理的Bean并解析成<code>BeanDefinition</code></li>
@@ -341,13 +448,14 @@
 <p><img src="/img/else_img/%E5%87%86%E5%A4%87%E4%B8%8A%E4%B8%8B%E6%96%87.png" srcset="/img/loading.gif" lazyload alt="准备上下文"></p>
 <p> <code>registerBeanPostProcessors()</code>会找到并实例化所有的<code>BeanPostProcessor</code>，并放到<code>beanPostProcessors</code>集合中</p>
 <p><code>finishBeanFactoryInitialization()</code>完成了所有非懒加载的单例<code>Bean</code>的实例化和初始化，属性的填充以及解决了循环依赖等问题</p>
-<h3 id="12个步骤"><a href="#12个步骤" class="headerlink" title="12个步骤"></a>12个步骤</h3><p><strong>概览</strong></p>
+<h4 id="12个步骤"><a href="#12个步骤" class="headerlink" title="12个步骤"></a>12个步骤</h4><p><strong>概览</strong></p>
 <ul>
 <li>1：准备工作</li>
 <li>2~6：创建准备BeanFactory的各项功能</li>
 <li>7~12：准备ApplicationContext</li>
 </ul>
-<h4 id="1-prepareRefresh-开启容器，加载键值"><a href="#1-prepareRefresh-开启容器，加载键值" class="headerlink" title="1.prepareRefresh()-开启容器，加载键值"></a>1.prepareRefresh()-开启容器，加载键值</h4><ul>
+<p>1.prepareRefresh()-开启容器，加载键值</p>
+<ul>
 <li><p>创建和准备了<strong>Environment</strong>对象</p>
 </li>
 <li><p>Environment对象的作用：加载了一些键值信息：</p>
@@ -361,7 +469,8 @@
 <p><img src="/img/else_img/environment.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ul>
-<h4 id="2-obtainFreshBeanFactory-获取或创建Bean工厂"><a href="#2-obtainFreshBeanFactory-获取或创建Bean工厂" class="headerlink" title="2.obtainFreshBeanFactory()-获取或创建Bean工厂"></a>2.obtainFreshBeanFactory()-获取或创建Bean工厂</h4><ul>
+<p>2.obtainFreshBeanFactory()-获取或创建Bean工厂</p>
+<ul>
 <li><p>创建了<strong>BeanFactory</strong>对象</p>
 </li>
 <li><p>BeanDefinitionMap为BeanFactory的成员对象，存储了BeanDefinition</p>
@@ -374,7 +483,8 @@
 <p><img src="/img/else_img/beanFactory.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ul>
-<h4 id="3-prepareBeanFactory-完善Bean工厂"><a href="#3-prepareBeanFactory-完善Bean工厂" class="headerlink" title="3.prepareBeanFactory()-完善Bean工厂"></a>3.prepareBeanFactory()-完善Bean工厂</h4><ul>
+<p>3.prepareBeanFactory()-完善Bean工厂</p>
+<ul>
 <li><p>创建用来解析SpEL的beanExpressionResolver</p>
 </li>
 <li><p>创建执行类型转换的propertyEditorRegistrars</p>
@@ -391,130 +501,55 @@
 <li><p>特殊bean指beanFactory以及ApplicationContext，通过registerResolvableDependency来注册它们</p>
 </li>
 </ul>
-<h4 id="4-postProcessBeanFactory-子类扩展Bean工厂"><a href="#4-postProcessBeanFactory-子类扩展Bean工厂" class="headerlink" title="4.postProcessBeanFactory()-子类扩展Bean工厂"></a>4.postProcessBeanFactory()-子类扩展Bean工厂</h4><ul>
+<p>4.postProcessBeanFactory()-子类扩展Bean工厂</p>
+<ul>
 <li>后处理可以理解为添加功能。</li>
 <li>默认为空实现，留个子类扩展</li>
 <li>一般Web环境的ApplicationContext都要利用它注册新的Scope，完善Web下的BeanFactory</li>
 </ul>
-<h4 id="5-invokeBeanFactoryPostProcessors-后处理器扩展Bean工厂"><a href="#5-invokeBeanFactoryPostProcessors-后处理器扩展Bean工厂" class="headerlink" title="5.invokeBeanFactoryPostProcessors()-后处理器扩展Bean工厂"></a>5.invokeBeanFactoryPostProcessors()-后处理器扩展Bean工厂</h4><ul>
+<p>5.invokeBeanFactoryPostProcessors()-后处理器扩展Bean工厂</p>
+<ul>
 <li>预先定义好的后处理，通过处理器的方式添加BeanFactory的功能</li>
 <li>后置处理器可以扩展beanFactory的功能，用来补充和修改BeanDefinition</li>
 <li>ConfigurationClassPostProcessor-解析@Configuration、@Bean、@Import等</li>
 </ul>
-<h4 id="6-registerBeanPostProcessors-注册Bean后处理器"><a href="#6-registerBeanPostProcessors-注册Bean后处理器" class="headerlink" title="6.registerBeanPostProcessors()-注册Bean后处理器"></a>6.registerBeanPostProcessors()-注册Bean后处理器</h4><ul>
+<p>6.registerBeanPostProcessors()-注册Bean后处理器</p>
+<ul>
 <li>bean后后处理器充当bean的扩展点，可以工作在bean的实例化、依赖注入、初始化阶段</li>
 <li>如有解析@Autowired、@Value、@Resource等注解的后处理器</li>
 </ul>
-<h4 id="7-initMessageSource-国际化"><a href="#7-initMessageSource-国际化" class="headerlink" title="7.initMessageSource()-国际化"></a>7.initMessageSource()-国际化</h4><ul>
+<p>7.initMessageSource()-国际化</p>
+<ul>
 <li><p>初始化messageSource，用来做国际化功能</p>
 <p><img src="/img/else_img/messageSource.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ul>
-<h4 id="8-initApplicationEventMulticaster-初始化事件多播器"><a href="#8-initApplicationEventMulticaster-初始化事件多播器" class="headerlink" title="8.initApplicationEventMulticaster()-初始化事件多播器"></a>8.initApplicationEventMulticaster()-初始化事件多播器</h4><ul>
+<p>8.initApplicationEventMulticaster()-初始化事件多播器</p>
+<ul>
 <li>这个类会持有所有的事件监听器(<code>ApplicationListener</code>)，当有<code>ApplicationEvent</code>事件发布时，该事件监听器能根据事件类型，检索到对该事件感兴趣的<code>ApplicationListener</code></li>
 </ul>
 <p>​	<img src="/img/else_img/multicaster.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="9-onRefresh-初始化子容器中的bean"><a href="#9-onRefresh-初始化子容器中的bean" class="headerlink" title="9.onRefresh()-初始化子容器中的bean"></a>9.onRefresh()-初始化子容器中的bean</h4><ul>
+<p>9.onRefresh()-初始化子容器中的bean</p>
+<ul>
 <li>执行其他的初始化操作，例如和<code>SpringMVC</code>整合时，需要初始化一些其他的<code>bean</code>，但是对于纯<code>Spring</code>工程来说，<code>onRefresh()</code>方法是一个空方法。</li>
 </ul>
-<h4 id="10-registerListeners-注册监听器"><a href="#10-registerListeners-注册监听器" class="headerlink" title="10.registerListeners()-注册监听器"></a>10.registerListeners()-注册监听器</h4><ul>
+<p>10.registerListeners()-注册监听器</p>
+<ul>
 <li>接收事件</li>
 </ul>
-<h4 id="11-finishBeanFactoryInitialization-初始化所有剩下的单例-bean"><a href="#11-finishBeanFactoryInitialization-初始化所有剩下的单例-bean" class="headerlink" title="11.finishBeanFactoryInitialization()- 初始化所有剩下的单例 bean"></a>11.finishBeanFactoryInitialization()- 初始化所有剩下的单例 bean</h4><ul>
+<p>11.finishBeanFactoryInitialization()- 初始化所有剩下的单例 bean</p>
+<ul>
 <li>conversionService也是一套转换机制，作为对PropertyEditor的补充</li>
 <li>内嵌值解析器用来解析@Value中的${}，借用的是Environment的功能</li>
 <li>单例池用来缓存所有单例对象</li>
 <li>对象创建分为三个阶段：创建、依赖注入、初始化，每个阶段都有不同的bean处理器参与扩展</li>
 </ul>
 <p>​	<img src="/img/else_img/finishBeanFactoryInitialozation.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="12-finishRefresh-准备声明周期管理器，发布ContextRefresh事件"><a href="#12-finishRefresh-准备声明周期管理器，发布ContextRefresh事件" class="headerlink" title="12.finishRefresh()-准备声明周期管理器，发布ContextRefresh事件"></a>12.finishRefresh()-准备声明周期管理器，发布ContextRefresh事件</h4><ul>
+<p>12.finishRefresh()-准备声明周期管理器，发布ContextRefresh事件</p>
+<ul>
 <li>lifecycleProcessor用来控制容器内需要生命周期管理的bean</li>
 </ul>
 <p><img src="/img/else_img/finishRefersh.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="Bean的作用域"><a href="#Bean的作用域" class="headerlink" title="Bean的作用域"></a>Bean的作用域</h2><ul>
-<li>Singleton：默认，在IOC容器中只有一个实例</li>
-<li>Prototype：可以有多个实例</li>
-<li>Request：每次http请求都会创建一个Bean</li>
-<li>Session：一个Session中对应一个Bean对应一个实例</li>
-<li>Global-session：全局Session中，一个Bean对应一个实例</li>
-</ul>
-<h2 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h2><p><img src="/img/else_img/bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="7个阶段"><a href="#7个阶段" class="headerlink" title="7个阶段"></a>7个阶段</h3><p>Bean为懒惰初始化，生命周期从doGetBean()方法开始</p>
-<p><strong>概览</strong></p>
-<ul>
-<li>阶段1：处理名称，检查缓存</li>
-<li>阶段2：检查父工厂</li>
-<li>阶段3：检查DependsOn</li>
-<li>阶段4：按Scope创建bean</li>
-<li>阶段5：创建bean</li>
-<li>阶段6：类型转换</li>
-<li>阶段7：销毁bean</li>
-</ul>
-<h4 id="阶段1"><a href="#阶段1" class="headerlink" title="阶段1"></a>阶段1</h4><ul>
-<li>先把别名解析为实际名称，再进行后续处理</li>
-<li>若要FactoryBean本身，需要使用&amp;名称获取</li>
-<li>检查缓存里是否有：<ul>
-<li>一级缓存是singletonObjects，放单例成品对象</li>
-<li>二级缓存是earlySingletonObjects，放单例工厂的产品，可称为提前单例对象</li>
-<li>三级缓存是singletonFactories，放单例工厂</li>
-</ul>
-</li>
-</ul>
-<h4 id="阶段2"><a href="#阶段2" class="headerlink" title="阶段2"></a>阶段2</h4><ul>
-<li>缓存中没有bean回去父容器中找</li>
-<li>父容器中的bean和子容器中的bean名称可以重复</li>
-</ul>
-<h4 id="阶段3"><a href="#阶段3" class="headerlink" title="阶段3"></a>阶段3</h4><ul>
-<li>如果A显式依赖于B，则B会被先创建</li>
-<li>DependsOn用在非显式依赖的bean的创建顺序控制</li>
-</ul>
-<h4 id="阶段4"><a href="#阶段4" class="headerlink" title="阶段4"></a>阶段4</h4><ul>
-<li>常见scope：<ul>
-<li>singleton scope表示从单例池范围内获取bean<ul>
-<li>容器创建时创建，容器销毁时销毁</li>
-</ul>
-</li>
-<li>prototype scope表示从不缓存bean，每次创建新的<ul>
-<li>用时创建，不用时手动销毁</li>
-</ul>
-</li>
-<li>request scope表示从request对象范围内获取bean<ul>
-<li>在request域中创建，request销毁时销毁</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="阶段5"><a href="#阶段5" class="headerlink" title="阶段5"></a>阶段5</h4><ul>
-<li>创建阶段：<ul>
-<li>AutowiredAnnotationBeanPostProcessor选择构造：优先使用带@Autowired的构造方法来创建bean，如果只有一个有参构造，则用这个有参构造创建bean</li>
-<li>默认构造：保底使用无参构造来创建</li>
-</ul>
-</li>
-<li>依赖注入阶段：<ul>
-<li>后处理器扩展功能：按注解匹配要注入的bean</li>
-<li>根据名字、类型去容器中找bean</li>
-<li>xml精确指定bean</li>
-</ul>
-</li>
-<li>初始化阶段：<ul>
-<li>处理Aware接口，如BeanNameAware、BeanFactoryAware，BeanFactory会把相应的资源传递进来</li>
-<li>调用初始化方法，初始化方法定义有@PostConstruct、实现InitalizingBean接口等</li>
-<li>创建aop代理</li>
-</ul>
-</li>
-<li>注册可销毁bean<ul>
-<li>将有销毁方法的bean保存起来，销毁时调用方法</li>
-</ul>
-</li>
-</ul>
-<p>​	<img src="/img/else_img/%E5%88%9B%E5%BB%BAbean.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="阶段6"><a href="#阶段6" class="headerlink" title="阶段6"></a>阶段6</h4><ul>
-<li>如果getBean的requiredType参数与实际得到的对象类型不同，会尝试类型转换</li>
-</ul>
-<h4 id="阶段7"><a href="#阶段7" class="headerlink" title="阶段7"></a>阶段7</h4><ul>
-<li>根据scpoe来销毁bean</li>
-</ul>
 <h2 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a>事务的传播行为</h2><table>
 <thead>
 <tr>
@@ -671,23 +706,6 @@
 <p><img src="/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%964.png" srcset="/img/loading.gif" lazyload></p>
 <p>解决方式2：通过<code>ObjectFactory&lt;B&gt; b</code> 来先注入工厂，使用时在创建bean</p>
 <p><img src="/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%965.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ul>
-<h2 id="单例Bean是线程安全的吗"><a href="#单例Bean是线程安全的吗" class="headerlink" title="单例Bean是线程安全的吗"></a>单例Bean是线程安全的吗</h2><p>不是线程安全的。@Scope注解默认是sington单例的。如果spring的bean中注入的都是无状态的对象，是没有线程安全问题的，如果在bean中定义了可以修改的成员变量，是要考虑线程安全问题的，可以使用多例或加锁来解决问题</p>
-<h2 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h2><blockquote>
-<p>面向切面编程，用于将那些与业务无关，但对多个对象产生影响的公共行为或逻辑，抽出并封装成一个可重用的模块</p>
-</blockquote>
-<p>常见AOP使用场景</p>
-<ul>
-<li><p>记录操作日志</p>
-</li>
-<li><p>缓存处理</p>
-</li>
-<li><p>事务</p>
-<blockquote>
-<p>编程式事务：使用TransactionTemplate，对代码有侵入性</p>
-<p>声明式事务：使用@Transactional注解，通过AOP功能，对方法进行拦截</p>
-</blockquote>
 </li>
 </ul>
 <h2 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h2><p>@SpringBootApplication中包含的@EnableAutoConfiguration中用@Import导入了配置选择器</p>
