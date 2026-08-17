@@ -33,23 +33,11 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/multicaster.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/finishBeanFactoryInitialozation.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/finishRefersh.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/springMVC%E5%88%9D%E5%A7%8B%E5%8C%96.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/springMVC%E5%8C%B9%E9%85%8D%E9%98%B6%E6%AE%B5.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/SpringMVC%E6%89%A7%E8%A1%8C%E9%98%B6%E6%AE%B5.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/Spring%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/SpringMVC%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/SpringBoot%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/bean%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/bean%E7%9A%84%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%961.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/bean%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%962.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/bean%E7%9A%84%E7%AC%AC%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%963.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%964.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%965.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.592Z">
-<meta property="article:modified_time" content="2026-08-13T07:16:13.291Z">
+<meta property="article:modified_time" content="2026-08-17T06:09:58.909Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -251,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          3.9k 字
         
       </span>
     
@@ -262,7 +250,7 @@
         
         
         
-          31 分钟
+          33 分钟
         
       </span>
     
@@ -429,7 +417,7 @@
 <li><strong>AfterThrowing</strong>（异常通知）：目标对象的方法运行中抛出 &#x2F; 触发异常后触发。AfterReturning 和 AfterThrowing 两者互斥。如果方法调用成功无异常，则会有返回值；如果方法抛出了异常，则不会有返回值。</li>
 <li><strong>Around</strong> （环绕通知）：编程式控制目标对象的方法调用。环绕通知是所有通知类型中可操作范围最大的一种，因为它可以直接拿到目标对象，以及要执行的方法，所以环绕通知可以任意的在目标对象的方法调用前后搞事，甚至不调用目标对象的方法</li>
 </ul>
-<h3 id="refresh创建IOC容器"><a href="#refresh创建IOC容器" class="headerlink" title="refresh创建IOC容器"></a>refresh创建IOC容器</h3><p>Spring 容器启动时会创建IOC容器,在创建容器时,会调用 refresh()方法,整个容器就是通过该方法,完成所有的 bean 的创建以及初始化</p>
+<h3 id="IOC容器创建过程"><a href="#IOC容器创建过程" class="headerlink" title="IOC容器创建过程"></a>IOC容器创建过程</h3><p>Spring 容器启动时会创建IOC容器,在创建容器时,会调用 refresh()方法,整个容器就是通过该方法,完成所有的 bean 的创建以及初始化</p>
 <h4 id="重要的类-x2F-对象"><a href="#重要的类-x2F-对象" class="headerlink" title="重要的类&#x2F;对象"></a>重要的类&#x2F;对象</h4><ul>
 <li>ClassPathXmlApplicationContext：使用配置文件的容器</li>
 <li>AnnotationConfigApplicationContext：使用配置类的容器</li>
@@ -550,6 +538,73 @@
 <li>lifecycleProcessor用来控制容器内需要生命周期管理的bean</li>
 </ul>
 <p><img src="/img/else_img/finishRefersh.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h3><blockquote>
+<p>多个Bean对象之间循环引用，或者单个Bean自我依赖</p>
+</blockquote>
+<h4 id="三级缓存"><a href="#三级缓存" class="headerlink" title="三级缓存"></a>三级缓存</h4><blockquote>
+<p>解决<strong>字段 &#x2F; Setter循环依赖</strong>；</p>
+<p>通过构造函数来依赖注入，需要依赖的Bean存在才能实例化当前类，因此无法暴露前期对象，三级缓存解决不了这类循环依赖</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 一级缓存</span><br><span class="hljs-comment">/** 单例对象的缓存：bean 名称到 bean 实例 */</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String, Object&gt; singletonObjects = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcurrentHashMap</span>&lt;&gt;(<span class="hljs-number">256</span>);<br><br><span class="hljs-comment">// 二级缓存</span><br><span class="hljs-comment">/** 早期单例对象的缓存：bean 名称到 bean 实例 */</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String, Object&gt; earlySingletonObjects = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;(<span class="hljs-number">16</span>);<br><br><span class="hljs-comment">// 三级缓存</span><br><span class="hljs-comment">/** 单例工厂的缓存：bean 名称到 ObjectFactory */</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String, ObjectFactory&lt;?&gt;&gt; singletonFactories = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;(<span class="hljs-number">16</span>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>一级缓存</strong>：存放<strong>最终形态</strong>的Bean</p>
+</li>
+<li><p><strong>二级缓存</strong>：存放<strong>实例化、但尚未属性填充</strong>的Bean</p>
+</li>
+<li><p><strong>三级缓存</strong>：存放**<code>ObjectFactory</code>**，<code>ObjectFactory</code>的<code>getObject()</code>方法可以生成原始 Bean 对象或者代理对象</p>
+<blockquote>
+<p>三级缓存的作用是，在需要时能够 <strong>提前生成 AOP 代理对象</strong>，避免其他 Bean 拿到错误的原始对象</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>创建循环依赖Bean的流程</strong>：</p>
+<ol>
+<li>如果允许循环依赖，在创建Bean的时候会<strong>向三级缓存中添加一个<code>ObjectFactory</code>对象</strong></li>
+<li>依赖注入时，依次检查三个缓存，如果前两层没有，会调用三级缓存的<code>ObjectFactory.getObject()</code>方法获取<strong>前期暴露对象</strong>，将对象放入二级缓存并移除ObjectFactory。</li>
+<li>将这个<strong>前期暴露对象注入到依赖</strong>，来支持循环依赖。</li>
+</ol>
+<h4 id="Lazy"><a href="#Lazy" class="headerlink" title="@Lazy"></a>@Lazy</h4><blockquote>
+<p><code>@Lazy</code> 用来标识类是否需要懒加载&#x2F;延迟加载，可以作用在类上、方法上、构造器上、方法参数上、成员变量中；</p>
+<p><code>@Lazy</code>可以<strong>解决构造器循环依赖</strong>（<strong>不要在构造器、<code>@PostConstruct</code> 等 Bean 创建阶段过早调用这个懒加载依赖</strong>，否则可能让循环依赖重新出现）</p>
+</blockquote>
+<p>给要注入的Bean加上<code>@Lazy</code>注解后，<strong>被标记的类会延迟加载</strong>，会先注入一个<strong>懒加载代理对象</strong>，第一次实际调用代理时再创建目标 Bean</p>
+<h2 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h2><blockquote>
+<p>MVC 是模型(Model)、视图(View)、控制器(Controller)的简写，其核心思想是通过<strong>将业务逻辑、数据、显示分离来组织代码</strong></p>
+</blockquote>
+<h3 id="核心组件"><a href="#核心组件" class="headerlink" title="核心组件"></a>核心组件</h3><ul>
+<li><strong><code>DispatcherServlet</code><strong>：</strong>核心的中央调度器</strong>，负责接收请求、找Handler处理请求，并给予客户端响应</li>
+<li><strong><code>HandlerMapping</code><strong>：根据当前 HTTP 请求</strong>找到应该由哪个 Handler 处理</strong>，并会将请求涉及到的拦截器和 <code>Handler</code> 一起封装</li>
+<li>**<code>HandlerAdapter</code>**：将不同类型的 Handler <strong>适配成 DispatcherServlet 可以统一调用的方式</strong></li>
+<li><strong><code>Handler</code><strong>：</strong>实际处理请求的业务入口</strong>，处理实际请求的处理器</li>
+<li>**<code>ModelAndView</code>**：Handler的返回。包含 Model（数据）+ View（视图），不过现在一般都直接返回JSON数据</li>
+<li><strong><code>ViewResolver</code><strong>：</strong>视图解析器</strong>，根据 <code>Handler</code> 返回的逻辑视图 &#x2F; 视图，解析并渲染真正的视图，并传递给 <code>DispatcherServlet</code> 响应客户端</li>
+</ul>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ol>
+<li>客户端发送请求，<strong>DispatcherServlet</strong>拦截请求</li>
+<li><strong>DispatcherServlet</strong>根据请求信息调用<strong>HandlerMapping</strong>。<strong>HandlerMapping</strong>根据URL匹配能处理的<strong>Handler</strong>，并将涉及到的拦截器和Handler一起封装</li>
+<li><strong>DispatcherServlet</strong>调用 <strong>HandlerAdapter</strong>适配器执行 <strong>Handler</strong></li>
+<li><strong>Handler</strong>处理请求并返回<strong>MoedlAndView</strong> &#x2F; 字符串 &#x2F; 对象等给<strong>DispatcherServlet</strong><ul>
+<li>如果是返回ModelAndView：<ol>
+<li><strong>ViewResolver</strong> 会根据逻辑 View 查找实际的View</li>
+<li><strong>DispaterServlet</strong>把Model传给View进行视图渲染写入<strong>HttpServletResponse</strong>并返回</li>
+</ol>
+</li>
+<li>如果是返回对象：<ol>
+<li>将对象序列化成JSON，写入<strong>HttpServletResponse</strong>并返回</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="统一异常处理"><a href="#统一异常处理" class="headerlink" title="统一异常处理"></a>统一异常处理</h3><p>使用<code>@ControllerAdvice</code> + <code>@ExceptionHandler</code>统一处理请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestControllerAdvice</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GlobalExceptionHandler</span> &#123;<br><br>    <span class="hljs-meta">@ExceptionHandler(BaseException.class)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;?&gt; handleAppException(<br>            BaseException ex,<br>            HttpServletRequest request) &#123;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br><br>    <span class="hljs-meta">@ExceptionHandler(ResourceNotFoundException.class)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;ErrorResponse&gt; <span class="hljs-title function_">handleResourceNotFoundException</span><span class="hljs-params">(</span><br><span class="hljs-params">            ResourceNotFoundException ex,</span><br><span class="hljs-params">            HttpServletRequest request)</span> &#123;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>Controller抛出异常，<strong>DispatcherServlet</strong> 找到匹配的 <strong>@ExceptionHandler</strong></li>
+<li>执行异常处理方法，返回ResponseEntity</li>
+<li>序列化成JSON，写入<strong>HttpServletResponse</strong>并返回</li>
+</ol>
 <h2 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a>事务的传播行为</h2><table>
 <thead>
 <tr>
@@ -608,33 +663,6 @@
 <h3 id="场景7：锁失效"><a href="#场景7：锁失效" class="headerlink" title="场景7：锁失效"></a>场景7：锁失效</h3><p>原因：@Transactional没有保证原子行为，在方法上加锁只能保证方法内的原子性，提交事务时锁失效</p>
 <p>解决方式1：synchronized范围扩大至代理方法调用</p>
 <p>解决方式2：sql语句<code>select ... for update</code>替换<code>select</code></p>
-<h2 id="SpringMVC执行流程"><a href="#SpringMVC执行流程" class="headerlink" title="SpringMVC执行流程"></a>SpringMVC执行流程</h2><ol>
-<li><p>初始化阶段</p>
-<ul>
-<li>第一次用到DispatcherServlet时，会创建其对象并执行init方法</li>
-<li>容器初始化后，会将初始化好的重要组件赋值给DispatcherServlet的成员变量</li>
-</ul>
-<p><img src="/img/else_img/springMVC%E5%88%9D%E5%A7%8B%E5%8C%96.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>匹配阶段</p>
-<ul>
-<li>用户请求到达DispatcherServlet，由其遍历所有的HandlerMapping，找到与路径匹配的处理器</li>
-<li>将HandlerMethod连同匹配到的拦截器，生成调用链对象返回</li>
-<li>遍历HandlerAdapter，找到能处理HandlerMethod的适配器，开始调用</li>
-</ul>
-<p><img src="/img/else_img/springMVC%E5%8C%B9%E9%85%8D%E9%98%B6%E6%AE%B5.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>执行阶段</p>
-<ul>
-<li>执行拦截器的preHandle</li>
-<li>调用HandlerMethod,返回ModelAndView</li>
-<li>执行拦截器的postHandle</li>
-<li>解析ModelAndView</li>
-<li>执行拦截器的afterCompletion</li>
-</ul>
-<p><img src="/img/else_img/SpringMVC%E6%89%A7%E8%A1%8C%E9%98%B6%E6%AE%B5.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ol>
 <h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><h3 id="Spring常见注解"><a href="#Spring常见注解" class="headerlink" title="Spring常见注解"></a>Spring常见注解</h3><p><img src="/img/else_img/Spring%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="SpringMVC常见注解"><a href="#SpringMVC常见注解" class="headerlink" title="SpringMVC常见注解"></a>SpringMVC常见注解</h3><p><img src="/img/else_img/SpringMVC%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="SpringBoot常见注解"><a href="#SpringBoot常见注解" class="headerlink" title="SpringBoot常见注解"></a>SpringBoot常见注解</h3><p><img src="/img/else_img/SpringBoot%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png" srcset="/img/loading.gif" lazyload></p>
@@ -652,60 +680,6 @@
 <li>@ComponentScan<ul>
 <li>属性excludeFilters用于排除一些类不注册为bean</li>
 </ul>
-</li>
-</ul>
-<h2 id="循环依赖"><a href="#循环依赖" class="headerlink" title="循环依赖"></a>循环依赖</h2><p><img src="/img/else_img/bean%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="切面"><a href="#切面" class="headerlink" title="切面"></a>切面</h3><p>通过代理对象来关联ProxyFactory实现切面，SpringBoot通过自动代理后处理器来识别相关注解</p>
-<p><strong>术语</strong></p>
-<ul>
-<li><p>Advisor：最基础的切面，把一个Advice和一个Pointcut组合起来</p>
-</li>
-<li><p>Advice：增强</p>
-</li>
-<li><p>Pointcut：切点</p>
-</li>
-<li><p>Aspect：切面</p>
-</li>
-</ul>
-<blockquote>
-<ol>
-<li><p>最基本的切面是Advisor，一个Aspect切面对应一到多个Advisor</p>
-</li>
-<li><p>最基本的Advice是MethodInterceptor，其他Advice最终都会适配为MethodInterceptor</p>
-</li>
-<li><p>创建代理的方式有：实现了用户自定义接口，采用jdk动态代理；没有实现用户自定义接口，采用cglib代理；设置了setProxyTargetClass(True)，统一采用cglib代理</p>
-</li>
-<li><p>切面、切点、通知等都不会被代理</p>
-</li>
-<li><p>自动代理后处理器调用时机：创建阶段、<strong>依赖注入阶段</strong>、<strong>初始化阶段</strong></p>
-</li>
-</ol>
-</blockquote>
-<p><strong>注解</strong></p>
-<ul>
-<li>@Aspect：表示为切面类</li>
-<li>@Around、@Before、@After等：通知方法，可以加切点表达式</li>
-</ul>
-<h3 id="三级缓存"><a href="#三级缓存" class="headerlink" title="三级缓存"></a>三级缓存</h3><p><img src="/img/else_img/bean%E7%9A%84%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><ul>
-<li>一级缓存作用：限制bean在beanFactory中只存一份</li>
-</ul>
-<p>​		<strong>只有一级缓存不能解决循环依赖问题</strong></p>
-<p>​		<img src="/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%961.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li><p>二级缓存作用（Spring中的三级缓存）：存还未装载成员变量的空对象，解决循环依赖，在初始化完后把二级缓存中的空对象清除掉</p>
-<p><img src="/img/else_img/bean%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>二级缓存不能解决循环依赖中有代理的情况</strong></p>
-<p><img src="/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%962.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>三级缓存作用（Spring中的二级缓存）：解决循环依赖中代理创建过晚的问题，通过工厂判断是否需要代理，需要则提前创建代理对象，否则返回本身空对象</p>
-<p><img src="/img/else_img/bean%E7%9A%84%E7%AC%AC%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>三级缓存不能解决构造函数中有循环依赖</strong>：构造不出来，无法放到缓存中</p>
-<p><img src="/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%963.png" srcset="/img/loading.gif" lazyload></p>
-<p>解决方式1：加@Lazy注解，会先创建代理对象注入，待用到时再注入</p>
-<p><img src="/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%964.png" srcset="/img/loading.gif" lazyload></p>
-<p>解决方式2：通过<code>ObjectFactory&lt;B&gt; b</code> 来先注入工厂，使用时在创建bean</p>
-<p><img src="/img/else_img/%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%965.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ul>
 <h2 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h2><p>@SpringBootApplication中包含的@EnableAutoConfiguration中用@Import导入了配置选择器</p>
