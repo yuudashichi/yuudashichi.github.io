@@ -24,7 +24,7 @@
 <meta property="og:description" content="基础基本概念 大模型的参数：   指神经网络中的权重（Weight）和偏置（Bias）的总数量。   参数数量和能力不是线性关系，存在边际效应。   参数不是越多越好，越多推理成本也越高。  Token：是模型内部的最小处理单元，模型通过分词器（Tokenizer）把文本切碎后的小片段。  上下文窗口：指模型单次能处理的最大 Token 总数  Temperature：控制输出的随机性与发散度">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-23T07:07:44.713Z">
-<meta property="article:modified_time" content="2026-08-14T09:00:46.911Z">
+<meta property="article:modified_time" content="2026-08-19T08:32:34.696Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -235,7 +235,7 @@
         
         
         
-          108 分钟
+          109 分钟
         
       </span>
     
@@ -1534,9 +1534,29 @@
 </blockquote>
 <p><strong>主要结构</strong>：</p>
 <ul>
-<li>底层基础设施：<code>config</code>、<code>enums</code>、<code>http</code>、<code>token</code>、<code>util</code>包，提供配置、常量http请求等基础能力</li>
-<li>路由核心：<code>model</code>包，提供模型选择、健康检查、故障转移执行器</li>
-<li>能力子系统：<code>chat</code>、<code>embedding</code>、<code>rerank</code>，模型对话、embed和排序等能力</li>
+<li><strong>底层基础设施</strong>：<code>config</code>、<code>enums</code>、<code>http</code>、<code>token</code>、<code>util</code>包，提供配置、常量http请求等基础能力</li>
+<li><strong>路由核心</strong>：<code>model</code>包，提供模型选择、健康检查、故障转移执行器</li>
+<li><strong>能力子系统</strong>：<code>chat</code>、<code>embedding</code>、<code>rerank</code>，模型对话、embed和排序等能力</li>
+</ul>
+<p><strong>路由核心组件</strong>：</p>
+<ul>
+<li><p>ModelTarget：数据载体，封装模型的配置信息</p>
+</li>
+<li><p><strong>ModelSelector</strong>：模型选择器，根据配置和当前需求选择合适的模型候选列表</p>
+<blockquote>
+<p>根据首选模型id、模式对应的预设调用模型顺序来排序；</p>
+<p>再根据是否支持深度思考、是否启用来过滤</p>
+</blockquote>
+</li>
+<li><p><strong>ModelHealthStore</strong>：模型健康状态存储器</p>
+<blockquote>
+<p>记录每个模型的连续失败次数、熔断时间和状态；</p>
+<p>提供检查模型状态的函数，切换模型的熔断器开启、半开启和关闭；</p>
+<p>使用ConcurrentHashMap防止并发修改</p>
+</blockquote>
+</li>
+<li><p><strong>ModelRoutingExecutor</strong>：模型路由执行器，根据选择器选择的候选列表调用模型</p>
+</li>
 </ul>
 
                 

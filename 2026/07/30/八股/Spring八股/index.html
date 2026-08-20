@@ -33,11 +33,8 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/multicaster.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/finishBeanFactoryInitialozation.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/finishRefersh.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/Spring%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/SpringMVC%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/SpringBoot%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.592Z">
-<meta property="article:modified_time" content="2026-08-17T06:09:58.909Z">
+<meta property="article:modified_time" content="2026-08-20T05:37:31.771Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          7k 字
         
       </span>
     
@@ -250,7 +247,7 @@
         
         
         
-          33 分钟
+          59 分钟
         
       </span>
     
@@ -605,7 +602,24 @@
 <li>执行异常处理方法，返回ResponseEntity</li>
 <li>序列化成JSON，写入<strong>HttpServletResponse</strong>并返回</li>
 </ol>
-<h2 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a>事务的传播行为</h2><table>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><blockquote>
+<p>是否支持事务取决于数据库是否支持</p>
+</blockquote>
+<p><strong>事务相关接口</strong>：</p>
+<ul>
+<li><strong>PlatformTransactionManager</strong>：定义了获取事务<code>getTransaction</code>、提交事务<code>commit</code>、回滚事务<code>rollback</code>的函数</li>
+<li><strong>TransactionDefinition</strong>：定义了基本的事务属性，描述了事务策略如何应用到方法上。如隔离级别、传播行为、超时时间、是否只读</li>
+<li><strong>TransactionStatus</strong>：记录事务的状态</li>
+</ul>
+<p><strong>Spring事务管理方式</strong>：</p>
+<ul>
+<li><strong>编程式事务</strong>：通过 <code>TransactionTemplate</code>或者<code>TransactionManager</code>手动管理事务</li>
+<li><strong>声明式事务</strong>：使用<code>@Transactional</code>注解管理事务，基于AOP实现</li>
+</ul>
+<h3 id="事务的传播行为"><a href="#事务的传播行为" class="headerlink" title="事务的传播行为"></a>事务的传播行为</h3><blockquote>
+<p>解决业务层方法之间<strong>互相调用</strong>的事务问题</p>
+</blockquote>
+<table>
 <thead>
 <tr>
 <th>级别</th>
@@ -613,77 +627,721 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>Required（默认）</td>
-<td>支持当前事务，没有事务会创建一个</td>
+<td>Required（<strong>默认</strong>）</td>
+<td>当前存在事务则加入，否则新开启一个</td>
 </tr>
 <tr>
 <td>Supports</td>
-<td>支持当前事务，没有事务则以非事务的方式执行</td>
+<td>加入当前事务，<strong>没有事务则以非事务的方式执行</strong></td>
 </tr>
 <tr>
 <td>Mandatory</td>
-<td>支持当前事务，没有事务会抛出异常</td>
+<td>加入当前事务，<strong>当前没事务则抛出异常</strong></td>
 </tr>
 <tr>
 <td>Requires_new</td>
-<td>创建新事务并挂起当前事务</td>
+<td>创建一个<strong>独立于当前的新事务</strong></td>
 </tr>
 <tr>
 <td>Not_supported</td>
-<td>以非事务方式执行，会挂起当前事务</td>
+<td>始终以非事务方式运行，<strong>不受外层事务影响</strong></td>
 </tr>
 <tr>
 <td>Never</td>
-<td>以非事务方式执行，有事务会抛出异常</td>
+<td>仅支持非事务，<strong>当前有事务则抛出异常</strong></td>
 </tr>
 <tr>
 <td>Nested</td>
-<td>嵌套事务</td>
+<td>在当前事务下创建<strong>子事务</strong>，跟随父事务提交&#x2F;回滚，可以独立回滚</td>
 </tr>
 </tbody></table>
-<h2 id="事务失效场景"><a href="#事务失效场景" class="headerlink" title="事务失效场景"></a>事务失效场景</h2><h3 id="场景1：检查异常"><a href="#场景1：检查异常" class="headerlink" title="场景1：检查异常"></a>场景1：检查异常</h3><blockquote>
-<p>需要<code>try..catch</code>或<code>throw</code>的异常都是检查异常</p>
-<p>运行时异常是非检查异常</p>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><table>
+<thead>
+<tr>
+<th>Spring 隔离级别</th>
+<th>对应数据库隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Isolation.DEFAULT</code></td>
+<td>使用数据库默认级别</td>
+<td>取决于数据库</td>
+<td>取决于数据库</td>
+<td>取决于数据库</td>
+<td>Spring 默认值</td>
+</tr>
+<tr>
+<td><code>Isolation.READ_UNCOMMITTED</code></td>
+<td>读未提交</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>隔离级别最低，可以读取未提交数据</td>
+</tr>
+<tr>
+<td><code>Isolation.READ_COMMITTED</code></td>
+<td>读已提交</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>只能读取已经提交的数据</td>
+</tr>
+<tr>
+<td><code>Isolation.REPEATABLE_READ</code></td>
+<td>可重复读</td>
+<td>❌</td>
+<td>❌</td>
+<td>理论上 ✅</td>
+<td>同一事务中多次读取同一数据结果一致</td>
+</tr>
+<tr>
+<td><code>Isolation.SERIALIZABLE</code></td>
+<td>串行化</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>隔离级别最高，并发性能最低</td>
+</tr>
+</tbody></table>
+<h3 id="事务失效场景"><a href="#事务失效场景" class="headerlink" title="事务失效场景"></a>事务失效场景</h3><ul>
+<li><p><strong>场景1：检查异常</strong></p>
+<blockquote>
+<p>需要 <code>try..catch</code> 或 <code>throws</code> 处理的异常通常属于检查异常<br><code>RuntimeException</code> 和 <code>Error</code> 属于非检查异常</p>
 </blockquote>
-<p>抛出检查异常导致事务不能正常回滚</p>
-<p>原因：spring默认只会回滚非检查异常</p>
-<p>解决方式：在注解上加上<code>@Transactional(rollbackFor=Exception.class)</code>设置需要回滚的异常</p>
-<h3 id="场景2：错误try-catch"><a href="#场景2：错误try-catch" class="headerlink" title="场景2：错误try catch"></a>场景2：错误try catch</h3><p>原因：事务是通过代理实现的，如果在被代理方法内catch了异常，外层调用者是不知道发生了异常的，从而事务失效</p>
-<p>解决方式1：把异常抛出去</p>
-<p>解决方式2：手动设置事务状态<code>TransactionStatus.setRollbackOnly()</code></p>
-<h3 id="场景3：aop切面顺序不对"><a href="#场景3：aop切面顺序不对" class="headerlink" title="场景3：aop切面顺序不对"></a>场景3：aop切面顺序不对</h3><p>原因：在自定义切面里catch了异常，导致更上层的事务切面不知道发生了异常</p>
-<p>解决方式1：同场景2</p>
-<p>解决方式2：使自定义切面优先级比事务的高<code>@Order(Ordered.LOWEST.PRECEDENCE - 1)</code></p>
-<h3 id="场景4：加在非公共方法上"><a href="#场景4：加在非公共方法上" class="headerlink" title="场景4：加在非公共方法上"></a>场景4：加在非公共方法上</h3><p>原因：Spring为方法创建代理、添加事务通知、前提条件都是方法是public的</p>
-<h3 id="场景5：父子容器导致的事务失效"><a href="#场景5：父子容器导致的事务失效" class="headerlink" title="场景5：父子容器导致的事务失效"></a>场景5：父子容器导致的事务失效</h3><p>原因：子容器扫描范围过大，把未加事务配置的service扫描进来</p>
-<p>解决方式1：容器各自扫各自的包</p>
-<p>解决方式2：不用父子容器</p>
-<h3 id="场景6：调用本类方法导致传播行为失效"><a href="#场景6：调用本类方法导致传播行为失效" class="headerlink" title="场景6：调用本类方法导致传播行为失效"></a>场景6：调用本类方法导致传播行为失效</h3><p>原因：本类方法调用没有经过代理增强</p>
-<p>解决方式：依赖注入自身</p>
-<h3 id="场景7：锁失效"><a href="#场景7：锁失效" class="headerlink" title="场景7：锁失效"></a>场景7：锁失效</h3><p>原因：@Transactional没有保证原子行为，在方法上加锁只能保证方法内的原子性，提交事务时锁失效</p>
-<p>解决方式1：synchronized范围扩大至代理方法调用</p>
-<p>解决方式2：sql语句<code>select ... for update</code>替换<code>select</code></p>
-<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><h3 id="Spring常见注解"><a href="#Spring常见注解" class="headerlink" title="Spring常见注解"></a>Spring常见注解</h3><p><img src="/img/else_img/Spring%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="SpringMVC常见注解"><a href="#SpringMVC常见注解" class="headerlink" title="SpringMVC常见注解"></a>SpringMVC常见注解</h3><p><img src="/img/else_img/SpringMVC%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="SpringBoot常见注解"><a href="#SpringBoot常见注解" class="headerlink" title="SpringBoot常见注解"></a>SpringBoot常见注解</h3><p><img src="/img/else_img/SpringBoot%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="SpringBoot自动配置"><a href="#SpringBoot自动配置" class="headerlink" title="SpringBoot自动配置"></a>SpringBoot自动配置</h2><p>@SpringBootApplication主要由三个注解构成</p>
+<pre><code class="hljs">**原因**：Spring 默认只对 `RuntimeException` 和 `Error` 回滚，检查异常默认不回滚
+
+**解决方式**：在注解上加 `@Transactional(rollbackFor = Exception.class)`
+</code></pre>
+</li>
+<li><p><strong>场景2：错误 try catch</strong></p>
+<pre><code class="hljs">原因：方法内部 catch 住异常且没有重新抛出，事务切面感知不到异常，会正常提交事务
+
+**解决方式1**：把异常重新抛出去
+
+**解决方式2**：手动设置事务回滚状态 `TransactionAspectSupport.currentTransactionStatus().setRollbackOnly()`
+</code></pre>
+</li>
+<li><p><strong>场景3：AOP 切面顺序或异常处理不当</strong></p>
+<pre><code class="hljs">**原因**：自定义切面 catch 住异常并吞掉，可能导致事务切面感知不到异常
+
+**解决方式1**：自定义切面不要吞异常，继续向外抛出
+
+**解决方式2**：根据实际需求使用 `@Order` 调整自定义切面和事务切面的执行顺序
+</code></pre>
+</li>
+<li><p><strong>场景4：加在非公共方法上</strong></p>
+<pre><code class="hljs">**原因**：Spring 基于代理实现事务，非 `public` 方法在不同代理方式和 Spring 版本下支持情况不同，容易导致事务无法按预期生效
+
+**解决方式**：事务入口方法尽量使用 `public`
+</code></pre>
+</li>
+<li><p><strong>场景5：父子容器导致事务失效</strong></p>
+<pre><code class="hljs">**原因**：子容器扫描范围过大，把 Service 再次创建成一个没有事务增强的 Bean，Controller 可能注入了这个 Bean
+
+**解决方式1**：父子容器分别扫描自己的包
+
+**解决方式2**：避免不必要的父子容器结构
+</code></pre>
+</li>
+<li><p><strong>场景6：调用本类方法导致传播行为失效</strong></p>
+<pre><code class="hljs">**原因**：本类内部通过 `this.xxx()` 调用，没有经过 Spring 代理，因此被调用方法上的 `@Transactional` 不生效
+
+**解决方式1**：将事务方法拆到另一个 Bean 中调用
+
+**解决方式2**：注入自身代理对象，通过代理调用
+</code></pre>
+</li>
+<li><p><strong>场景7：锁范围与事务范围不一致</strong></p>
+<pre><code class="hljs">**原因**：`@Transactional` 的事务提交通常发生在目标方法返回之后，如果只在目标方法上加 `synchronized`，可能出现锁已经释放但事务还未提交的情况
+
+**解决方式1**：将 `synchronized` 范围扩大到事务代理方法调用之外
+
+**解决方式2**：使用数据库悲观锁，如 `select ... for update`
+</code></pre>
+</li>
+<li><p><strong>场景8：对象没有交给 Spring 管理</strong></p>
+<pre><code class="hljs">**原因**：自己通过 `new` 创建对象，不会经过 Spring 代理，因此 `@Transactional` 不生效
+
+**解决方式**：让类成为 Spring Bean，并通过 Spring 容器获取对象
+</code></pre>
+</li>
+<li><p><strong>场景9：事务类没有被 Spring 扫描</strong></p>
+<pre><code class="hljs">**原因**：类所在包不在组件扫描范围内，Bean 没有被 Spring 管理，自然也不会创建事务代理
+
+**解决方式**：调整 `@ComponentScan` 或 Spring Boot 启动类的包扫描范围
+</code></pre>
+</li>
+<li><p><strong>场景10：数据库本身不支持事务</strong></p>
+<pre><code class="hljs">**原因**：底层数据库或存储引擎不支持事务，即使 Spring 开启了事务也无法真正回滚
+
+**解决方式**：使用支持事务的数据库和存储引擎，例如 MySQL InnoDB
+</code></pre>
+</li>
+<li><p><strong>场景11：多数据源使用了错误的事务管理器</strong></p>
+<pre><code class="hljs">**原因**：操作的是数据源 B，但 `@Transactional` 使用的是数据源 A 对应的 `TransactionManager`
+
+**解决方式**：显式指定正确的事务管理器
+</code></pre>
+  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Transactional(transactionManager = <span class="hljs-string">&quot;transactionManagerB&quot;</span>)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>场景12：异步线程导致事务无法传播</strong></p>
+<pre><code class="hljs">**原因**：Spring 事务通常通过 `ThreadLocal` 绑定到当前线程，`@Async` 开启新线程后不会自动继承原事务
+
+**解决方式**：异步线程需要自己开启事务，不能依赖外层事务
+</code></pre>
+</li>
+<li><p><strong>场景13：手动创建新线程</strong></p>
+<pre><code class="hljs">**原因**：`new Thread()`、线程池等新线程不会自动继承当前线程的 Spring 事务
+
+**解决方式**：新线程中的数据库操作需要独立事务控制
+</code></pre>
+</li>
+<li><p><strong>场景14：传播行为因为自调用失效</strong></p>
+<pre><code class="hljs">**原因**：例如同类中 `A()` 调用带 `REQUIRES_NEW` 的 `B()`，由于没有经过代理，`B()` 不会真正创建新事务
+
+**解决方式**：将 `B()` 拆到其他 Bean 中，通过代理对象调用
+</code></pre>
+<blockquote>
+<p>这个场景本质上属于场景6，但传播行为失效是非常常见的表现，建议单独记住。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="常用注解"><a href="#常用注解" class="headerlink" title="常用注解"></a>常用注解</h2><h3 id="Spring-Boot-基础注解"><a href="#Spring-Boot-基础注解" class="headerlink" title="Spring Boot 基础注解"></a>Spring Boot 基础注解</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@SpringBootApplication</code></td>
+<td>Spring Boot 应用的核心注解，通常标注在启动类上；组合了自动配置、组件扫描和配置类功能。</td>
+</tr>
+<tr>
+<td><code>@EnableAutoConfiguration</code></td>
+<td>启用 Spring Boot 自动配置，根据项目依赖和已有 Bean 自动配置应用。</td>
+</tr>
+<tr>
+<td><code>@ComponentScan</code></td>
+<td>扫描指定包下的 Spring 组件，如 <code>@Component</code>、<code>@Service</code>、<code>@Repository</code> 和 <code>@Controller</code>。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-Bean-注册与依赖注入"><a href="#Spring-Bean-注册与依赖注入" class="headerlink" title="Spring Bean 注册与依赖注入"></a>Spring Bean 注册与依赖注入</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Component</code></td>
+<td>将普通类注册为 Spring Bean，是通用的组件注解。</td>
+</tr>
+<tr>
+<td><code>@Repository</code></td>
+<td>标注持久层组件，并将其注册为 Spring Bean。</td>
+</tr>
+<tr>
+<td><code>@Service</code></td>
+<td>标注业务逻辑层组件，并将其注册为 Spring Bean。</td>
+</tr>
+<tr>
+<td><code>@Controller</code></td>
+<td>标注 Spring MVC 控制器，并将其注册为 Spring Bean。</td>
+</tr>
+<tr>
+<td><code>@Bean</code></td>
+<td>标注配置类中的方法，将方法返回的对象注册为 Spring Bean。</td>
+</tr>
+<tr>
+<td><code>@Autowired</code></td>
+<td>按类型自动注入 Spring Bean，可用于构造器、字段、Setter 方法或配置方法。</td>
+</tr>
+<tr>
+<td><code>@Qualifier</code></td>
+<td>当同一类型存在多个 Bean 时，通过名称指定需要注入的 Bean。</td>
+</tr>
+<tr>
+<td><code>@Primary</code></td>
+<td>将某个 Bean 标记为同类型 Bean 中的首选注入对象。</td>
+</tr>
+<tr>
+<td><code>@Resource</code></td>
+<td>JSR-250&#x2F;Jakarta 注入注解，默认优先按名称注入，也可通过 <code>name</code> 指定 Bean；不支持构造器注入。</td>
+</tr>
+<tr>
+<td><code>@Scope</code></td>
+<td>指定 Bean 的作用域，如 <code>singleton</code>、<code>prototype</code>、<code>request</code>、<code>session</code>、<code>application</code> 或 <code>websocket</code>。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-配置相关注解"><a href="#Spring-配置相关注解" class="headerlink" title="Spring 配置相关注解"></a>Spring 配置相关注解</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Configuration</code></td>
+<td>声明一个类为 Spring 配置类，通常在类中通过 <code>@Bean</code> 定义 Bean。</td>
+</tr>
+<tr>
+<td><code>@Value</code></td>
+<td>注入配置文件中的单个属性，也支持 Spring 表达式语言 SpEL。</td>
+</tr>
+<tr>
+<td><code>@ConfigurationProperties</code></td>
+<td>将一组具有相同前缀的配置批量绑定到 Java 对象，适合结构化配置。</td>
+</tr>
+<tr>
+<td><code>@PropertySource</code></td>
+<td>加载指定的自定义配置文件，如 classpath 下的 <code>.properties</code> 文件。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-MVC-控制器与请求映射"><a href="#Spring-MVC-控制器与请求映射" class="headerlink" title="Spring MVC 控制器与请求映射"></a>Spring MVC 控制器与请求映射</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Controller</code></td>
+<td>声明传统 MVC 控制器，方法返回值通常作为逻辑视图名称。</td>
+</tr>
+<tr>
+<td><code>@RestController</code></td>
+<td>等价于 <code>@Controller + @ResponseBody</code>，方法返回值默认写入响应体，常用于 RESTful API。</td>
+</tr>
+<tr>
+<td><code>@RequestMapping</code></td>
+<td>将请求路径、HTTP 方法、请求参数或请求头等映射到控制器类或方法。</td>
+</tr>
+<tr>
+<td><code>@GetMapping</code></td>
+<td>映射 HTTP GET 请求。</td>
+</tr>
+<tr>
+<td><code>@PostMapping</code></td>
+<td>映射 HTTP POST 请求，通常用于创建资源。</td>
+</tr>
+<tr>
+<td><code>@PutMapping</code></td>
+<td>映射 HTTP PUT 请求，通常用于完整更新资源。</td>
+</tr>
+<tr>
+<td><code>@DeleteMapping</code></td>
+<td>映射 HTTP DELETE 请求。</td>
+</tr>
+<tr>
+<td><code>@PatchMapping</code></td>
+<td>映射 HTTP PATCH 请求，通常用于局部更新资源。</td>
+</tr>
+<tr>
+<td><code>@ResponseBody</code></td>
+<td>将方法返回值写入 HTTP 响应体，通常转换为 JSON 或 XML，而不是解析为视图名称。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-MVC-参数绑定"><a href="#Spring-MVC-参数绑定" class="headerlink" title="Spring MVC 参数绑定"></a>Spring MVC 参数绑定</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@PathVariable</code></td>
+<td>获取 URL 路径中的占位符参数，如 <code>/users/&#123;id&#125;</code> 中的 <code>id</code>。</td>
+</tr>
+<tr>
+<td><code>@RequestParam</code></td>
+<td>获取查询参数或表单参数，如 <code>/users?name=Tom</code> 中的 <code>name</code>。</td>
+</tr>
+<tr>
+<td><code>@RequestBody</code></td>
+<td>读取 HTTP 请求体，并通过 <code>HttpMessageConverter</code> 将 JSON 等数据转换为 Java 对象。</td>
+</tr>
+</tbody></table>
+<h3 id="Bean-Validation-数据校验"><a href="#Bean-Validation-数据校验" class="headerlink" title="Bean Validation 数据校验"></a>Bean Validation 数据校验</h3><blockquote>
+<p>Spring Boot 2.x 通常使用 <code>javax.validation.constraints</code>，Spring Boot 3.x 及以上通常使用 <code>jakarta.validation.constraints</code>。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Valid</code></td>
+<td>触发对象的 Bean Validation 校验，常与 <code>@RequestBody</code> 配合使用。</td>
+</tr>
+<tr>
+<td><code>@Validated</code></td>
+<td>Spring 提供的校验注解，支持分组校验和方法级校验。</td>
+</tr>
+<tr>
+<td><code>@NotNull</code></td>
+<td>被校验值不能为 <code>null</code>，但可以是空字符串或空集合。</td>
+</tr>
+<tr>
+<td><code>@NotEmpty</code></td>
+<td>值不能为 <code>null</code>，且字符串、集合、Map 或数组的长度不能为 0。</td>
+</tr>
+<tr>
+<td><code>@NotBlank</code></td>
+<td>字符串不能为 <code>null</code>，且去除首尾空白后长度必须大于 0。</td>
+</tr>
+<tr>
+<td><code>@Null</code></td>
+<td>被校验值必须为 <code>null</code>。</td>
+</tr>
+<tr>
+<td><code>@AssertTrue</code> &#x2F; <code>@AssertFalse</code></td>
+<td>布尔值必须为 <code>true</code> &#x2F; <code>false</code>。</td>
+</tr>
+<tr>
+<td><code>@Min</code> &#x2F; <code>@Max</code></td>
+<td>数值必须大于等于指定最小值／小于等于指定最大值，主要用于整数类型。</td>
+</tr>
+<tr>
+<td><code>@DecimalMin</code> &#x2F; <code>@DecimalMax</code></td>
+<td>校验数值的最小值／最大值，支持小数。</td>
+</tr>
+<tr>
+<td><code>@Size</code></td>
+<td>字符串、集合、Map 或数组的长度必须处于指定范围。</td>
+</tr>
+<tr>
+<td><code>@Digits</code></td>
+<td>限制数字整数部分和小数部分的最大位数。</td>
+</tr>
+<tr>
+<td><code>@Pattern</code></td>
+<td>字符串必须匹配指定的正则表达式。</td>
+</tr>
+<tr>
+<td><code>@Email</code></td>
+<td>字符串必须符合电子邮箱格式。</td>
+</tr>
+<tr>
+<td><code>@Past</code> &#x2F; <code>@Future</code></td>
+<td>日期或时间必须位于当前时间之前／之后。</td>
+</tr>
+<tr>
+<td><code>@PastOrPresent</code> &#x2F; <code>@FutureOrPresent</code></td>
+<td>日期或时间必须位于当前时间之前或等于当前时间／之后或等于当前时间。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-MVC-全局异常处理"><a href="#Spring-MVC-全局异常处理" class="headerlink" title="Spring MVC 全局异常处理"></a>Spring MVC 全局异常处理</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@ControllerAdvice</code></td>
+<td>定义全局控制器增强类，可集中处理 Controller 层异常。</td>
+</tr>
+<tr>
+<td><code>@ExceptionHandler</code></td>
+<td>标注异常处理方法，指定该方法负责处理的异常类型。</td>
+</tr>
+<tr>
+<td><code>@ResponseBody</code></td>
+<td>将异常处理方法的返回结果写入响应体，常用于返回统一的 JSON 错误信息。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-事务管理"><a href="#Spring-事务管理" class="headerlink" title="Spring 事务管理"></a>Spring 事务管理</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Transactional</code></td>
+<td>为类或方法开启声明式事务；默认对 <code>RuntimeException</code> 和 <code>Error</code> 回滚，可通过 <code>rollbackFor</code> 指定其他异常。</td>
+</tr>
+</tbody></table>
+<h3 id="JPA-实体与字段映射"><a href="#JPA-实体与字段映射" class="headerlink" title="JPA 实体与字段映射"></a>JPA 实体与字段映射</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Entity</code></td>
+<td>声明一个类为 JPA 实体，与数据库表建立映射。</td>
+</tr>
+<tr>
+<td><code>@Table</code></td>
+<td>指定实体对应的数据库表名及其他表级配置。</td>
+</tr>
+<tr>
+<td><code>@Id</code></td>
+<td>声明实体字段为主键。</td>
+</tr>
+<tr>
+<td><code>@GeneratedValue</code></td>
+<td>指定主键生成策略，如 <code>IDENTITY</code>、<code>SEQUENCE</code>、<code>TABLE</code>、<code>UUID</code> 或 <code>AUTO</code>。</td>
+</tr>
+<tr>
+<td><code>@GenericGenerator</code></td>
+<td>Hibernate 提供的注解，用于声明自定义主键生成器。</td>
+</tr>
+<tr>
+<td><code>@Column</code></td>
+<td>配置字段对应的数据库列名、长度、可空性和列定义等信息。</td>
+</tr>
+<tr>
+<td><code>@Transient</code></td>
+<td>声明字段不需要持久化，不映射到数据库列。</td>
+</tr>
+<tr>
+<td><code>@Lob</code></td>
+<td>将字段映射为大对象类型，如 CLOB 或 BLOB。</td>
+</tr>
+<tr>
+<td><code>@Enumerated</code></td>
+<td>指定枚举的持久化方式；推荐使用 <code>EnumType.STRING</code> 存储枚举名称。</td>
+</tr>
+<tr>
+<td><code>@OneToOne</code></td>
+<td>声明实体之间的一对一关联。</td>
+</tr>
+<tr>
+<td><code>@OneToMany</code></td>
+<td>声明实体之间的一对多关联。</td>
+</tr>
+<tr>
+<td><code>@ManyToOne</code></td>
+<td>声明实体之间的多对一关联。</td>
+</tr>
+<tr>
+<td><code>@ManyToMany</code></td>
+<td>声明实体之间的多对多关联。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-Data-JPA-查询与审计"><a href="#Spring-Data-JPA-查询与审计" class="headerlink" title="Spring Data JPA 查询与审计"></a>Spring Data JPA 查询与审计</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@Query</code></td>
+<td>在 Repository 方法上声明自定义 JPQL 或原生 SQL 查询。</td>
+</tr>
+<tr>
+<td><code>@Param</code></td>
+<td>将 Repository 方法参数绑定到查询语句中的命名参数。</td>
+</tr>
+<tr>
+<td><code>@Modifying</code></td>
+<td>将 <code>@Query</code> 标记为 INSERT、UPDATE、DELETE 或 DDL 等修改操作。</td>
+</tr>
+<tr>
+<td><code>@MappedSuperclass</code></td>
+<td>声明实体公共父类，其字段映射可被子实体继承，但自身不对应独立数据表。</td>
+</tr>
+<tr>
+<td><code>@EntityListeners</code></td>
+<td>为实体注册监听器，例如 JPA 审计监听器。</td>
+</tr>
+<tr>
+<td><code>@EnableJpaAuditing</code></td>
+<td>开启 Spring Data JPA 审计功能。</td>
+</tr>
+<tr>
+<td><code>@CreatedDate</code></td>
+<td>实体首次保存时自动记录创建时间。</td>
+</tr>
+<tr>
+<td><code>@LastModifiedDate</code></td>
+<td>实体更新时自动记录最后修改时间。</td>
+</tr>
+<tr>
+<td><code>@CreatedBy</code></td>
+<td>实体首次保存时自动记录创建人。</td>
+</tr>
+<tr>
+<td><code>@LastModifiedBy</code></td>
+<td>实体更新时自动记录最后修改人。</td>
+</tr>
+</tbody></table>
+<h3 id="Jackson-JSON-数据处理"><a href="#Jackson-JSON-数据处理" class="headerlink" title="Jackson JSON 数据处理"></a>Jackson JSON 数据处理</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@JsonIgnoreProperties</code></td>
+<td>作用于类，批量忽略指定 JSON 属性，也可通过 <code>ignoreUnknown = true</code> 忽略未知属性。</td>
+</tr>
+<tr>
+<td><code>@JsonIgnore</code></td>
+<td>作用于字段或 Getter&#x2F;Setter，在序列化或反序列化时忽略单个属性。</td>
+</tr>
+<tr>
+<td><code>@JsonFormat</code></td>
+<td>指定字段的 JSON 格式，常用于日期时间格式和时区设置。</td>
+</tr>
+<tr>
+<td><code>@JsonUnwrapped</code></td>
+<td>将嵌套对象的属性展开到当前 JSON 对象中，使 JSON 结构扁平化。</td>
+</tr>
+</tbody></table>
+<h3 id="Spring-测试相关注解"><a href="#Spring-测试相关注解" class="headerlink" title="Spring 测试相关注解"></a>Spring 测试相关注解</h3><table>
+<thead>
+<tr>
+<th>注解名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@SpringBootTest</code></td>
+<td>加载完整的 Spring Boot 应用上下文，用于集成测试。</td>
+</tr>
+<tr>
+<td><code>@ActiveProfiles</code></td>
+<td>指定测试期间启用的 Spring Profile，如 <code>test</code>。</td>
+</tr>
+<tr>
+<td><code>@Test</code></td>
+<td>JUnit 注解，用于声明测试方法。</td>
+</tr>
+<tr>
+<td><code>@Transactional</code></td>
+<td>用于测试方法时，通常在测试结束后自动回滚测试线程中的事务。</td>
+</tr>
+<tr>
+<td><code>@WithMockUser</code></td>
+<td>Spring Security Test 注解，在测试期间模拟已认证用户及其角色或权限。</td>
+</tr>
+</tbody></table>
+<h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><blockquote>
+<p>简化 Spring 开发减少配置文件，开箱即用</p>
+</blockquote>
+<h2 id="Starter作用"><a href="#Starter作用" class="headerlink" title="Starter作用"></a>Starter作用</h2><blockquote>
+<p>Spring Boot Starter本质是一个<strong>依赖集合</strong>，解决该引用哪些依赖的问题</p>
+</blockquote>
+<p>主要做了：</p>
 <ul>
-<li>@SpringBootConfiguration<ul>
-<li>@Configuration可以多个，@SpringBootConfiguration只能一个，用于表示当前类为SpringBoot配置类</li>
+<li><strong>集合依赖</strong>：把某一类开发需要的依赖统一引入</li>
+<li><strong>版本协调</strong>：配合 Spring Boot 的依赖管理，避免版本冲突</li>
+<li><strong>降低配置成本</strong></li>
 </ul>
+<h2 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h2><p>**<code>@SpringBootApplication</code>**注解组成构成：</p>
+<ul>
+<li>**<code>@SpringBootConfiguration</code>**：表示当前类是 Spring Boot 的配置类，本质上包含 <strong><code>@Configuration</code></strong></li>
+<li>**<code>@EnableAutoConfiguration</code>**：开启 Spring Boot 自动配置</li>
+<li>**<code>@ComponentScan</code>**：自动扫描当前包及其子包中的 Spring Bean</li>
+</ul>
+<p> <strong>自动装配</strong>：</p>
+<ol>
+<li><code>@EnableAutoConfiguration</code>通过<code>@import</code>导入了**<code>AutoConfigurationImportSelector</code>** 类</li>
+<li><strong><code>AutoConfigurationImportSelector</code><strong>会将所有自动配置类的</strong>全限定类名</strong>以 List 返回</li>
+<li><strong><code>@Conditional</code></strong> 注解再按条件来<strong>选择要创建的Bean</strong></li>
+</ol>
+<h2 id="读取配置文件"><a href="#读取配置文件" class="headerlink" title="读取配置文件"></a>读取配置文件</h2><ul>
+<li><p>**<code>@Value(&quot;$&#123;property&#125;&quot;)</code>**：加在变量上，用于读取比较简单的配置</p>
 </li>
-<li>@EnableAutoConfiguration<ul>
-<li>@AutoConfigurationPackage：记录标注了这个注解的包名</li>
-<li>@Import(AutoConfigurationImportSelector.class)：导入自动配置相关的bean，加载META-INF&#x2F;spring.factories中的配置类</li>
-</ul>
+<li><p>**<code>@PropertySource(&quot;classpath:配置文件名&quot;)</code>**：指定读取的配置文件</p>
 </li>
-<li>@ComponentScan<ul>
-<li>属性excludeFilters用于排除一些类不注册为bean</li>
-</ul>
+<li><p>**<code>@ConfigurationProperties(prefix = &quot;配置key名&quot;)</code>**：加在类上，读取配置信息并与Bean绑定。</p>
+<blockquote>
+<p>需要使用<code>@Component</code>或<code>@EnableConfigurationProperties(XXX.class)</code>等方式将配置类<strong>注册成Bean</strong></p>
+</blockquote>
 </li>
 </ul>
-<h2 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h2><p>@SpringBootApplication中包含的@EnableAutoConfiguration中用@Import导入了配置选择器</p>
-<p>内部读取了该项目和引用的Jar包的classpath路径下<code>META-INF/spring.factories</code>文件中的所配置的类的全类名，根据这些配置类中定义的Bean所指定的条件来决定是否注入到Spring容器中</p>
+<p><strong>宽松绑定</strong>：</p>
+<blockquote>
+<p>配置项名称不必和 Java 字段名完全一致，Spring Boot 会<strong>按配置来源进行规范化后再匹配</strong>；</p>
+<p>推荐配置里用<strong>小写 + <code>-</code></strong>  写法，Java字段使用驼峰命名</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>配置来源</th>
+<th>支持的写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.properties</code></td>
+<td><code>first-name</code>、<code>firstName</code>、<code>first_name</code></td>
+</tr>
+<tr>
+<td>YAML</td>
+<td><code>first-name</code>、<code>firstName</code>、<code>first_name</code></td>
+</tr>
+<tr>
+<td>JVM 系统属性 <code>-D</code></td>
+<td><code>first-name</code>、<code>firstName</code>、<code>first_name</code></td>
+</tr>
+<tr>
+<td>操作系统环境变量</td>
+<td>大写字母和下划线，例如 <code>FIRST_NAME</code></td>
+</tr>
+</tbody></table>
+<h2 id="Bean映射工具"><a href="#Bean映射工具" class="headerlink" title="Bean映射工具"></a>Bean映射工具</h2><blockquote>
+<p>在不同 Java 对象之间传递属性，典型场景是在DTO、VO、业务对象和Map之间相互转换</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>默认映射规则</th>
+<th>实现原理</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Spring <code>BeanUtils</code></td>
+<td>同名、目标可写、类型兼容</td>
+<td>属性描述器+反射</td>
+<td>简单对象浅复制</td>
+</tr>
+<tr>
+<td>Apache <code>BeanUtils</code></td>
+<td>同名属性，可尝试类型转换</td>
+<td>JavaBeans 内省+反射+<code>ConvertUtils</code></td>
+<td>老项目、字符串参数转换</td>
+</tr>
+<tr>
+<td>CGLIB <code>BeanCopier</code></td>
+<td>同名、类型兼容</td>
+<td>运行时生成字节码</td>
+<td>大量重复简单复制</td>
+</tr>
+<tr>
+<td><strong>MapStruct</strong>（推荐）</td>
+<td>默认同名，支持注解显式映射</td>
+<td>编译期生成 Java 代码</td>
+<td>正式项目中 Entity&#x2F;DTO 转换</td>
+</tr>
+<tr>
+<td>ModelMapper</td>
+<td>根据名称分词和匹配策略推断</td>
+<td>运行时分析、反射、缓存 <code>TypeMap</code></td>
+<td>快速构建复杂映射</td>
+</tr>
+<tr>
+<td>Jackson <code>ObjectMapper</code></td>
+<td>根据 JSON 属性规则匹配</td>
+<td>序列化&#x2F;反序列化转换</td>
+<td>Map&#x2F;JSON 风格转换，不建议替代常规 Mapper</td>
+</tr>
+</tbody></table>
 
                 
               </div>
