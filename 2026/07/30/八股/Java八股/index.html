@@ -16,12 +16,12 @@
   <meta name="author" content="xw">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Java基础集合 ArrayList 动态数组  实现接口 List : 表明它是一个列表，支持添加、删除、查找等操作，并且可以通过下标进行访问。 RandomAccess：这是一个标志接口，表明实现这个接口的 List 集合是支持 快速随机访问 的。在 ArrayList 中，我们就可以通过元素的序号快速获取元素对象，这就是快速随机访问。 Cloneable：表明它具有拷贝能力，可以进行深拷贝或">
+    <meta name="description" content="Java基础基础概念 Java SE（Java Standard Edition）：Java 标准版。提供 Java 基础开发能力，如集合、IO、多线程、JDBC 等。  Java EE（Java Enterprise Edition）：Java 企业版，现在称为 Jakarta EE。建立在 Java SE 之上，提供 Servlet、JPA、Web 服务等企业级开发规范。  JDK（Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java八股">
 <meta property="og:url" content="http://xwww12.github.io/2026/07/30/%E5%85%AB%E8%82%A1/Java%E5%85%AB%E8%82%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Java基础集合 ArrayList 动态数组  实现接口 List : 表明它是一个列表，支持添加、删除、查找等操作，并且可以通过下标进行访问。 RandomAccess：这是一个标志接口，表明实现这个接口的 List 集合是支持 快速随机访问 的。在 ArrayList 中，我们就可以通过元素的序号快速获取元素对象，这就是快速随机访问。 Cloneable：表明它具有拷贝能力，可以进行深拷贝或">
+<meta property="og:description" content="Java基础基础概念 Java SE（Java Standard Edition）：Java 标准版。提供 Java 基础开发能力，如集合、IO、多线程、JDBC 等。  Java EE（Java Enterprise Edition）：Java 企业版，现在称为 Jakarta EE。建立在 Java SE 之上，提供 Servlet、JPA、Web 服务等企业级开发规范。  JDK（Java">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E9%9B%86%E5%90%88%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/hashMap.png">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.316Z">
-<meta property="article:modified_time" content="2026-07-30T02:41:09.644Z">
+<meta property="article:modified_time" content="2026-08-27T06:26:42.749Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.6k 字
+          8.5k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
         
-          63 分钟
+          72 分钟
         
       </span>
     
@@ -309,24 +309,158 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><p><img src="/img/else_img/%E9%9B%86%E5%90%88%E5%85%B3%E7%B3%BB%E5%9B%BE.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h4><blockquote>
+                <h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><ul>
+<li><p><strong>Java SE（Java Standard Edition）</strong>：Java 标准版。提供 Java 基础开发能力，如集合、IO、多线程、JDBC 等。</p>
+</li>
+<li><p><strong>Java EE（Java Enterprise Edition）</strong>：Java 企业版，现在称为 <strong>Jakarta EE</strong>。建立在 Java SE 之上，提供 Servlet、JPA、Web 服务等企业级开发规范。</p>
+</li>
+<li><p><strong>JDK（Java Development Kit）</strong>：Java 开发工具包。包含 <strong>JRE + javac 编译器 + javadoc、jar 等开发工具</strong>。用于开发和运行 Java 程序。</p>
+</li>
+<li><p><strong>JRE（Java Runtime Environment）</strong>：Java 运行环境。传统上可理解为 <strong>JVM + Java 核心类库</strong>。用于运行 Java 程序。</p>
+</li>
+<li><p><strong>JVM（Java Virtual Machine）</strong>：Java 虚拟机。负责执行 <code>.class</code> 字节码，并提供内存管理、垃圾回收等能力。</p>
+</li>
+<li><p><strong>JIT（Just-In-Time Compiler，即时编译器）</strong>：是 JVM 中负责<strong>把字节码编译成本地机器码</strong>的组件。目的是让 Java 程序运行得更快。</p>
+</li>
+<li><p><strong>字节码</strong>：JVM 可以理解的代码就叫做字节码（.class）</p>
+</li>
+</ul>
+<h3 id="编译与解释并存"><a href="#编译与解释并存" class="headerlink" title="编译与解释并存"></a>编译与解释并存</h3><p>Java 源码先由编译器生成字节码（<code>.class</code> 文件），<strong>字节码可由 JVM 解释执行，也可在运行时由 JIT 编译为机器码</strong>。字节码并非必须由解释器执行，具体执行策略由 JVM 实现决定</p>
+<h3 id="基本数据结构"><a href="#基本数据结构" class="headerlink" title="基本数据结构"></a>基本数据结构</h3><table>
+<thead>
+<tr>
+<th align="left">基本类型</th>
+<th align="left">位数</th>
+<th align="left">字节</th>
+<th align="left">默认值</th>
+<th>取值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>byte</code></td>
+<td align="left">8</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td>-128 ~ 127</td>
+</tr>
+<tr>
+<td align="left"><code>short</code></td>
+<td align="left">16</td>
+<td align="left">2</td>
+<td align="left">0</td>
+<td>-32768（-2^15） ~ 32767（2^15 - 1）</td>
+</tr>
+<tr>
+<td align="left"><code>int</code></td>
+<td align="left">32</td>
+<td align="left">4</td>
+<td align="left">0</td>
+<td>-2147483648 ~ 2147483647</td>
+</tr>
+<tr>
+<td align="left"><code>long</code></td>
+<td align="left">64</td>
+<td align="left">8</td>
+<td align="left">0L</td>
+<td>-9223372036854775808（-2^63） ~ 9223372036854775807（2^63 -1）</td>
+</tr>
+<tr>
+<td align="left"><code>char</code></td>
+<td align="left">16</td>
+<td align="left">2</td>
+<td align="left">‘\u0000’</td>
+<td>0 ~ 65535（2^16 - 1）</td>
+</tr>
+<tr>
+<td align="left"><code>float</code></td>
+<td align="left">32</td>
+<td align="left">4</td>
+<td align="left">0f</td>
+<td>约 -3.4028235E38 ~ 3.4028235E38，最小正非零值约 1.4E-45，另含 ±0、±∞、NaN</td>
+</tr>
+<tr>
+<td align="left"><code>double</code></td>
+<td align="left">64</td>
+<td align="left">8</td>
+<td align="left">0d</td>
+<td>约 -1.7976931348623157E308 ~ 1.7976931348623157E308，最小正非零值约 4.9E-324，另含 ±0、±∞、NaN</td>
+</tr>
+<tr>
+<td align="left"><code>boolean</code></td>
+<td align="left">未规定</td>
+<td align="left">未规定</td>
+<td align="left">false</td>
+<td>true、false</td>
+</tr>
+</tbody></table>
+<h3 id="自动装箱与拆箱"><a href="#自动装箱与拆箱" class="headerlink" title="自动装箱与拆箱"></a>自动装箱与拆箱</h3><blockquote>
+<p>频繁自动拆装箱也会影响性能，尽量避免不必要的操作</p>
+</blockquote>
+<ul>
+<li><strong>装箱（Boxing）</strong>：将基本类型用它们对应的引用类型包装起来，如自动调用<code>Integer.valueOf(10)</code>；</li>
+<li><strong>拆箱（Unboxing）</strong>：将包装类型转换为基本数据类型，如自动调用<code>obj.intValue()</code>；</li>
+</ul>
+<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><blockquote>
+<p>抽象出对象，然后用对象执行方法的方式解决问题</p>
+</blockquote>
+<h4 id="三大特征"><a href="#三大特征" class="headerlink" title="三大特征"></a>三大特征</h4><ul>
+<li><p><strong>封装</strong>：封装是指把一个<strong>对象的状态信息隐藏在对象内部</strong>，隐藏内部实现，只暴露必要接口。</p>
+<ul>
+<li>优点：降低耦合、保护数据、方便修改内部实现而不影响外部调用。</li>
+</ul>
+</li>
+<li><p><strong>继承</strong>：子类复用父类的属性和方法。</p>
+<ul>
+<li>优点：减少重复代码，提高代码复用性，也便于扩展已有功能</li>
+</ul>
+</li>
+<li><p><strong>多态</strong>：同一个父类&#x2F;接口引用，可以指向不同子类对象，调用时执行各自实现。</p>
+<ul>
+<li>优点：提高程序的扩展性和灵活性，新增实现时通常不需要修改原有调用代码</li>
+</ul>
+</li>
+</ul>
+<h3 id="接口和抽象类的共同点与区别"><a href="#接口和抽象类的共同点与区别" class="headerlink" title="接口和抽象类的共同点与区别"></a>接口和抽象类的共同点与区别</h3><p><strong>共同点</strong>：不能直接实例化；都可以定义抽象方法，由子类&#x2F;实现类完成具体实现；都用于抽象公共行为，支持多态。</p>
+<p><strong>不同点</strong>：</p>
+<ul>
+<li>接口主要用于对类的行为进行约束；抽象类主要用于代码复用</li>
+<li>一个类只能继承一个类，但可以实现多个接口</li>
+<li>接口中的成员变量只能是 <code>public static final</code> 类型的，抽象类的成员变量可以有任何修饰符</li>
+</ul>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><blockquote>
+<p>所有类的父类</p>
+</blockquote>
+<p>提供了以下方法：</p>
+<ul>
+<li><code>public final Class&lt;?&gt; getClass()</code>：用于返回当前运行时对象的 Class 对象</li>
+<li><code>public native int hashCode()</code>：用于返回对象的哈希码</li>
+<li><code>public boolean equals(Object obj)</code>：用于比较 2 个引用是否指向同一个对象</li>
+<li><code>protected native Object clone()</code>：用于创建并返回当前对象的一份拷贝</li>
+<li><code>public String toString()</code>：返回类的名字实例的哈希码的 16 进制的字符串</li>
+<li><code>public final native void notify()</code>：唤醒一个在此对象监视器上等待的线程</li>
+<li><code>public final native void notifyAll()</code>：会唤醒在此对象监视器上等待的所有线程</li>
+<li><code>public final native void wait(long timeout)</code>：暂停线程的执行并且释放锁</li>
+<li><code>public final void wait()</code>：无超时时间的等待</li>
+</ul>
+<p><strong>为什么重写 equals() 时必须重写 hashCode() 方法？</strong>：如果 <code>equals</code> 方法判断两个对象是相等的，那这两个对象的 <code>hashCode</code> 值也要相等</p>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p><img src="/img/else_img/%E9%9B%86%E5%90%88%E5%85%B3%E7%B3%BB%E5%9B%BE.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><blockquote>
 <p>动态数组</p>
 </blockquote>
-<h5 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h5><ul>
+<h4 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h4><ul>
 <li><code>List</code> : 表明它是一个列表，支持添加、删除、查找等操作，并且可以通过下标进行访问。</li>
 <li><code>RandomAccess</code>：这是一个标志接口，表明实现这个接口的 <code>List</code> 集合是支持 <strong>快速随机访问</strong> 的。在 <code>ArrayList</code> 中，我们就可以通过元素的序号快速获取元素对象，这就是快速随机访问。</li>
 <li><code>Cloneable</code>：表明它具有拷贝能力，可以进行深拷贝或浅拷贝操作。</li>
 <li><code>Serializable</code> : 表明它可以进行序列化操作，也就是可以将对象转换为字节流进行持久化存储或网络传输，非常方便。</li>
 </ul>
-<h5 id="主要成员变量"><a href="#主要成员变量" class="headerlink" title="主要成员变量"></a>主要成员变量</h5><ul>
+<h4 id="主要成员变量"><a href="#主要成员变量" class="headerlink" title="主要成员变量"></a>主要成员变量</h4><ul>
 <li><code>Object[] elementData</code>：存放元素</li>
 <li><code>int size</code>：所包含元素个数</li>
 <li><code>static final int DEFAULT_CAPACITY</code>：默认初始容量</li>
 <li><code>static final Object[] EMPTY_ELEMENTDATA</code>：用于空实例的共享空数组实例</li>
 <li><code>static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA</code></li>
 </ul>
-<h5 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h5><blockquote>
+<h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><blockquote>
 <p>第一次扩容容量为Math.max(10, 插入的元素数量)，之后扩容都是之前容量的1.5倍</p>
 </blockquote>
 <p><strong>java8</strong>：</p>
@@ -335,7 +469,7 @@
 <p><strong>java11</strong>：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 容量检查</span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">grow</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 实际扩容</span><br></code></pre></td></tr></table></figure>
 
-<h5 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h5><p>当在使用迭代器时有其它线程修改数组时有两种<strong>策略</strong>：</p>
+<h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><p>当在使用迭代器时有其它线程修改数组时有两种<strong>策略</strong>：</p>
 <ol>
 <li><strong>fail-fast</strong>：在使用迭代器的线程立即报错</li>
 <li><strong>fail-safe</strong>：发现有人修改了则采取一些对策，例如牺牲一些一致性来让整个遍历完成</li>
@@ -345,13 +479,13 @@
 <blockquote>
 <p>ArrayList使用的第一种策略，CopyOnWriteArrayList是第二种策略（对策是添加把原集合复制出来，在新集合上进行修改，修改好后指向新集合。创建迭代器时会指向当前集合，遍历的是旧集合不影响（读写分离））；</p>
 </blockquote>
-<h5 id="数组和List之间的转换"><a href="#数组和List之间的转换" class="headerlink" title="数组和List之间的转换"></a>数组和List之间的转换</h5><p>数组转List（浅拷贝）</p>
+<h4 id="数组和List之间的转换"><a href="#数组和List之间的转换" class="headerlink" title="数组和List之间的转换"></a>数组和List之间的转换</h4><p>数组转List（浅拷贝）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; list = Arrays.asList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>&#125;);<br></code></pre></td></tr></table></figure>
 
 <p>List转数组（深拷贝）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><br>list.add(<span class="hljs-string">&quot;a&quot;</span>); <br>list.add(<span class="hljs-string">&quot;b&quot;</span>);<br><br>String[] strs = list.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[list.size()]);<br></code></pre></td></tr></table></figure>
 
-<h4 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h4><h5 id="与ArrayList的比较"><a href="#与ArrayList的比较" class="headerlink" title="与ArrayList的比较"></a>与ArrayList的比较</h5><ul>
+<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><h4 id="与ArrayList的比较"><a href="#与ArrayList的比较" class="headerlink" title="与ArrayList的比较"></a>与ArrayList的比较</h4><ul>
 <li><p><strong>底层数据结构</strong></p>
 <p><code>ArrayList</code>基于<strong>Object数组</strong>，需要连续内存</p>
 <p><code>LinkedList</code>基于<strong>双向链表</strong>，无需连续内存</p>
@@ -371,7 +505,7 @@
 <p>包装一下，变成线程安全的</p>
 </li>
 </ul>
-<h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><ul>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><ul>
 <li><p><strong>链表过长时的解决方法</strong></p>
 <p><img src="/img/else_img/hashMap.png" srcset="/img/loading.gif" lazyload alt="桶数组是用来存储数据元素，链表是用来解决冲突，红黑树是为了提高查询的效率"></p>
 <ol>

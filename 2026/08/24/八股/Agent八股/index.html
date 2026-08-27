@@ -16,24 +16,24 @@
   <meta name="author" content="xw">
   <meta name="keywords" content="">
   
-    <meta name="description" content="多线程基础进程和线程进程：当一个程序被运行，从磁盘加载代码到内存，此时就开启了一个进程 线程：一个进程可以分为多个线程 比较：  进程是正在运行的实例，进程包含线程，每个线程执行不同的任务 不同的进程使用不同的内存空间，一个进程的线程共享内存空间 线程上下文切换代价更低  并发和并行并发：一个cpu同时处理多个线程 并行：多个线程同时执行 :star:创建线程的方式 继承Thread类，重写run">
+    <meta name="description" content="LLM上下文窗口 一次调用能够容纳的 Token 上限  上下文的组成部分：    组成部分 包含内容    系统级指令 平台规则、安全规则、模型行为边界等。通常由平台注入，用户不一定可见   开发者指令 应用设定的角色、任务要求、输出格式、处理流程、风格等   工具定义 可调用工具的名称、用途、参数说明、JSON Schema，以及工具选择约束   历史对话 之前的用户消息、助手回答，以及保留下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="多线程八股">
-<meta property="og:url" content="http://xwww12.github.io/2026/07/30/%E5%85%AB%E8%82%A1/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%AB%E8%82%A1/index.html">
+<meta property="og:title" content="Agent八股">
+<meta property="og:url" content="http://xwww12.github.io/2026/08/24/%E5%85%AB%E8%82%A1/Agent%E5%85%AB%E8%82%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="多线程基础进程和线程进程：当一个程序被运行，从磁盘加载代码到内存，此时就开启了一个进程 线程：一个进程可以分为多个线程 比较：  进程是正在运行的实例，进程包含线程，每个线程执行不同的任务 不同的进程使用不同的内存空间，一个进程的线程共享内存空间 线程上下文切换代价更低  并发和并行并发：一个cpu同时处理多个线程 并行：多个线程同时执行 :star:创建线程的方式 继承Thread类，重写run">
+<meta property="og:description" content="LLM上下文窗口 一次调用能够容纳的 Token 上限  上下文的组成部分：    组成部分 包含内容    系统级指令 平台规则、安全规则、模型行为边界等。通常由平台注入，用户不一定可见   开发者指令 应用设定的角色、任务要求、输出格式、处理流程、风格等   工具定义 可调用工具的名称、用途、参数说明、JSON Schema，以及工具选择约束   历史对话 之前的用户消息、助手回答，以及保留下">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/JMM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
-<meta property="article:published_time" content="2026-07-30T02:34:03.611Z">
-<meta property="article:modified_time" content="2026-07-30T02:40:45.161Z">
+<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/RAG%E5%B7%A5%E7%A8%8B%E9%93%BE%E8%B7%AF.png">
+<meta property="article:published_time" content="2026-08-24T00:51:34.749Z">
+<meta property="article:modified_time" content="2026-08-24T08:25:25.194Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xwww12.github.io/img/else_img/JMM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
+<meta name="twitter:image" content="http://xwww12.github.io/img/ai_agent_img/RAG%E5%B7%A5%E7%A8%8B%E9%93%BE%E8%B7%AF.png">
   
   
   
-  <title>多线程八股 - Hexo</title>
+  <title>Agent八股 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">多线程八股</span>
+            <span id="subtitle">Agent八股</span>
           
         </div>
 
@@ -215,8 +215,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-07-30 10:34" pubdate>
-          2026年7月30日 上午
+        <time datetime="2026-08-24 08:51" pubdate>
+          2026年8月24日 早上
         </time>
       </span>
     
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          947 字
+          851 字
         
       </span>
     
@@ -292,95 +292,115 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">多线程八股</h1>
+            <h1 id="seo-header">Agent八股</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="进程和线程"><a href="#进程和线程" class="headerlink" title="进程和线程"></a>进程和线程</h3><p>进程：当一个程序被运行，从磁盘加载代码到内存，此时就开启了一个进程</p>
-<p>线程：一个进程可以分为多个线程</p>
-<p><strong>比较</strong>：</p>
-<ol>
-<li>进程是正在运行的实例，进程包含线程，每个线程执行不同的任务</li>
-<li>不同的进程使用不同的内存空间，一个进程的线程共享内存空间</li>
-<li>线程上下文切换代价更低</li>
-</ol>
-<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h3><p>并发：一个cpu同时处理多个线程</p>
-<p>并行：多个线程同时执行</p>
-<h3 id="star-创建线程的方式"><a href="#star-创建线程的方式" class="headerlink" title=":star:创建线程的方式"></a>:star:创建线程的方式</h3><ul>
-<li>继承<strong>Thread</strong>类，重写run()，start()开启</li>
-<li>实现<strong>Runnable</strong>接口，重写run()，用Thread()包装，start()开启</li>
-<li>实现<strong>Callable</strong>接口，重写call()，用FutureTask()包装，再用Thread()包装，start()开启，get()获取返回值</li>
-<li><strong>线程池</strong>创建线程，将任务submit提交给线程池</li>
-</ul>
-<p>Runnable和Callable的区别：</p>
-<ul>
-<li>Runnable接口的run方法没有返回值，Callable接口call方法有返回值</li>
-<li>Callable接口的call方法允许抛出异常，Runnable的run只能catch</li>
-</ul>
-<h3 id="start-和run-的区别"><a href="#start-和run-的区别" class="headerlink" title="start()和run()的区别"></a>start()和run()的区别</h3><p>start()：启动线程，start方法只能调用一次</p>
-<p>run()：要被线程执行的代码</p>
-<h3 id="线程状态"><a href="#线程状态" class="headerlink" title="线程状态"></a>线程状态</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">State</span>&#123;<br>    <span class="hljs-comment">// 新建</span><br>    NEW,<br>    <br>    <span class="hljs-comment">// 就绪</span><br>    RUNNABLE,<br>    <br>    <span class="hljs-comment">// 阻塞</span><br>    BLOCKED,<br>    <br>    <span class="hljs-comment">// 等待</span><br>    WAITING,<br>    <br>    <span class="hljs-comment">// 有限时等待</span><br>    TIMED_WAITING,<br>    <br>    <span class="hljs-comment">// 终止</span><br>    TERMINATED;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>Thread.join()：等待线程执行完</p>
-<p>Object.wait()：放弃锁，在这个锁上等待</p>
-<p>Object.notify()：随机唤醒锁上等待的线程</p>
-<p>Object.notifyAll()：唤醒当前锁上的所有线程</p>
-<p>Thread.sleep()：抱着锁睡眠</p>
-<p>Thread.interrupt()：打断线程，被打断的线程如果在阻塞会抛异常；被打断线程没有阻塞，则自己通过interrupt变量判断是否要终止线程</p>
-<h2 id="并发安全"><a href="#并发安全" class="headerlink" title="并发安全"></a>并发安全</h2><h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p><strong>synchronized</strong></p>
-<blockquote>
-<p>互斥的对象锁，重量级锁，性能较低，一旦锁发生竞争都会升级为重量级锁</p>
+                <h1 id="LLM"><a href="#LLM" class="headerlink" title="LLM"></a>LLM</h1><h2 id="上下文窗口"><a href="#上下文窗口" class="headerlink" title="上下文窗口"></a>上下文窗口</h2><blockquote>
+<p>一次调用能够容纳的 Token 上限</p>
 </blockquote>
-<p><strong>原理</strong></p>
-<p>synchronized(lock)中的lock会与Monitor关联（对象的MarkWord指向Monitor）</p>
-<p>Monitor监视器：</p>
+<p>上下文的组成部分：</p>
+<table>
+<thead>
+<tr>
+<th>组成部分</th>
+<th>包含内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>系统级指令</td>
+<td>平台规则、安全规则、模型行为边界等。通常由平台注入，用户不一定可见</td>
+</tr>
+<tr>
+<td>开发者指令</td>
+<td>应用设定的角色、任务要求、输出格式、处理流程、风格等</td>
+</tr>
+<tr>
+<td>工具定义</td>
+<td>可调用工具的名称、用途、参数说明、JSON Schema，以及工具选择约束</td>
+</tr>
+<tr>
+<td>历史对话</td>
+<td>之前的用户消息、助手回答，以及保留下来的其他会话项目</td>
+</tr>
+<tr>
+<td>当前用户输入</td>
+<td>当前问题、附件、图片、文件以及结构化输入</td>
+</tr>
+<tr>
+<td>工具调用历史</td>
+<td>助手之前发起的函数调用、调用参数，以及工具返回的结果</td>
+</tr>
+<tr>
+<td>检索或外部资料</td>
+<td>RAG 检索片段、网页搜索结果、数据库记录、文件搜索结果等，但前提是应用把它们注入上下文</td>
+</tr>
+<tr>
+<td>压缩摘要或记忆</td>
+<td>长对话经过压缩后形成的摘要，以及应用主动取出的用户偏好或长期记忆</td>
+</tr>
+<tr>
+<td>推理状态项</td>
+<td>某些推理模型和 Responses API 工作流中，为保持多轮连续性而传递的 reasoning items；不等同于向用户公开完整思维过程</td>
+</tr>
+</tbody></table>
+<h1 id="Agent"><a href="#Agent" class="headerlink" title="Agent"></a>Agent</h1><h2 id="什么是Agent"><a href="#什么是Agent" class="headerlink" title="什么是Agent"></a>什么是Agent</h2><p>可以理解为一个能感知环境、做决策、执行动作的软件系统。和普通聊天机器人的差别在于：Agent 不只是回复消息，它<strong>会在动态环境里持续观察、判断、执行，直到任务结束</strong></p>
+<p><strong>Agent &#x3D; LLM + Planning + Memory + Tools</strong> </p>
 <ul>
-<li>WaitSet：在锁上wait的线程</li>
-<li>EntryList：等待锁的线程队列</li>
-<li>Owner：当前锁的持有者</li>
+<li><strong>Planning</strong>：LLM分析当前任务状态，拆目标，决定下一步怎么做</li>
+<li><strong>Tools</strong>：让LLM能操作外部世界，如查数据、调 API、读文件、执行代码</li>
+<li><strong>Agent Loop</strong>：不断循环让 LLM 推理、调用工具、把工具结果写回上下文，直到任务完成或触发停止条件</li>
 </ul>
-<p><strong>轻量级锁</strong>：通过CAS来获取锁；锁对象的MarkWord指向锁记录地址，原来MarkWord的内容放在持有锁线程中</p>
-<p><strong>偏向锁</strong>：只是在MarkWord中记录一下持有锁线程的id，锁重入时不需要cas</p>
-<h3 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h3><blockquote>
-<p>JMM（Java Memory Model），定义了<strong>共享内存</strong>和<strong>多线程程序</strong>读写操作的行为规范</p>
-</blockquote>
-<p><img src="/img/else_img/JMM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><blockquote>
-<p>Compare And Swap，体现乐观锁的思想，在无锁状态下保证线程操作数据的原子性</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 伪代码</span><br><span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>    <span class="hljs-type">int</span> 旧值A = 共享变量V;<br>    <span class="hljs-type">int</span> 新值B = 旧值A + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span> (compareAndSwap(旧值A, 新值B)) &#123;		<span class="hljs-comment">// 比较V的值是否和旧值A相同</span><br>        <span class="hljs-comment">// 成功，退出循环</span><br>    &#125;<br>&#125;<br><span class="hljs-comment">// cas失败则会重试一定次数(自旋)</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>特点</strong>：</p>
+<p><strong>设计思想</strong>：</p>
 <ul>
-<li>没有加锁，线程不会阻塞，效率较高</li>
-<li>若竞争激烈，重试频繁，效率会受影响</li>
+<li><strong>ReAct</strong>：Reasoning + Acting。模型先推理一步，拿到外部环境反馈，再推理下一步，交替进行<ul>
+<li>优点：减少幻觉，复杂任务成功率高</li>
+<li>缺点：多轮迭代增加延迟，效果依赖Tools和Skills质量</li>
 </ul>
-<p><strong>底层</strong>：</p>
-<p>​	依赖于Unsafe类来直接调用操作系统的CAS指令</p>
-<p><strong>使用场景</strong>：</p>
-<ul>
-<li>ReentrantLock、AtomicXXX类等</li>
+</li>
+<li><strong>Plan-and-Execute</strong>：先让 LLM 制定全局分步计划，再由执行器按步骤完成<ul>
+<li>优点：适合步骤多、依赖关系明确的长期任务，不容易在长任务中迷路</li>
+<li>缺点：动态调整会弱一些</li>
 </ul>
-<h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><blockquote>
-<p>关键字，被修饰的变量可以保证<strong>可见性</strong>和防止<strong>指令重排序</strong></p>
+</li>
+</ul>
+<h2 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h2><table>
+<thead>
+<tr>
+<th>功能类型</th>
+<th>核心问题</th>
+<th>存储内容</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事实记忆</td>
+<td>智能体知道什么</td>
+<td>用户偏好、环境状态、显式事实</td>
+<td>记住用户的技术栈偏好</td>
+</tr>
+<tr>
+<td>经验记忆</td>
+<td>智能体如何改进</td>
+<td>过往轨迹、成败教训、策略知识</td>
+<td>从失败的代码审查中学习</td>
+</tr>
+<tr>
+<td>工作记忆</td>
+<td>智能体当前思考什么</td>
+<td>当前推理上下文、任务进展</td>
+<td>多步推理中的中间状态</td>
+</tr>
+</tbody></table>
+<h2 id="Skills"><a href="#Skills" class="headerlink" title="Skills"></a>Skills</h2><blockquote>
+<p>把某类任务的经验、约束和执行顺序沉淀下来，让 Agent 在需要时再读</p>
 </blockquote>
-<p><strong>共享变量不可见的情况</strong>：由于一个变量需要读很多次，而每次都读到的同一个值，JIT编译器就会做优化</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">boolean</span> <span class="hljs-variable">stop</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;<br><span class="hljs-keyword">while</span>(!stop) &#123;		<span class="hljs-comment">// 这里!stop就可能被优化成true</span><br>    i++;<br>&#125;<br><br><span class="hljs-comment">// 通过 volatile boolean stop 可以不被优化</span><br></code></pre></td></tr></table></figure>
-
-<p><strong>指令重排序的情况</strong>：编译器优化代码顺序</p>
-<p>volatile通过向上的写屏障和向下的读屏障来防止指令重排</p>
-<h3 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h3><blockquote>
-<p>Abstract Queue Synchronized，抽象队列同步器</p>
+<h1 id="RAG"><a href="#RAG" class="headerlink" title="RAG"></a>RAG</h1><blockquote>
+<p><strong>Retrieval-Augmented Generation，检索增强生成</strong>，系统<strong>先从知识库里检索出和当前问题相关的片段</strong>，知识库可以是数据库、文档集合，也可以是企业内部系统。然后<strong>把这些片段和原始问题一起喂给 LLM</strong>，让模型基于检索内容回答，而不是只靠训练时记住的知识</p>
 </blockquote>
-<p><strong>原理</strong>：通过state变量表示锁是否被占用(0 无锁，1 有锁)，线程通过CAS操作来进行修改，没抢到锁的去FIFO队列等待</p>
-<p><strong>AQS常见的实现类</strong></p>
-<ul>
-<li>ReentrantLock 可重入锁</li>
-<li>Semaphore 信号量</li>
-<li>CountDownLatch 倒计时锁</li>
-</ul>
-<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2>
+<p><img src="/img/ai_agent_img/RAG%E5%B7%A5%E7%A8%8B%E9%93%BE%E8%B7%AF.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="AI编程"><a href="#AI编程" class="headerlink" title="AI编程"></a>AI编程</h1>
                 
               </div>
             
@@ -432,8 +452,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>多线程八股</div>
-      <div>http://xwww12.github.io/2026/07/30/八股/多线程八股/</div>
+      <div>Agent八股</div>
+      <div>http://xwww12.github.io/2026/08/24/八股/Agent八股/</div>
     </div>
     <div class="license-meta">
       
@@ -445,7 +465,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年7月30日</div>
+          <div>2026年8月24日</div>
         </div>
       
       
@@ -477,18 +497,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/08/24/%E5%85%AB%E8%82%A1/Agent%E5%85%AB%E8%82%A1/" title="Agent八股">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Agent八股</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/07/30/%E5%85%AB%E8%82%A1/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%85%AB%E8%82%A1/" title="消息中间件八股">
-                        <span class="hidden-mobile">消息中间件八股</span>
+                      <a href="/2026/07/30/%E5%85%AB%E8%82%A1/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%AB%E8%82%A1/" title="多线程八股">
+                        <span class="hidden-mobile">多线程八股</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
