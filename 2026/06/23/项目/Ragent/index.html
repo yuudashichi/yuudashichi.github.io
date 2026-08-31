@@ -24,7 +24,7 @@
 <meta property="og:description" content="基础基本概念 大模型的参数：   指神经网络中的权重（Weight）和偏置（Bias）的总数量。   参数数量和能力不是线性关系，存在边际效应。   参数不是越多越好，越多推理成本也越高。  Token：是模型内部的最小处理单元，模型通过分词器（Tokenizer）把文本切碎后的小片段。  上下文窗口：指模型单次能处理的最大 Token 总数  Temperature：控制输出的随机性与发散度">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-23T07:07:44.713Z">
-<meta property="article:modified_time" content="2026-08-27T09:19:22.936Z">
+<meta property="article:modified_time" content="2026-08-28T08:32:40.406Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -1674,6 +1674,26 @@
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">RerankClient</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 获取Rerank服务提供商名称</span><br><span class="hljs-comment">     */</span><br>    String <span class="hljs-title function_">provider</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 对检索到的文档片段进行重新排序</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> query      用户查询文本</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> candidates 待排序的候选文档片段列表</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> topN       返回前N个最相关的结果</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> target     目标模型配置信息</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 重新排序后的文档片段列表，按相关性从高到低排序</span><br><span class="hljs-comment">     */</span><br>    List&lt;RetrievedChunk&gt; <span class="hljs-title function_">rerank</span><span class="hljs-params">(String query, List&lt;RetrievedChunk&gt; candidates, <span class="hljs-type">int</span> topN, ModelTarget target)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+
+
+<h2 id="流式对话流水线八阶段"><a href="#流式对话流水线八阶段" class="headerlink" title="流式对话流水线八阶段"></a>流式对话流水线八阶段</h2><blockquote>
+<p>在将用户提问发给LLM之前的操作</p>
+</blockquote>
+<ol start="0">
+<li><strong>防护</strong><ol>
+<li>幂等拦截</li>
+<li>限流拦截</li>
+</ol>
+</li>
+<li><strong>加载会话记忆</strong></li>
+<li><strong>查询改写与子问题拆分</strong></li>
+<li><strong>意图识别</strong></li>
+<li><strong>歧义引导</strong></li>
+<li><strong>系统直答</strong></li>
+<li><strong>多通道检索</strong></li>
+<li><strong>空结果兜底</strong></li>
+<li><strong>组装Prompt、流式生成</strong></li>
+</ol>
 
                 
               </div>

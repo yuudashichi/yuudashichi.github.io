@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.316Z">
-<meta property="article:modified_time" content="2026-08-27T06:26:42.749Z">
+<meta property="article:modified_time" content="2026-08-30T12:03:05.462Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.5k 字
+          10k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
         
-          72 分钟
+          86 分钟
         
       </span>
     
@@ -443,33 +443,213 @@
 <li><code>public final void wait()</code>：无超时时间的等待</li>
 </ul>
 <p><strong>为什么重写 equals() 时必须重写 hashCode() 方法？</strong>：如果 <code>equals</code> 方法判断两个对象是相等的，那这两个对象的 <code>hashCode</code> 值也要相等</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p><strong>分类</strong>：</p>
+<blockquote>
+<p>都继承自 java.lang.Throwable</p>
+</blockquote>
+<ul>
+<li><strong>Exception</strong>：程序可以处理的异常，又可分为<ul>
+<li><strong>检查异常</strong>（必须处理），如：IOException、ClassNotFoundException、SQLException</li>
+<li><strong>非检查异常</strong>（可以不处理），如：IndexOutOfBoundsException、NullPointerException</li>
+</ul>
+</li>
+<li><strong>Error</strong>： JVM 或系统层面的严重错误，通常程序无法正常恢复。如：OutOfMemoryError、StackOverflowError</li>
+</ul>
+<p><strong><code>finally</code>中的代码一定会被执行吗？</strong>不一定，在如下情况不会执行：</p>
+<ul>
+<li>JVM 被直接终止，比如 <code>System.exit(0)</code></li>
+<li>JVM 崩溃</li>
+<li>进程被操作系统强制杀死，比如 <code>kill -9</code></li>
+<li>所在线程永远阻塞&#x2F;死循环，始终走不到 <code>finally</code></li>
+</ul>
+<h3 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h3><blockquote>
+<p>编译器可以对泛型参数进行检测，并且通过泛型参数可以指定传入的对象类型</p>
+</blockquote>
+<p>泛型类型：</p>
+<ul>
+<li><p><strong>泛型类</strong>：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Generic</span>&lt;T&gt;&#123;<br><br>    <span class="hljs-keyword">private</span> T key;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Generic</span><span class="hljs-params">(T key)</span> &#123;<br>        <span class="hljs-built_in">this</span>.key = key;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> T <span class="hljs-title function_">getKey</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> key;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>泛型接口</strong></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Generator</span>&lt;T&gt; &#123;<br>    <span class="hljs-keyword">public</span> T <span class="hljs-title function_">method</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>泛型方法</strong></p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt; E &gt; <span class="hljs-keyword">void</span> <span class="hljs-title function_">printArray</span><span class="hljs-params">( E[] inputArray )</span><br>&#123;<br>     <span class="hljs-keyword">for</span> ( E element : inputArray )&#123;<br>        System.out.printf( <span class="hljs-string">&quot;%s &quot;</span>, element );<br>     &#125;<br>     System.out.println();<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><blockquote>
+<p>需要持久化Java对象，或网络传输Java对象时，都需要用到序列化</p>
+</blockquote>
+<p><strong>序列化</strong>：将内存中的<strong>对象</strong>（不是类）或数据结构的信息转换为一种可存储、可传输、可重建的表示形式</p>
+<p><strong>反序列化</strong>：将在序列化过程中所生成的数据转换为原始数据结构或者对象</p>
+<p><strong>常用的序列化协议</strong>：</p>
+<ol>
+<li><p><strong>JDK自带序列化方式</strong>：实现<code>Serializable</code>接口。</p>
+<blockquote>
+<p><strong>不推荐使用</strong>。反序列化不可信数据可能导致反序列化漏洞；性能差；和代码强耦合，需要关注<code>serialVersionUID</code>防止类结构变化产生的兼容性问题</p>
+</blockquote>
+</li>
+<li><p><strong>Protobuf</strong>：出自Google，支持多语言，跨平台</p>
+</li>
+<li><p><strong>JSON</strong>：通用性和可读性好，性能不如二进制序列化</p>
+</li>
+</ol>
+<h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><blockquote>
+<p>通过反射可以<strong>在程序运行时获取类的字段、方法、构造器等信息</strong>，并在访问控制和模块边界允许的情况下进行调用或读写</p>
+</blockquote>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li><p><strong>框架底层实现</strong>：Spring、MyBatis、Jackson 等都会大量使用反射。比如 Spring 根据类上的 <code>@Component</code>、<code>@Autowired</code> 等注解，动态创建对象、注入属性、调用方法</p>
+</li>
+<li><p><strong>动态创建对象</strong>：在程序运行时才决定创建哪个类</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">Class&lt;?&gt; clazz = Class.forName(<span class="hljs-string">&quot;com.example.User&quot;</span>);<br><span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> clazz.getDeclaredConstructor().newInstance();<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>动态调用方法</strong>：运行时才确定调用哪个方法</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Method</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> clazz.getMethod(<span class="hljs-string">&quot;test&quot;</span>);<br>method.invoke(obj);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>读取和修改字段</strong>：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Field</span> <span class="hljs-variable">field</span> <span class="hljs-operator">=</span> clazz.getDeclaredField(<span class="hljs-string">&quot;name&quot;</span>);<br>field.setAccessible(<span class="hljs-literal">true</span>);<br>field.set(obj, <span class="hljs-string">&quot;Tom&quot;</span>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>读取注解</strong>：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (clazz.isAnnotationPresent(MyAnnotation.class)) &#123;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<li><strong>优点</strong>：运行时动态获取类信息，让代码更加灵活</li>
+<li><strong>缺点</strong>：性能相对低；可读性差；编译期检查能力变弱</li>
+</ul>
+<h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><blockquote>
+<p>用代理对象来代替对真实对象的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能</p>
+</blockquote>
+<h3 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h3><blockquote>
+<p>对目标对象的每个方法的增强都是手动完成的</p>
+</blockquote>
+<p><strong>静态代理实现步骤</strong>：</p>
+<ol>
+<li>定义接口及其实现类</li>
+<li>创建代理对象并实现相同接口</li>
+<li>将目标对象注入进代理类，然后在代理类的对应方法调用目标类中的对应方法，并在方法前后加上增强逻辑</li>
+</ol>
+<p><strong>局限</strong>：不灵活，接口一旦新增方法，目标类和代理类都需要修改</p>
+<h3 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h3><blockquote>
+<p>不需要针对每个目标类都单独创建一个代理类，并且也不需要我们必须实现接口，可以直接代理实现类；</p>
+<p>JVM角度看，是在运行时动态生成类字节码，并加载到JVM中</p>
+</blockquote>
+<p><strong>JDK动态代理</strong></p>
+<blockquote>
+<p>基于接口，在运行时生成一个实现了指定接口的代理类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Proxy类中的方法，用来生成并返回代理对象</span><br><span class="hljs-comment">// 要实现动态代理的话，还必须需要实现 InvocationHandler 来自定义处理逻辑</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Object <span class="hljs-title function_">newProxyInstance</span><span class="hljs-params">(ClassLoader loader,		// 用于加载代理对象</span><br><span class="hljs-params">                                      Class&lt;?&gt;[] interfaces,	// 被代理类实现的接口</span><br><span class="hljs-params">                                      InvocationHandler h 		// 实现了 InvocationHandler 接口的对象</span><br><span class="hljs-params"> )</span> <span class="hljs-keyword">throws</span> IllegalArgumentException &#123;<br>    ......<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 当动态代理对象调用方法时，方法的调用会被转发到实现了InvocationHandler接口类的invoke方法</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">InvocationHandler</span> &#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 当你使用代理对象调用方法的时候实际会调用到这个方法</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span><br>        <span class="hljs-keyword">throws</span> Throwable;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>CGLIB动态代理</strong></p>
+<blockquote>
+<p><code>CGLIB</code>(<em>Code Generation Library</em>)是一个基于<code>ASM</code>的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成；</p>
+<p>在运行时动态生成目标类的子类作为代理类</p>
+</blockquote>
+<p><strong>使用步骤</strong>：</p>
+<ol>
+<li>导入<code>CGLIB</code>依赖</li>
+<li>定义被代理类</li>
+<li>自定义 <code>MethodInterceptor</code> 并重写 <code>intercept</code> 方法，<code>intercept</code> 用于拦截增强被代理类的方法</li>
+<li>通过 <code>Enhancer</code> 类的 <code>create()</code> 创建代理类</li>
+</ol>
+<h3 id="两种代理方式比较"><a href="#两种代理方式比较" class="headerlink" title="两种代理方式比较"></a>两种代理方式比较</h3><table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>静态代理 (Static Proxy)</th>
+<th>动态代理 (Dynamic Proxy)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>代理关系确定时机</td>
+<td>编译期（编译后生成固定的 <code>.class</code> 字节码文件）</td>
+<td>运行时（动态生成代理类字节码并加载到 JVM）</td>
+</tr>
+<tr>
+<td>实现方式</td>
+<td>在编译前手动编写代理类，常通过组合和委托调用目标对象</td>
+<td>无需手动编写具体代理类，通过 <code>Handler</code>&#x2F;<code>Interceptor</code> 封装增强逻辑</td>
+</tr>
+<tr>
+<td>接口依赖</td>
+<td>不是必须；基于接口的静态代理通常让代理类与目标类遵循同一接口</td>
+<td>JDK 动态代理面向接口，CGLIB 等子类代理面向可继承的实现类</td>
+</tr>
+<tr>
+<td>代码量与维护性</td>
+<td>代码量大（目标类越多，代理类越多），维护成本高；接口新增方法时，目标类与代理类需同步修改</td>
+<td>代码量极少（通用增强逻辑可复用），维护性好；与接口解耦，接口变更不影响代理逻辑</td>
+</tr>
+<tr>
+<td>核心优势</td>
+<td>实现简单、逻辑直观，无额外框架依赖</td>
+<td>灵活性强、复用性高，降低重复编码，适配复杂场景</td>
+</tr>
+<tr>
+<td>典型应用场景</td>
+<td>简单的装饰器模式、少量固定类的增强需求</td>
+<td>Spring AOP、RPC 框架（如 Dubbo）、ORM 框架</td>
+</tr>
+</tbody></table>
+<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><h3 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h3><ul>
+<li><strong>InputStream</strong>：用于从数据源源读取数据（<strong>字节</strong>信息）到内存中</li>
+<li><strong>OutputStream</strong>：用于将数据（字节信息）写入到目的地</li>
+</ul>
+<h3 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a>字符流</h3><blockquote>
+<p>提供了一个直接操作字符的接口，方便我们平时对字符进行流操作，需要通过 <code>Charset</code> 指定编码</p>
+</blockquote>
+<ul>
+<li><strong>Reader</strong>：用于从数据源头读取数据（<strong>字符</strong>信息）到内存中</li>
+<li><strong>Wirter</strong>：用于将数据（字符信息）写入到目的地</li>
+</ul>
+<h3 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h3><blockquote>
+<p>IO 操作是很消耗性能的，缓冲流将数据加载至缓冲区，一次性读取&#x2F;写入多个字节，<strong>减少实际的IO操作次数</strong>，提高流的传输效率；</p>
+<p>采用了<strong>装饰器</strong>模式来增强输入输出流</p>
+</blockquote>
+<ul>
+<li><p><strong>InputStream</strong>：从数据源读取数据（字节信息）到内存的过程中不会一个字节一个字节的读取，而是会先将读取到的字节存放在缓存区，并从内部缓冲区中单独读取字节</p>
+</li>
+<li><p><strong>OutputStream</strong>：将数据（字节信息）写入到目的地的过程中不会一个字节一个字节的写入，而是会先将要写入的字节存放在缓存区，并从内部缓冲区中单独写入字节</p>
+</li>
+<li><p><strong>BufferedReader</strong></p>
+</li>
+<li><p><strong>BufferedWriter</strong></p>
+</li>
+</ul>
 <h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p><img src="/img/else_img/%E9%9B%86%E5%90%88%E5%85%B3%E7%B3%BB%E5%9B%BE.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><blockquote>
-<p>动态数组</p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><h4 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h4><blockquote>
+<p>底层是Object数组，容量可以动态增长，线程不安全</p>
 </blockquote>
-<h4 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h4><ul>
-<li><code>List</code> : 表明它是一个列表，支持添加、删除、查找等操作，并且可以通过下标进行访问。</li>
-<li><code>RandomAccess</code>：这是一个标志接口，表明实现这个接口的 <code>List</code> 集合是支持 <strong>快速随机访问</strong> 的。在 <code>ArrayList</code> 中，我们就可以通过元素的序号快速获取元素对象，这就是快速随机访问。</li>
-<li><code>Cloneable</code>：表明它具有拷贝能力，可以进行深拷贝或浅拷贝操作。</li>
-<li><code>Serializable</code> : 表明它可以进行序列化操作，也就是可以将对象转换为字节流进行持久化存储或网络传输，非常方便。</li>
+<p><strong>继承的父类、实现的接口</strong></p>
+<ul>
+<li>**<code>AbstractList</code>**：提供了通用的<code>List</code>操作，减少子类重复代码</li>
+<li><strong><code>List&lt;E&gt;</code></strong> : 表明这是一个<strong>有序、可重复元素</strong>的集合</li>
+<li><strong><code>RandomAccess</code><strong>：这是一个标记接口，表明这个List</strong>支持高效的随机访问</strong></li>
+<li>**<code>Cloneable</code>**：这是一个标记接口，表明支持<code>clone()</code>创建一个副本</li>
+<li><strong><code>Serializable</code></strong> ：表明支持<strong>Java原生序列化</strong></li>
 </ul>
-<h4 id="主要成员变量"><a href="#主要成员变量" class="headerlink" title="主要成员变量"></a>主要成员变量</h4><ul>
-<li><code>Object[] elementData</code>：存放元素</li>
-<li><code>int size</code>：所包含元素个数</li>
-<li><code>static final int DEFAULT_CAPACITY</code>：默认初始容量</li>
-<li><code>static final Object[] EMPTY_ELEMENTDATA</code>：用于空实例的共享空数组实例</li>
-<li><code>static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA</code></li>
+<p><strong>主要成员变量</strong></p>
+<ul>
+<li>**<code>Object[] elementData</code>**：存储实际的元素</li>
+<li>**<code>int size</code>**：实际存放的元素个数</li>
+<li>**<code>static final int DEFAULT_CAPACITY</code>**：默认初始容量</li>
+<li>**<code>static final Object[] EMPTY_ELEMENTDATA</code>**：共享的容量为0的数组实例</li>
+<li>**<code>static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA</code>**：不指定初始容量，实例化对象时使用的空数组，首次添加元素的时候才分配容量</li>
 </ul>
-<h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><blockquote>
-<p>第一次扩容容量为Math.max(10, 插入的元素数量)，之后扩容都是之前容量的1.5倍</p>
+<p><strong>扩容机制</strong></p>
+<blockquote>
+<p>第一次添加元素时容量为<strong>Math.max(10, 插入的元素数量)<strong>；之后容量不足扩容为</strong>Math.max(之前容量的1.5倍, 至少需要的容量)</strong></p>
 </blockquote>
-<p><strong>java8</strong>：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">()</span></span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">ensureCapacityInternal</span><span class="hljs-params">()</span></span>	<span class="hljs-comment">// 计算添加元素后需要的容量</span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">ensureExplicitCapacity</span><span class="hljs-params">()</span></span>	<span class="hljs-comment">// 容量检查，判断是否需要扩容</span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">grow</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 实际扩容</span><br></code></pre></td></tr></table></figure>
+<p><strong>JDK8</strong>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">()</span></span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">ensureCapacityInternal</span><span class="hljs-params">()</span></span>	<span class="hljs-comment">// 计算添加元素至少需要多少容量</span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">ensureExplicitCapacity</span><span class="hljs-params">()</span></span>	<span class="hljs-comment">// 容量检查，判断是否需要扩容</span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">grow</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 调用 Arrays.copyOf() 实际扩容</span><br></code></pre></td></tr></table></figure>
 
-<p><strong>java11</strong>：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 容量检查</span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">grow</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 实际扩容</span><br></code></pre></td></tr></table></figure>
+<p>**JDK9+**：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">add</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 添加元素前检查容量是否足够</span><br>   ↓<br><span class="hljs-function"><span class="hljs-title">grow</span><span class="hljs-params">()</span></span>						<span class="hljs-comment">// 调用 Arrays.copyOf() 实际扩容</span><br></code></pre></td></tr></table></figure>
 
-<h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><p>当在使用迭代器时有其它线程修改数组时有两种<strong>策略</strong>：</p>
+<p><strong>迭代器</strong></p>
+<p>当在使用迭代器时有其它线程修改数组时有两种<strong>策略</strong>：</p>
 <ol>
 <li><strong>fail-fast</strong>：在使用迭代器的线程立即报错</li>
 <li><strong>fail-safe</strong>：发现有人修改了则采取一些对策，例如牺牲一些一致性来让整个遍历完成</li>
@@ -479,13 +659,14 @@
 <blockquote>
 <p>ArrayList使用的第一种策略，CopyOnWriteArrayList是第二种策略（对策是添加把原集合复制出来，在新集合上进行修改，修改好后指向新集合。创建迭代器时会指向当前集合，遍历的是旧集合不影响（读写分离））；</p>
 </blockquote>
-<h4 id="数组和List之间的转换"><a href="#数组和List之间的转换" class="headerlink" title="数组和List之间的转换"></a>数组和List之间的转换</h4><p>数组转List（浅拷贝）</p>
+<p><strong>数组和List之间的转换</strong></p>
+<p>数组转List（浅拷贝）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; list = Arrays.asList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>&#125;);<br></code></pre></td></tr></table></figure>
 
 <p>List转数组（深拷贝）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><br>list.add(<span class="hljs-string">&quot;a&quot;</span>); <br>list.add(<span class="hljs-string">&quot;b&quot;</span>);<br><br>String[] strs = list.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[list.size()]);<br></code></pre></td></tr></table></figure>
 
-<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><h4 id="与ArrayList的比较"><a href="#与ArrayList的比较" class="headerlink" title="与ArrayList的比较"></a>与ArrayList的比较</h4><ul>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h3><h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><h4 id="与ArrayList的比较"><a href="#与ArrayList的比较" class="headerlink" title="与ArrayList的比较"></a>与ArrayList的比较</h4><ul>
 <li><p><strong>底层数据结构</strong></p>
 <p><code>ArrayList</code>基于<strong>Object数组</strong>，需要连续内存</p>
 <p><code>LinkedList</code>基于<strong>双向链表</strong>，无需连续内存</p>
@@ -605,14 +786,6 @@
 </li>
 <li><p><strong>初始化时传入的容量不是2的倍数会怎样？</strong></p>
 <p>会向上寻找离得最近的2的倍数</p>
-</li>
-</ul>
-<h3 id="hashCode和equals"><a href="#hashCode和equals" class="headerlink" title="hashCode和equals"></a>hashCode和equals</h3><p><strong>为什么重写 equals 时必须 重写hashCode 方法？</strong></p>
-<p>hashCode() 的作⽤是获取哈希码，也称为散列码，主要在哈希表这类集合映射的时候用到</p>
-<ul>
-<li><p>如果两个对象相等，则 hashcode ⼀定也是相同的</p>
-</li>
-<li><p>如果两个对象有相同的 hashcode 值，它们也不⼀定是相等的</p>
 </li>
 </ul>
 <h3 id="Java的IO模型"><a href="#Java的IO模型" class="headerlink" title="Java的IO模型"></a>Java的IO模型</h3><h4 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h4><blockquote>
