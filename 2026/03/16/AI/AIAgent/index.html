@@ -19,23 +19,23 @@
     <meta name="description" content="hello-agents教程 概念 什么是AI Agent  AI Agent是能够让大语言模型（LLMs）执行操作的系统，通过为 LLMs 提供工具和知识来扩展其功能。    Agent 的任务环境  性能度量（Performance）：在预算和时间内，最大化用户满意度与合理性 环境（Environment）：能调用的工具、其他Agent 执行器（Actuators）：调用函数，展示结果 传感器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="AIAgent">
-<meta property="og:url" content="http://xwww12.github.io/2026/03/16/AI/AIAgent/index.html">
+<meta property="og:url" content="https://yuudashichi.github.io/2026/03/16/AI/AIAgent/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="hello-agents教程 概念 什么是AI Agent  AI Agent是能够让大语言模型（LLMs）执行操作的系统，通过为 LLMs 提供工具和知识来扩展其功能。    Agent 的任务环境  性能度量（Performance）：在预算和时间内，最大化用户满意度与合理性 环境（Environment）：能调用的工具、其他Agent 执行器（Actuators）：调用函数，展示结果 传感器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/%E4%BB%80%E4%B9%88%E6%98%AFaiAgent.png">
-<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/%E4%BD%99%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6.png">
-<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/Transformer%E6%9E%B6%E6%9E%84.png">
-<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/Temperature%E5%AF%B9Softmax%E7%9A%84%E5%BD%B1%E5%93%8D.png">
-<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/ReAct.png">
-<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/PlanAndSolve.png">
-<meta property="og:image" content="http://xwww12.github.io/img/ai_agent_img/Dify%E6%B5%8B%E8%AF%95%E4%BD%BF%E7%94%A8.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/ai_agent_img/%E4%BB%80%E4%B9%88%E6%98%AFaiAgent.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/ai_agent_img/%E4%BD%99%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/ai_agent_img/Transformer%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/ai_agent_img/Temperature%E5%AF%B9Softmax%E7%9A%84%E5%BD%B1%E5%93%8D.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/ai_agent_img/ReAct.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/ai_agent_img/PlanAndSolve.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/ai_agent_img/Dify%E6%B5%8B%E8%AF%95%E4%BD%BF%E7%94%A8.png">
 <meta property="article:published_time" content="2026-03-16T11:38:27.749Z">
-<meta property="article:modified_time" content="2026-05-04T13:37:03.888Z">
+<meta property="article:modified_time" content="2026-09-03T07:39:38.058Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xwww12.github.io/img/ai_agent_img/%E4%BB%80%E4%B9%88%E6%98%AFaiAgent.png">
+<meta name="twitter:image" content="https://yuudashichi.github.io/img/ai_agent_img/%E4%BB%80%E4%B9%88%E6%98%AFaiAgent.png">
   
   
   
@@ -77,7 +77,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"xwww12.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yuudashichi.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -439,7 +439,7 @@
 </blockquote>
 </li>
 </ul>
-<h2 id="Agent架构"><a href="#Agent架构" class="headerlink" title="Agent架构"></a>Agent架构</h2><p><a target="_blank" rel="noopener" href="https://github.com/Xwww12/learn_agent">https://github.com/Xwww12/learn_agent</a></p>
+<h2 id="Agent架构"><a href="#Agent架构" class="headerlink" title="Agent架构"></a>Agent架构</h2><p><a target="_blank" rel="noopener" href="https://github.com/yuudashichi/learn_agent">https://github.com/yuudashichi/learn_agent</a></p>
 <h3 id="ReAct-Reasoning-and-Acting"><a href="#ReAct-Reasoning-and-Acting" class="headerlink" title="ReAct (Reasoning and Acting)"></a>ReAct (Reasoning and Acting)</h3><p> 一种将<strong>思考</strong>和<strong>行动</strong>紧密结合的范式，让智能体边想边做，动态调整。</p>
 <p>每次输出都执行三个流程：</p>
 <ul>
@@ -733,7 +733,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>AIAgent</div>
-      <div>http://xwww12.github.io/2026/03/16/AI/AIAgent/</div>
+      <div>https://yuudashichi.github.io/2026/03/16/AI/AIAgent/</div>
     </div>
     <div class="license-meta">
       

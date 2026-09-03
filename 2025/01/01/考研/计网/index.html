@@ -19,70 +19,70 @@
     <meta name="description" content="概述性能指标 速率：数据的传输速率，也称为比特率或数据率  带宽：信号具有的频率成分范围，信道的频带宽度  吞吐量：单位时间通过信道、接口等的数据量  时延：传输所需时间  发送时延 传播时延（传播速度看做是固定的，200m&#x2F;us） 处理时延（分析首部、提取数据、差错检验、查找路由等） 排队时延（在输入输出队列中排毒的时间）   时延带宽积：以比特为单位的链路长度 时延带宽积 &amp;#x3D">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计网">
-<meta property="og:url" content="http://xwww12.github.io/2025/01/01/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%BD%91/index.html">
+<meta property="og:url" content="https://yuudashichi.github.io/2025/01/01/%E8%80%83%E7%A0%94/%E8%AE%A1%E7%BD%91/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="概述性能指标 速率：数据的传输速率，也称为比特率或数据率  带宽：信号具有的频率成分范围，信道的频带宽度  吞吐量：单位时间通过信道、接口等的数据量  时延：传输所需时间  发送时延 传播时延（传播速度看做是固定的，200m&#x2F;us） 处理时延（分析首部、提取数据、差错检验、查找路由等） 排队时延（在输入输出队列中排毒的时间）   时延带宽积：以比特为单位的链路长度 时延带宽积 &amp;#x3D">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%90%84%E5%B1%82%E4%BD%9C%E7%94%A8.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A81.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%A0%81%E5%88%86%E5%A4%8D%E7%94%A8.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%A0%81%E5%88%86%E5%A4%8D%E7%94%A8%E4%BE%8B%E9%A2%98.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/CRC%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E6%B5%B7%E6%98%8E%E7%A0%81%E6%B1%82%E8%A7%A3%E6%AD%A5%E9%AA%A4.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/CSMACD%E5%8D%8F%E8%AE%AE.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/CSMACD%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/CSMACA%E5%8D%8F%E8%AE%AE%E6%9C%AA%E8%80%83%E8%99%91%E9%9A%90%E8%94%BD%E7%AB%99.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/CSMACA%E5%8D%8F%E8%AE%AE%E8%80%83%E8%99%91%E9%9A%90%E8%94%BD%E7%AB%99.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/CSMACA%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E4%BB%A4%E7%89%8C%E4%BC%A0%E9%80%92%E5%8D%8F%E8%AE%AE.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%B1%80%E5%9F%9F%E7%BD%91.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E4%BB%A5%E5%A4%AA%E7%BD%91MAC%E5%B8%A7.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/80211%E6%95%B0%E6%8D%AE%E5%B8%A7%E6%A0%BC%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/PPP%E5%8D%8F%E8%AE%AE%E5%B8%A7%E6%A0%BC%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%9B%B4%E9%80%9A%E4%BA%A4%E6%8D%A2.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%AD%98%E5%82%A8%E8%BD%AC%E5%8F%91%E4%BA%A4%E6%8D%A2.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/HDLC%E5%B8%A7%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/ip%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%B8%A7%E5%88%86%E7%89%87.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%88%86%E7%89%87%E7%94%A8%E5%88%B0%E7%9A%84%E9%A6%96%E9%83%A8%E4%BF%A1%E6%81%AF.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E6%9C%80%E5%88%9D%E7%9A%84ip%E5%9C%B0%E5%9D%80%E5%88%86%E7%B1%BB%E6%96%B9%E6%A1%88.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94ip.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/NAT%E6%80%BB%E7%BB%93.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%8F%91%E7%8E%B0%E6%8A%A5%E6%96%87.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E6%8F%90%E4%BE%9B%E6%8A%A5%E6%96%87.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/IPv6%E9%A6%96%E9%83%A8.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/IPv6%E5%9F%BA%E6%9C%AC%E9%A6%96%E9%83%A8.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%BB%84%E6%92%ADMAC%E5%9C%B0%E5%9D%80.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E8%B7%9D%E7%A6%BB%E5%90%91%E9%87%8F%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E8%87%AA%E6%B2%BB%E7%B3%BB%E7%BB%9F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/RIP%E7%A4%BA%E4%BE%8B.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/BGP1.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/BGP2.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E4%B8%89%E7%A7%8D%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E6%AF%94%E8%BE%83.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E7%86%9F%E7%9F%A5%E7%AB%AF%E5%8F%A3%E5%8F%B7.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/UDP%E9%A6%96%E9%83%A8.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/UDP%E6%A0%A1%E9%AA%8C.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/TCP%E6%8A%A5%E6%96%87%E6%AE%B5.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/TCP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A21.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/TCP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A22.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%BF%AB%E9%87%8D%E4%BC%A0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E6%85%A2%E5%BC%80%E5%A7%8B%E7%AE%97%E6%B3%951.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E6%85%A2%E5%BC%80%E5%A7%8B%E7%AE%97%E6%B3%952.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%BF%AB%E6%81%A2%E5%A4%8D%E7%AE%97%E6%B3%95.png">
-<meta property="og:image" content="http://xwww12.github.io/img/internet_img/%E5%9F%9F%E5%90%8D%E6%A0%91.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%90%84%E5%B1%82%E4%BD%9C%E7%94%A8.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A81.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%A0%81%E5%88%86%E5%A4%8D%E7%94%A8.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%A0%81%E5%88%86%E5%A4%8D%E7%94%A8%E4%BE%8B%E9%A2%98.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/CRC%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E6%B5%B7%E6%98%8E%E7%A0%81%E6%B1%82%E8%A7%A3%E6%AD%A5%E9%AA%A4.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/CSMACD%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/CSMACD%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/CSMACA%E5%8D%8F%E8%AE%AE%E6%9C%AA%E8%80%83%E8%99%91%E9%9A%90%E8%94%BD%E7%AB%99.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/CSMACA%E5%8D%8F%E8%AE%AE%E8%80%83%E8%99%91%E9%9A%90%E8%94%BD%E7%AB%99.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/CSMACA%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E4%BB%A4%E7%89%8C%E4%BC%A0%E9%80%92%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%B1%80%E5%9F%9F%E7%BD%91.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E4%BB%A5%E5%A4%AA%E7%BD%91MAC%E5%B8%A7.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/80211%E6%95%B0%E6%8D%AE%E5%B8%A7%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/PPP%E5%8D%8F%E8%AE%AE%E5%B8%A7%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%9B%B4%E9%80%9A%E4%BA%A4%E6%8D%A2.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%AD%98%E5%82%A8%E8%BD%AC%E5%8F%91%E4%BA%A4%E6%8D%A2.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/HDLC%E5%B8%A7%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%90%84%E7%A7%8D%E5%8D%8F%E8%AE%AE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/ip%E6%95%B0%E6%8D%AE%E6%8A%A5%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%B8%A7%E5%88%86%E7%89%87.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%88%86%E7%89%87%E7%94%A8%E5%88%B0%E7%9A%84%E9%A6%96%E9%83%A8%E4%BF%A1%E6%81%AF.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E6%9C%80%E5%88%9D%E7%9A%84ip%E5%9C%B0%E5%9D%80%E5%88%86%E7%B1%BB%E6%96%B9%E6%A1%88.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94ip.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/NAT%E6%80%BB%E7%BB%93.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%8F%91%E7%8E%B0%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E6%8F%90%E4%BE%9B%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/IPv6%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/IPv6%E5%9F%BA%E6%9C%AC%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%BB%84%E6%92%ADMAC%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E8%B7%9D%E7%A6%BB%E5%90%91%E9%87%8F%E8%B7%AF%E7%94%B1%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E8%87%AA%E6%B2%BB%E7%B3%BB%E7%BB%9F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/RIP%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/BGP1.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/BGP2.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E4%B8%89%E7%A7%8D%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E6%AF%94%E8%BE%83.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E7%86%9F%E7%9F%A5%E7%AB%AF%E5%8F%A3%E5%8F%B7.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/UDP%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/UDP%E6%A0%A1%E9%AA%8C.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/TCP%E6%8A%A5%E6%96%87%E6%AE%B5.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/TCP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A21.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/TCP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A22.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%BF%AB%E9%87%8D%E4%BC%A0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E6%85%A2%E5%BC%80%E5%A7%8B%E7%AE%97%E6%B3%951.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E6%85%A2%E5%BC%80%E5%A7%8B%E7%AE%97%E6%B3%952.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%BF%AB%E6%81%A2%E5%A4%8D%E7%AE%97%E6%B3%95.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/internet_img/%E5%9F%9F%E5%90%8D%E6%A0%91.png">
 <meta property="article:published_time" content="2025-01-01T05:57:24.140Z">
 <meta property="article:modified_time" content="2025-03-24T08:18:39.329Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="考研">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xwww12.github.io/img/internet_img/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
+<meta name="twitter:image" content="https://yuudashichi.github.io/img/internet_img/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
   
   
   
@@ -124,7 +124,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"xwww12.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yuudashichi.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -1266,7 +1266,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>计网</div>
-      <div>http://xwww12.github.io/2025/01/01/考研/计网/</div>
+      <div>https://yuudashichi.github.io/2025/01/01/考研/计网/</div>
     </div>
     <div class="license-meta">
       

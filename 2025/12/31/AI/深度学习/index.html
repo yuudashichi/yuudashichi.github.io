@@ -19,39 +19,39 @@
     <meta name="description" content="深度学习常见深度学习模型 卷积神经网络(Convolutional Neural Networks，CNN) 主要用于图像处理，如图像分类、目标检测、图像分割等 特点是使用卷积层来自动提取图像的局部特征，并通过池化层减少参数数量，提高计算效率   循环神经网络(Recurrent Neural Networks，RNN) 适用于处理序列数据，例如自然语言处理（NLP）、语音识别等   自编码器(A">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习">
-<meta property="og:url" content="http://xwww12.github.io/2025/12/31/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:url" content="https://yuudashichi.github.io/2025/12/31/AI/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="深度学习常见深度学习模型 卷积神经网络(Convolutional Neural Networks，CNN) 主要用于图像处理，如图像分类、目标检测、图像分割等 特点是使用卷积层来自动提取图像的局部特征，并通过池化层减少参数数量，提高计算效率   循环神经网络(Recurrent Neural Networks，RNN) 适用于处理序列数据，例如自然语言处理（NLP）、语音识别等   自编码器(A">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A1%88%E4%BE%8B.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/Sigmoid%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/Sigmoid%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/Tanh%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/Tanh%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/ReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/ReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/LeakyReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/LeakyReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/Softmax%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/BCE%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E5%B9%B3%E5%9D%87%E7%BB%9D%E5%AF%B9%E8%AF%AF%E5%B7%AE%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/Momentum%E5%85%AC%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/AdaGrad%E5%85%AC%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/RMSProp%E5%85%AC%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/Adam%E5%85%AC%E5%BC%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E5%85%AC%E5%BC%8F1.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E5%85%AC%E5%BC%8F2.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E7%AD%89%E9%97%B4%E9%9A%94%E8%A1%B0%E5%87%8F%E7%A4%BA%E4%BE%8B%E5%9B%BE%E5%83%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E6%8C%87%E5%AE%9A%E9%97%B4%E9%9A%94%E8%A1%B0%E5%87%8F%E7%A4%BA%E4%BE%8B%E5%9B%BE%E5%83%8F.png">
-<meta property="og:image" content="http://xwww12.github.io/img/deep_learning_img/%E6%8C%89%E6%8C%87%E6%95%B0%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%E5%9B%BE%E5%83%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A1%88%E4%BE%8B.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/Sigmoid%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/Sigmoid%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/Tanh%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/Tanh%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/ReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/ReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/LeakyReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/LeakyReLU%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%9B%BE%E5%83%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/Softmax%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/BCE%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E5%B9%B3%E5%9D%87%E7%BB%9D%E5%AF%B9%E8%AF%AF%E5%B7%AE%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/Momentum%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/AdaGrad%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/RMSProp%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/Adam%E5%85%AC%E5%BC%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E5%85%AC%E5%BC%8F1.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E5%85%AC%E5%BC%8F2.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E7%AD%89%E9%97%B4%E9%9A%94%E8%A1%B0%E5%87%8F%E7%A4%BA%E4%BE%8B%E5%9B%BE%E5%83%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E6%8C%87%E5%AE%9A%E9%97%B4%E9%9A%94%E8%A1%B0%E5%87%8F%E7%A4%BA%E4%BE%8B%E5%9B%BE%E5%83%8F.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E6%8C%89%E6%8C%87%E6%95%B0%E5%AD%A6%E4%B9%A0%E7%8E%87%E8%A1%B0%E5%87%8F%E5%9B%BE%E5%83%8F.png">
 <meta property="article:published_time" content="2025-12-31T01:40:49.785Z">
 <meta property="article:modified_time" content="2026-01-14T05:55:40.354Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xwww12.github.io/img/deep_learning_img/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A1%88%E4%BE%8B.png">
+<meta name="twitter:image" content="https://yuudashichi.github.io/img/deep_learning_img/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A1%88%E4%BE%8B.png">
   
   
   
@@ -93,7 +93,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"xwww12.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yuudashichi.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -891,7 +891,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>深度学习</div>
-      <div>http://xwww12.github.io/2025/12/31/AI/深度学习/</div>
+      <div>https://yuudashichi.github.io/2025/12/31/AI/深度学习/</div>
     </div>
     <div class="license-meta">
       

@@ -19,16 +19,16 @@
     <meta name="description" content="基本概念 什么是线程池（Thread Pool）  是一种基于池化思想管理线程的工具，线程池维护多个线程，等待管理者分配可并发执行的任务  线程池的作用  降低资源消耗：通过池化技术重复利用已创建的线程，降低线程创建和销毁造成的损耗。 提高响应速度：任务到达时，无需等待线程创建即可立即执行。 提高线程的可管理性：线程是稀缺资源，如果无限制创建，不仅会消耗系统资源，还会因为线程的不合理分布导致资源调">
 <meta property="og:type" content="article">
 <meta property="og:title" content="动态线程池oneThread系统">
-<meta property="og:url" content="http://xwww12.github.io/2026/05/06/%E9%A1%B9%E7%9B%AE/%E5%8A%A8%E6%80%81%E7%BA%BF%E7%A8%8B%E6%B1%A0oneThread%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:url" content="https://yuudashichi.github.io/2026/05/06/%E9%A1%B9%E7%9B%AE/%E5%8A%A8%E6%80%81%E7%BA%BF%E7%A8%8B%E6%B1%A0oneThread%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="基本概念 什么是线程池（Thread Pool）  是一种基于池化思想管理线程的工具，线程池维护多个线程，等待管理者分配可并发执行的任务  线程池的作用  降低资源消耗：通过池化技术重复利用已创建的线程，降低线程创建和销毁造成的损耗。 提高响应速度：任务到达时，无需等待线程创建即可立即执行。 提高线程的可管理性：线程是稀缺资源，如果无限制创建，不仅会消耗系统资源，还会因为线程的不合理分布导致资源调">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://xwww12.github.io/img/one_thread_img/ThreadPoolExecutor%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/one_thread_img/ThreadPoolExecutor%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B.png">
 <meta property="article:published_time" content="2026-05-06T12:10:17.958Z">
 <meta property="article:modified_time" content="2026-06-23T06:23:08.130Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://xwww12.github.io/img/one_thread_img/ThreadPoolExecutor%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B.png">
+<meta name="twitter:image" content="https://yuudashichi.github.io/img/one_thread_img/ThreadPoolExecutor%E8%BF%90%E8%A1%8C%E6%B5%81%E7%A8%8B.png">
   
   
   
@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"xwww12.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"yuudashichi.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -682,7 +682,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>动态线程池oneThread系统</div>
-      <div>http://xwww12.github.io/2026/05/06/项目/动态线程池oneThread系统/</div>
+      <div>https://yuudashichi.github.io/2026/05/06/项目/动态线程池oneThread系统/</div>
     </div>
     <div class="license-meta">
       
