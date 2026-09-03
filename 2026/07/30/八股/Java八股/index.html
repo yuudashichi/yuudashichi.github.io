@@ -24,8 +24,6 @@
 <meta property="og:description" content="Java基础基础概念 Java SE（Java Standard Edition）：Java 标准版。提供 Java 基础开发能力，如集合、IO、多线程、JDBC 等。  Java EE（Java Enterprise Edition）：Java 企业版，现在称为 Jakarta EE。建立在 Java SE 之上，提供 Servlet、JPA、Web 服务等企业级开发规范。  JDK（Java">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E9%9B%86%E5%90%88%E5%85%B3%E7%B3%BB%E5%9B%BE.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/hashMap.png">
-<meta property="og:image" content="http://xwww12.github.io/img/else_img/hashMap%E7%9A%84put%E6%B5%81%E7%A8%8B.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/java%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0.png">
@@ -37,7 +35,7 @@
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="http://xwww12.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.316Z">
-<meta property="article:modified_time" content="2026-08-30T12:03:05.462Z">
+<meta property="article:modified_time" content="2026-09-03T02:30:25.691Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          10k 字
+          11k 字
         
       </span>
     
@@ -250,7 +248,7 @@
         
         
         
-          86 分钟
+          93 分钟
         
       </span>
     
@@ -618,6 +616,39 @@
 <li><p><strong>BufferedWriter</strong></p>
 </li>
 </ul>
+<h3 id="Java-IO模型"><a href="#Java-IO模型" class="headerlink" title="Java IO模型"></a>Java IO模型</h3><h4 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h4><blockquote>
+<p>Blocking IO，<strong>同步阻塞式IO</strong></p>
+</blockquote>
+<p>应用发起系统调用后，<strong>程序会同步阻塞</strong>，直到内核把数据拷贝到用户空间</p>
+<p>传统的**<code>InputStream、OutputStream、Socket、ServerSocket</code>**都属于BIO</p>
+<h4 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h4><blockquote>
+<p>Non blocking IO，<strong>同步非阻塞IO</strong></p>
+</blockquote>
+<p><strong>非阻塞式IO类型</strong>：</p>
+<ul>
+<li><strong>同步非阻塞模型</strong>：线程发起一个 read 调用，如果没有数据，会立即返回。这个时候应用程序可以不阻塞等待，而是切换去做一些小的计算任务，然后很快回来继续发起 read 调用<ul>
+<li>优点：比BIO高效</li>
+<li>缺点：轮询消耗CPU资源</li>
+</ul>
+</li>
+<li><strong>多路复用</strong>（<strong>Java使用这个</strong>）：一个线程通过 <code>Selector</code> 同时监听多个 <code>Channel</code>，使用操作系统提供的多路复用机制，只处理已经准备好 IO 的连接<ul>
+<li>优点：通过减少无效的系统调用，减少了对 CPU 资源的消耗</li>
+</ul>
+</li>
+</ul>
+<p><strong>Java NIO核心组件</strong>：</p>
+<ul>
+<li><strong>Buffer（缓冲区）</strong>：NIO 读写数据都是通过缓冲区进行操作的。读操作的时候将 Channel 中的数据填充到 Buffer 中，而写操作时将 Buffer 中的数据写入到 Channel 中。</li>
+<li><strong>Channel（通道）</strong>：Channel 是一个双向的、可读可写的数据传输通道，NIO 通过 Channel 来实现数据的输入输出。通道是一个抽象的概念，它可以代表文件、套接字或者其他数据源之间的连接。</li>
+<li><strong>Selector（选择器）</strong>：允许一个线程处理多个 Channel，基于事件驱动的 I&#x2F;O 多路复用模型。所有的 Channel 都可以注册到 Selector 上，由 Selector 来分配线程来处理事件。</li>
+</ul>
+<h4 id="AIO"><a href="#AIO" class="headerlink" title="AIO"></a>AIO</h4><blockquote>
+<p>异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，<strong>操作系统会通知相应的线程进行后续的操作，不需要主动查询是否完成</strong></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 例如IO完成后执行completionHandler</span><br>channel.read(buffer, <span class="hljs-literal">null</span>, completionHandler);<br></code></pre></td></tr></table></figure>
+
+
+
 <h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><p><img src="/img/else_img/%E9%9B%86%E5%90%88%E5%85%B3%E7%B3%BB%E5%9B%BE.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><h4 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h4><blockquote>
 <p>底层是Object数组，容量可以动态增长，线程不安全</p>
@@ -638,7 +669,7 @@
 <li>**<code>static final Object[] EMPTY_ELEMENTDATA</code>**：共享的容量为0的数组实例</li>
 <li>**<code>static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA</code>**：不指定初始容量，实例化对象时使用的空数组，首次添加元素的时候才分配容量</li>
 </ul>
-<p><strong>扩容机制</strong></p>
+<p>✨<strong>扩容机制</strong></p>
 <blockquote>
 <p>第一次添加元素时容量为<strong>Math.max(10, 插入的元素数量)<strong>；之后容量不足扩容为</strong>Math.max(之前容量的1.5倍, 至少需要的容量)</strong></p>
 </blockquote>
@@ -654,8 +685,7 @@
 <li><strong>fail-fast</strong>：在使用迭代器的线程立即报错</li>
 <li><strong>fail-safe</strong>：发现有人修改了则采取一些对策，例如牺牲一些一致性来让整个遍历完成</li>
 </ol>
-<p><strong>原理</strong></p>
-<p>​	fail-fast是在创建迭代器时记录数组被修改的次数，每次获取下一个元素时判断现在数组的修改次数是否和之前记录的保持一致，如果不一致则报错（类似乐观锁）。</p>
+<p><strong>原理</strong>：fail-fast是在创建迭代器时<strong>记录数组被修改的次数</strong>，每次获取下一个元素时判断现在数组的修改次数是否和之前记录的保持一致，如果<strong>不一致则报错</strong>（类似乐观锁）</p>
 <blockquote>
 <p>ArrayList使用的第一种策略，CopyOnWriteArrayList是第二种策略（对策是添加把原集合复制出来，在新集合上进行修改，修改好后指向新集合。创建迭代器时会指向当前集合，遍历的是旧集合不影响（读写分离））；</p>
 </blockquote>
@@ -666,156 +696,444 @@
 <p>List转数组（深拷贝）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;String&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br><br>list.add(<span class="hljs-string">&quot;a&quot;</span>); <br>list.add(<span class="hljs-string">&quot;b&quot;</span>);<br><br>String[] strs = list.toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[list.size()]);<br></code></pre></td></tr></table></figure>
 
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><h3 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h3><h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><h4 id="与ArrayList的比较"><a href="#与ArrayList的比较" class="headerlink" title="与ArrayList的比较"></a>与ArrayList的比较</h4><ul>
-<li><p><strong>底层数据结构</strong></p>
-<p><code>ArrayList</code>基于<strong>Object数组</strong>，需要连续内存</p>
-<p><code>LinkedList</code>基于<strong>双向链表</strong>，无需连续内存</p>
+<h4 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h4><blockquote>
+<p>基于双向链表实现的集合类</p>
+</blockquote>
+<p><strong>继承的父类、实现的接口</strong></p>
+<ul>
+<li><p>**<code>AbstractSequentialList</code>**：内部继承了<code>AbstractList</code></p>
 </li>
-<li><p><strong>效率</strong></p>
-<p><code>ArrayList</code>的随机访问、末尾插入&#x2F;删除为O(1)，指定位置插入&#x2F;删除为O(n)</p>
-<p><code>LinkedList</code>的头尾插入&#x2F;删除为O(1)，指定位置插入&#x2F;删除为O(n)</p>
+<li><p><strong><code>List&lt;E&gt;</code></strong> </p>
 </li>
-<li><p><strong>占用空间</strong></p>
-<p><code>ArrayList</code>需要<strong>预留一定的容量</strong></p>
-<p><code>LinkedList</code>每个元素都<strong>需要额外空间</strong>（前后指针）</p>
+<li><p>**<code>Deque</code>**：继承自 <code>Queue</code> 接口，具有双端队列的特性，支持从两端插入和删除元素，方便实现栈和队列等数据结构</p>
 </li>
-<li><p><strong>线程安全</strong></p>
-<p><code>ArrayList</code>和<code>LinkedList</code>都<strong>不是线程安全的</strong>，可以通过</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">List&lt;Object&gt; list = Collections.synchronizedList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;());<br>List&lt;Object&gt; list = Collections.synchronizedList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;&gt;());<br></code></pre></td></tr></table></figure>
+<li><p><strong><code>Cloneable</code></strong></p>
+</li>
+<li><p><strong><code>Serializable</code></strong></p>
+</li>
+</ul>
+<h4 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h4><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>ArrayList</th>
+<th>LinkedList</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>底层结构</td>
+<td>动态数组 <code>Object[]</code></td>
+<td>双向链表</td>
+</tr>
+<tr>
+<td>随机访问 <code>get(index)</code></td>
+<td>**O(1)**，快</td>
+<td>**O(n)**，慢</td>
+</tr>
+<tr>
+<td>尾部添加 <code>add(e)</code></td>
+<td>均摊 <strong>O(1)</strong></td>
+<td><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>指定位置插入</td>
+<td>查找 O(1) + 移动 O(n)，整体 <strong>O(n)</strong></td>
+<td>查找 O(n) + 插入 O(1)，整体 <strong>O(n)</strong></td>
+</tr>
+<tr>
+<td>指定位置删除</td>
+<td>查找 O(1) + 移动 O(n)，整体 <strong>O(n)</strong></td>
+<td>查找 O(n) + 删除 O(1)，整体 <strong>O(n)</strong></td>
+</tr>
+<tr>
+<td>已知节点时插入&#x2F;删除</td>
+<td>不适用</td>
+<td><strong>O(1)</strong></td>
+</tr>
+<tr>
+<td>内存占用</td>
+<td>较小，但可能有预留容量</td>
+<td>较大，每个节点保存前后指针</td>
+</tr>
+<tr>
+<td>CPU 缓存友好性</td>
+<td><strong>好</strong>，数组连续存储</td>
+<td>较差，节点分散在堆中</td>
+</tr>
+<tr>
+<td>扩容</td>
+<td>需要，通常约 1.5 倍</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td><code>RandomAccess</code></td>
+<td>✅ 实现</td>
+<td>❌ 未实现</td>
+</tr>
+<tr>
+<td><code>Deque</code> &#x2F; 队列操作</td>
+<td>❌</td>
+<td>✅ 实现 <code>Deque</code></td>
+</tr>
+<tr>
+<td>典型场景</td>
+<td><strong>查询多、遍历多</strong></td>
+<td>频繁操作首尾元素</td>
+</tr>
+</tbody></table>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><h5 id="底层数据结构"><a href="#底层数据结构" class="headerlink" title="底层数据结构"></a>底层数据结构</h5><p>在<strong>JDK8+<strong>为</strong>数组 + 链表 + 红黑树</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HashMap</span>&lt;K,V&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractMap</span>&lt;K,V&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Map</span>&lt;K,V&gt;, Cloneable, Serializable &#123;<br>    <span class="hljs-comment">// 主要成员变量</span><br>    <span class="hljs-keyword">transient</span> Node&lt;K,V&gt;[] table;    <span class="hljs-comment">// 每个数组位置叫做一个桶</span><br>    <span class="hljs-type">int</span> threshold;    				<span class="hljs-comment">// 阈值 = 容量 * 负载因子，当实际大小超过阈值时，会进行扩容</span><br>    <span class="hljs-keyword">final</span> <span class="hljs-type">float</span> loadFactor;			<span class="hljs-comment">// 负载因子，默认0.75</span><br>    <span class="hljs-keyword">transient</span> <span class="hljs-type">int</span> size;				<span class="hljs-comment">// 实际元素个数</span><br><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span>&lt;K,V&gt; &#123;<br>        <span class="hljs-comment">// 主要成员变量</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> hash;<br>        <span class="hljs-keyword">final</span> K key;<br>        V value;<br>        Node&lt;K,V&gt; next;<br>    &#125;<br><br>    <span class="hljs-comment">// hash函数，把高16位混到低16位，提高随机性</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hash</span><span class="hljs-params">(Object key)</span> &#123;<br>        <span class="hljs-type">int</span> h;<br>        <span class="hljs-keyword">return</span> (key == <span class="hljs-literal">null</span>) ? <span class="hljs-number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="hljs-number">16</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>包装一下，变成线程安全的</p>
-</li>
-</ul>
-<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><ul>
-<li><p><strong>链表过长时的解决方法</strong></p>
-<p><img src="/img/else_img/hashMap.png" srcset="/img/loading.gif" lazyload alt="桶数组是用来存储数据元素，链表是用来解决冲突，红黑树是为了提高查询的效率"></p>
-<ol>
-<li><strong>数组扩容</strong>：<ol>
-<li>put元素后检查，当元素总数大于阈值（阈值&#x3D;容量*负载因子）时会发生一次扩容</li>
-<li>每次扩容都是之前容量的2倍</li>
-<li>扩容之后会创建一个新的数组，把老数组中的元素迁移过去<ul>
-<li>没有hash冲突的节点，直接<code>e.hash &amp; (newCap - 1)</code>计算索引下标</li>
-<li>红黑树则走红黑树逻辑</li>
-<li>如果是链表，则需要遍历链表，可能需要拆分链表，判断<code>e.hash &amp; oldCap == 0</code>是否成立，如果成立则仍在这个位置，否则移动到<code>原始位置+oldCap</code>上</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><strong>树化</strong>（jdk1.8）：若数组容量小于64时会先尝试扩容，当数组容量超过64且链表长度大于8（阈值）时会树化</li>
-</ol>
-</li>
-<li><p><strong>底层数据结构，1.7和1.8有何不同?</strong></p>
+<p>当<strong>链表长度 &gt;&#x3D; 8  且数组容量 &gt;&#x3D; 64</strong>时会转换成红黑树，之前会<strong>优先考虑数组扩容</strong></p>
+<h5 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h5><p><strong>触发时机</strong>：</p>
 <ul>
-<li>1.7为数组+链表，1.8为数组+(链表 | 红黑树)</li>
-<li>1.7为头插法，1.8为尾插法</li>
-<li>1.7先扩容后插入，1.8先插入后扩容（减少频繁转换的概率）</li>
+<li>第一次<code>put()</code>，通过<code>resize()</code>初始化</li>
+<li><code>size &gt; threshold</code>时扩容，<code>threshold = capacity * loadFactor</code></li>
 </ul>
-</li>
-<li><p><strong>为何要用红黑树，为何不一上来就树化，树化阈值为何是8，何时会树化，何时会退化成链表</strong></p>
+<p><strong>扩容流程</strong></p>
 <ol>
-<li><p>大部分情况下链表长度是不会超过8的，只有在像Dos攻击时被注入大量key相同的元素时链表才会过长。红黑树用来防止链表过长时的性能下降。平衡二叉树是比红黑树更严格的平衡树，所以平衡二叉树插入和删除的效率 比红黑树要低，故用红黑树。</p>
+<li><p>扩容数组容量（<strong>新扩容为原来的2倍</strong>）</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">newCap = oldCap &lt;&lt; <span class="hljs-number">1</span>;<br>newThr = oldThr &lt;&lt; <span class="hljs-number">1</span>;<br><br>Node&lt;K,V&gt;[] newTab = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>[newCap];<br>table = newTab;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>hash表查找和更新的时间复杂度为O(1)，红黑树为O(log2(n))，且红黑树的TreeNode比链表的Node占用内存大，所以尽量使用链表</p>
-</li>
-<li><p>选择8是为了让树化几率足够小；红黑树再转回链表的阈值是6，目的是防止节点数在8附近徘徊导致频繁发生转换</p>
-</li>
-<li><p>树化条件：链表长度&gt;&#x3D;阈值8 且 数组容量&gt;&#x3D;64</p>
-</li>
-<li><p>退化情况1：<strong>扩容时</strong>树被拆分，树元素个数&lt;&#x3D;6会退化成链表；</p>
-<p>退化情况2：<strong>remove节点时</strong>，检查若root，root.left，root.right，root.left.left中有一个为null，则退化</p>
-</li>
+<li><p>遍历旧数组，把旧数组中的节点重新分配到新数组</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// JDK8前，每个元素需要重新计算位置</span><br><span class="hljs-comment">// newIndex = hash &amp; (newCap - 1);</span><br><br><span class="hljs-comment">// JDK8+，将原链表/红黑树拆分为两个链表/红黑树，通过与运算决定插入哪个链表/红黑树</span><br><span class="hljs-comment">// （红黑树节点少于阈值会退化成链表）</span><br><span class="hljs-keyword">if</span> ((e.hash &amp; oldCap) == <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// 插入原链表</span><br>    ...<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 插入新链表，位置为 原索引+oldCap</span><br>    ...<br>&#125;<br><br><span class="hljs-comment">// 如果是链表，在链表尾部插入</span><br><span class="hljs-comment">// 如果是红黑树，则是插入红黑树逻辑</span><br></code></pre></td></tr></table></figure></li>
 </ol>
-</li>
-<li><p><strong>索引是如何计算的？hashCode都有了为何还要hash()方法？数组容量为何是2^n？</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hash</span><span class="hljs-params">(Object key)</span> &#123;<br>    <span class="hljs-type">int</span> h;<br>    <span class="hljs-comment">// key的hashCode和key的hashCode右移16位做异或运算</span><br>    <span class="hljs-keyword">return</span> (key == <span class="hljs-literal">null</span>) ? <span class="hljs-number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="hljs-number">16</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<h5 id="HashMap高频问题"><a href="#HashMap高频问题" class="headerlink" title="HashMap高频问题"></a>HashMap高频问题</h5><ul>
+<li><p><strong>1. 链表过长时如何解决？</strong></p>
+<p>  JDK 8 有两种处理方式：<strong>扩容</strong>和<strong>树化</strong>。</p>
+<ul>
+<li><p>普通新增元素后，如果：</p>
+  <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">++size &gt; threshold<br></code></pre></td></tr></table></figure>
 
+<p>  则执行 <code>resize()</code>，通常容量扩大为原来的 2 倍。</p>
+</li>
+<li><p>链表过长时调用 <code>treeifyBin()</code>：</p>
+  <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-built_in">table</span>.<span class="hljs-built_in">length</span> &lt; <span class="hljs-number">64</span>  → 优先扩容<br><span class="hljs-built_in">table</span>.<span class="hljs-built_in">length</span> &gt;= <span class="hljs-number">64</span> → 转为红黑树<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>  树化相关常量：</p>
+  <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">TREEIFY_THRESHOLD</span> = <span class="hljs-number">8</span><br><span class="hljs-attr">UNTREEIFY_THRESHOLD</span> = <span class="hljs-number">6</span><br><span class="hljs-attr">MIN_TREEIFY_CAPACITY</span> = <span class="hljs-number">64</span><br></code></pre></td></tr></table></figure>
+
+<p>  JDK 8 扩容迁移时，链表节点只需判断：</p>
+  <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">hash <span class="hljs-meta">&amp; oldCap</span><br></code></pre></td></tr></table></figure>
+
+  <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">== 0 → 原索引</span><br>!= 0 → 原索引 + oldCap<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>2. JDK 7 和 JDK 8 的 HashMap 有什么区别？</strong></p>
+<table>
+<thead>
+<tr>
+<th>对比</th>
+<th>JDK 7</th>
+<th>JDK 8</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据结构</td>
+<td>数组 + 链表</td>
+<td>数组 + 链表 + 红黑树</td>
+</tr>
+<tr>
+<td>链表插入</td>
+<td>头插</td>
+<td>尾插</td>
+</tr>
+<tr>
+<td>长链表优化</td>
+<td>无</td>
+<td>红黑树</td>
+</tr>
+<tr>
+<td>扩容迁移</td>
+<td>重新计算桶位置</td>
+<td><code>hash &amp; oldCap</code></td>
+</tr>
+<tr>
+<td>并发扩容</td>
+<td>可能形成循环链表</td>
+<td>避免了 JDK7 的死链问题</td>
+</tr>
+</tbody></table>
+<p>  扩容时机：</p>
+  <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">JDK7：满足条件时先扩容，再插入</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">JDK8：先插入，size </span>&gt; threshold 后扩容<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>3. 为什么 HashMap 使用红黑树？</strong></p>
+<p>  Hash 冲突严重时，同一个桶中的链表会变长：</p>
+  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">链表查询：<span class="hljs-constructor">O(<span class="hljs-params">n</span>)</span><br>红黑树查询：<span class="hljs-constructor">O(<span class="hljs-params">log</span> <span class="hljs-params">n</span>)</span><br></code></pre></td></tr></table></figure>
+
+<p>  因此红黑树主要用于避免严重 Hash 冲突导致查询性能退化。</p>
+<p>  注意：<strong>相同 Key 不会导致链表变长</strong>，因为会直接覆盖旧 Value。</p>
+</li>
+<li><p><strong>4. 为什么不用 AVL 树？</strong></p>
+<p>  AVL （平衡二叉树）平衡要求更严格，插入和删除时旋转调整通常更多。</p>
+<p>  红黑树属于弱平衡树，仍能保证：</p>
+  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">查询：<span class="hljs-constructor">O(<span class="hljs-params">log</span> <span class="hljs-params">n</span>)</span><br>插入：<span class="hljs-constructor">O(<span class="hljs-params">log</span> <span class="hljs-params">n</span>)</span><br>删除：<span class="hljs-constructor">O(<span class="hljs-params">log</span> <span class="hljs-params">n</span>)</span><br></code></pre></td></tr></table></figure>
+
+<p>  更适合 HashMap 这种既有查询又有插入、删除的场景。</p>
+</li>
+<li><p><strong>5. 为什么不一开始就使用红黑树？</strong></p>
+<p>  主要两个原因：</p>
+<ol>
+<li><p>正常情况下一个桶中的节点很少，链表遍历更简单。</p>
+</li>
+<li><p><code>TreeNode</code> 需要额外维护：</p>
+ <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">parent、<span class="hljs-keyword">left</span>、<span class="hljs-keyword">right</span>、<span class="hljs-keyword">prev</span>、<span class="hljs-keyword">red</span><br></code></pre></td></tr></table></figure>
+
+<p> 内存占用比普通 <code>Node</code> 更大。</p>
+</li>
+</ol>
+<p>  所以：</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">节点少 → 链表<br>节点多 → 红黑树<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>6. 为什么树化阈值是 8？</strong></p>
+<p>  正常 Hash 分布下，桶中出现很长链表的概率很低。</p>
+<p>  因此：</p>
+  <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">TREEIFY_THRESHOLD</span> = <span class="hljs-number">8</span><br></code></pre></td></tr></table></figure>
+
+<p>  只有 Hash 冲突比较严重时才进行树化，避免过早引入红黑树的额外成本。</p>
+</li>
+<li><p><strong>7. 为什么退化阈值是 6，而不是 8？</strong></p>
+  <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">TREEIFY_THRESHOLD</span> = <span class="hljs-number">8</span><br><span class="hljs-attr">UNTREEIFY_THRESHOLD</span> = <span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+
+<p>  中间保留 <code>6~8</code> 的缓冲区，是为了避免节点数量在临界值附近变化时频繁：</p>
+  <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">链表 ↔ 红黑树<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>8. 红黑树什么时候退化成链表？</strong></p>
+<p>  两种情况：</p>
+<ol>
+<li><p><strong>扩容拆分</strong></p>
+ <figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">拆分后节点数 &lt;<span class="hljs-operator">=</span> <span class="hljs-number">6</span> → 退化为链表<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>remove 删除</strong></p>
+<p> 不单纯判断 <code>&lt;= 6</code>，而是根据树结构是否已经足够小决定是否调用 <code>untreeify()</code>。</p>
+</li>
+</ol>
+</li>
+<li><p><strong>9. HashMap 的索引如何计算？</strong></p>
+<p>  JDK 8：</p>
+  <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs processing"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hash</span>(<span class="hljs-built_in">Object</span> <span class="hljs-built_in">key</span>) &#123;<br>    <span class="hljs-type">int</span> h;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">key</span> == <span class="hljs-literal">null</span> ? <span class="hljs-number">0</span> :<br>        (h = <span class="hljs-built_in">key</span>.<span class="hljs-property">hashCode</span>()) ^ (h &gt;&gt;&gt; <span class="hljs-number">16</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>  最终索引：</p>
+  <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">index</span> = (n - <span class="hljs-number">1</span>) &amp; hash<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>10. 已经有 hashCode()，为什么还需要 hash()？</strong></p>
+<p>  因为数组长度是 <code>2^n</code>，计算：</p>
+  <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">(n - <span class="hljs-number">1</span>) <span class="hljs-meta">&amp; hash</span><br></code></pre></td></tr></table></figure>
+
+<p>  时主要使用 Hash 值低位。</p>
+<p>  JDK 8 使用：</p>
+  <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">h</span><span class="hljs-regexp"> ^</span> (h &gt;&gt;&gt; <span class="hljs-number">16</span>)<br></code></pre></td></tr></table></figure>
+
+<p>  将高 16 位信息混入低 16 位，使低位分布更均匀，减少 Hash 冲突。</p>
+</li>
+<li><p><strong>11. 为什么 HashMap 容量必须是 2 的幂？</strong></p>
+<ol>
+<li><p>可以使用<code>hash &amp; (n - 1)</code>代替 <code>% n</code> 计算索引</p>
+</li>
+<li><p>扩容为 2 倍后，节点位置只可能是：</p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">原位置<br>原位置 + oldCap<br></code></pre></td></tr></table></figure>
+
+<p> 只需判断：</p>
+ <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">hash <span class="hljs-meta">&amp; oldCap</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p><strong>12. JDK 8 的 put() 流程是什么？</strong></p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">put</span><span class="hljs-params">()</span></span><br>  ↓<br><span class="hljs-function"><span class="hljs-title">hash</span><span class="hljs-params">(key)</span></span>	<span class="hljs-comment">// 通过哈希函数计算hash值</span><br>  ↓<br><span class="hljs-function"><span class="hljs-title">putVal</span><span class="hljs-params">()</span></span>	<span class="hljs-comment">// 包含真正的添加节点逻辑</span><br></code></pre></td></tr></table></figure>
+
+<p>  主要流程：</p>
+<ol>
+<li><p>table 为空 → <code>resize()</code> 初始化</p>
+</li>
+<li><p>根据 <code>(n - 1) &amp; hash</code> 计算桶下标</p>
+</li>
+<li><p>桶为空 → 直接插入</p>
+</li>
+<li><p>桶不为空：</p>
 <ul>
-<li>调用对象的hashCode()方法获得原始hash，再调用HashMap的hash()方法二次哈希，最后<code>tab[i = (n - 1) &amp; hash]</code>获取到对应的位置，n为table的长度</li>
-<li>为了提高综合高位数据，让哈希分布更加均匀，减少冲突</li>
-<li>计算索引时，如果是2的n次幂可以使用位与运算代替取模，提高效率；扩容时<code>hash &amp; oldCap == 0</code>的元素留在原处，否则<code>新位置=旧位置 + oldCap</code></li>
+<li>Key 相同 → 覆盖 Value</li>
+<li>红黑树 → <code>putTreeVal()</code></li>
+<li>链表 → 遍历后尾插</li>
 </ul>
 </li>
-<li><p><strong>介绍一下put方法流程，1.7和1.8的有何不同？</strong></p>
-<p><img src="/img/else_img/hashMap%E7%9A%84put%E6%B5%81%E7%A8%8B.png" srcset="/img/loading.gif" lazyload></p>
+<li><p>链表过长 → 树化<code>treeifyBin()</code></p>
+</li>
+<li><p>插入元素后判断是否扩容：</p>
+ <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scss">if (++size &gt; threshold)<br>    <span class="hljs-attribute">resize</span>();<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p><strong>13. JDK 7 和 JDK 8 的 put() 有什么区别？</strong></p>
+<table>
+<thead>
+<tr>
+<th>对比</th>
+<th>JDK 7</th>
+<th>JDK 8</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>冲突结构</td>
+<td>链表</td>
+<td>链表 &#x2F; 红黑树</td>
+</tr>
+<tr>
+<td>插入方式</td>
+<td>头插</td>
+<td>尾插</td>
+</tr>
+<tr>
+<td>普通扩容</td>
+<td>先扩容再插入</td>
+<td>先插入再判断扩容</td>
+</tr>
+<tr>
+<td>扩容迁移</td>
+<td>重新计算位置</td>
+<td><code>hash &amp; oldCap</code></td>
+</tr>
+<tr>
+<td>长链表</td>
+<td>一直是链表</td>
+<td>可以树化</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>14. HashMap 的 get() 流程是什么？</strong></p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">get</span><span class="hljs-params">(key)</span></span><br>  ↓<br><span class="hljs-function"><span class="hljs-title">hash</span><span class="hljs-params">(key)</span></span><br>  ↓<br><span class="hljs-function"><span class="hljs-title">getNode</span><span class="hljs-params">()</span></span><br></code></pre></td></tr></table></figure>
+
+<p>  流程：</p>
 <ol>
-<li>判断table是否为null，是的话执行resize()扩容（懒惰初始化）</li>
-<li>计算索引（hashCode() –&gt; hash() –&gt; 和桶大小求模）</li>
-<li>如果桶下标没人占用，则创建Node占位返回</li>
-<li>如果有人占用了<ol>
-<li>如果是TreeNode走红黑树逻辑</li>
-<li>如果是普通Node走链表逻辑，插入新节点后，如果需要树化则走树化逻辑</li>
-<li>遍历链表或红黑树时发现key已存在则覆盖原先的值</li>
-</ol>
+<li><p>table 为空 → 返回 <code>null</code></p>
 </li>
-<li>返回前检查容量是否超过阈值，超过则扩容</li>
-</ol>
-<p>不同：</p>
-<ol>
-<li>1.7是头插法，1.8是尾插法</li>
-<li>1.7是元素数量&gt;&#x3D;阈值且没有空位时才扩容，1.8是&gt;阈值时就扩容</li>
-<li>1.8在扩容计算索引时有优化</li>
-</ol>
+<li><p>计算桶下标</p>
 </li>
-<li><p><strong>介绍一下get方法流程</strong></p>
-<ol>
-<li>先判断table是否非空或大小为0，是的话直接返回null</li>
-<li>判断第一个元素的key是否和要找的key相同，是则返回</li>
-<li>否则判断节点的类型<ol>
-<li>如果是树节点，则走红黑树的逻辑</li>
-<li>否则遍历链表来找对应key的节点</li>
-</ol>
+<li><p>先比较桶中第一个节点</p>
+</li>
+<li><p>如果没找到：</p>
+ <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">TreeNode → 红黑树查找<br><span class="hljs-keyword">Node</span>     <span class="hljs-title">→ 遍历链表</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>找到返回 Value，否则返回 <code>null</code>。</p>
 </li>
 </ol>
 </li>
-<li><p><strong>加载因子为何默认0.75？</strong></p>
-<p>在空间占用和查询时间之间取得较好的平衡</p>
-<p>大于0.75，节省空间，但链表长了影响性能</p>
-<p>小于0.75，冲突减少，但扩容频繁空间占用更多</p>
+<li><p><strong>15. 为什么默认负载因子是 0.75？</strong></p>
+<p>  本质是在<strong>空间利用率</strong>和<strong>Hash 冲突概率</strong>之间做平衡。</p>
+  <figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pf"><span class="hljs-built_in">load</span>Factor 大：<br>空间利用率高，但冲突更多<br><br><span class="hljs-built_in">load</span>Factor 小：<br>冲突少，但更浪费空间<br></code></pre></td></tr></table></figure>
+
+<p>  <code>0.75</code> 是一个比较合理的经验折中值。</p>
 </li>
-<li><p><strong>多线程下会有什么问题？</strong></p>
-<ol>
-<li><strong>扩容死链</strong>（1.7）：1.7扩容是采用头插法，当两个线程同时进行扩容操作，若一个线程先扩容完，另一个线程再去扩容，会使得链表变成循环链表，造成死链</li>
-<li><strong>数据错乱</strong>（1.7，1.8）：put逻辑是先判断是否为空，后插入数据。并发条件下可能出现两个线程都判断一个位置为空，后都往一个位置插入数据，造成数据丢失</li>
-</ol>
+<li><p><strong>16. HashMap 多线程下有什么问题？</strong></p>
+<p>  <code>HashMap</code> <strong>不是线程安全的</strong>。</p>
+<p>  可能出现：数据覆盖、节点丢失、size 不准确、数据结构状态异常</p>
+<p>  JDK 7 并发扩容时，由于使用头插迁移链表，在特定线程交错情况下还可能形成<strong>循环链表</strong>，导致遍历死循环。</p>
+<p>  并发场景通常使用<code>ConcurrentHashMap</code></p>
 </li>
-<li><p><strong>key能否为null，作为key的对象有什么要求？</strong></p>
-<ol>
-<li>HashMap的key可以为null。但Map的其它实现则不然</li>
-<li>作为key的对象，必须实现hashCode()（为了key在整个HashMap中有更好的分布性）和equals()（当key相同时判断是否为同一个对象），并且key的内容不可以修改</li>
-</ol>
+<li><p><strong>17. HashMap 的 Key 可以为 null 吗？</strong></p>
+<p>  可以。</p>
+  <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gauss">HashMap：<br>允许 <span class="hljs-number">1</span> 个 <span class="hljs-built_in">null</span> <span class="hljs-built_in">Key</span><br>允许多个 <span class="hljs-built_in">null</span> Value<br></code></pre></td></tr></table></figure>
+
+<p>  JDK 8：</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">hash</span><span class="hljs-params">(null)</span></span> = <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<p>  所以 null Key 位于 <code>table[0]</code>。</p>
+<p>  常见实现对比：</p>
+<table>
+<thead>
+<tr>
+<th>Map</th>
+<th>null Key</th>
+<th>null Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HashMap</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>LinkedHashMap</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>Hashtable</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>ConcurrentHashMap</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+</tbody></table>
 </li>
-<li><p><strong>初始化时传入的容量不是2的倍数会怎样？</strong></p>
-<p>会向上寻找离得最近的2的倍数</p>
+<li><p><strong>18. 作为 HashMap Key 的对象有什么要求？</strong></p>
+<p>  自定义对象作为 Key 时，应正确重写：</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">equals</span><span class="hljs-params">()</span></span><br><span class="hljs-function"><span class="hljs-title">hashCode</span><span class="hljs-params">()</span></span><br></code></pre></td></tr></table></figure>
+
+<p>  必须满足：</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">equals</span><span class="hljs-params">()</span></span> 相等<br>    ↓<br><span class="hljs-function"><span class="hljs-title">hashCode</span><span class="hljs-params">()</span></span> 必须相等<br></code></pre></td></tr></table></figure>
+
+<p>  但反过来不成立：</p>
+  <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-built_in">hashCode</span>() 相同<br>不代表 <span class="hljs-built_in">equals</span>() 相等<br></code></pre></td></tr></table></figure>
+
+<p>  同时，Key 中参与 <code>equals()</code> &#x2F; <code>hashCode()</code> 计算的字段最好不要修改，否则可能导致 <code>get()</code> 找不到原来的数据</p>
+<p>  因此通常推荐使用不可变对象，例如 <code>String</code>、<code>Integer</code></p>
 </li>
+<li><p><strong>19. 初始化容量不是 2 的幂怎么办？</strong></p>
+<p>  HashMap 会通过 <code>tableSizeFor()</code> 向上调整为最近的 <strong>2 的幂</strong>：</p>
+  <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">10 </span>→ <span class="hljs-number">16</span><br><span class="hljs-symbol">16 </span>→ <span class="hljs-number">16</span><br><span class="hljs-symbol">17 </span>→ <span class="hljs-number">32</span><br><span class="hljs-symbol">33 </span>→ <span class="hljs-number">64</span><br></code></pre></td></tr></table></figure>
+
+<p>  注意：</p>
+  <figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-keyword">new</span> <span class="hljs-type">HashMap</span>&lt;&gt;(<span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
+
+<p>  构造时不会立即创建长度为 16 的数组，而是在第一次 <code>put()</code> 时真正初始化。</p>
+</li>
+<li><p><strong>20. HashMap 有哪些核心参数需要记？</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>默认容量</td>
+<td>16</td>
+<td>默认数组容量</td>
+</tr>
+<tr>
+<td>默认负载因子</td>
+<td>0.75</td>
+<td>控制扩容阈值</td>
+</tr>
+<tr>
+<td><code>TREEIFY_THRESHOLD</code></td>
+<td>8</td>
+<td>树化阈值</td>
+</tr>
+<tr>
+<td><code>UNTREEIFY_THRESHOLD</code></td>
+<td>6</td>
+<td>退化阈值</td>
+</tr>
+<tr>
+<td><code>MIN_TREEIFY_CAPACITY</code></td>
+<td>64</td>
+<td>最小树化容量</td>
+</tr>
+</tbody></table>
+<p>  核心公式：</p>
+  <figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">threshold</span> <span class="hljs-operator">=</span> capacity × loadFactor<br></code></pre></td></tr></table></figure>
+
+<p>  索引：</p>
+  <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">(n - <span class="hljs-number">1</span>) <span class="hljs-meta">&amp; hash</span><br></code></pre></td></tr></table></figure>
+
+<p>  二次 Hash：</p>
+  <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">h</span><span class="hljs-regexp"> ^</span> (h &gt;&gt;&gt; <span class="hljs-number">16</span>)<br></code></pre></td></tr></table></figure>
+
+<p>  JDK 8 扩容迁移：</p>
+  <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs 1c">(hash <span class="hljs-meta">&amp; oldCap) == 0</span><br>    → 原位置<br><br>(hash <span class="hljs-meta">&amp; oldCap) != 0</span><br>    → 原位置 + oldCap<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="Java的IO模型"><a href="#Java的IO模型" class="headerlink" title="Java的IO模型"></a>Java的IO模型</h3><h4 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h4><blockquote>
-<p>Blocking IO，阻塞式IO</p>
-</blockquote>
-<p>应用发起系统调用后，程序会一直阻塞，直到内核把数据拷贝到用户空间</p>
-<h4 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h4><blockquote>
-<p>Non blocking IO，非阻塞IO</p>
-</blockquote>
-<p><strong>非阻塞式IO类型</strong>：</p>
-<ul>
-<li><strong>同步非阻塞</strong>：线程发起一个 read 调用，如果没有数据，会立即返回。这个时候应用程序可以不阻塞等待，而是切换去做一些小的计算任务，然后很快回来继续发起 read 调用<ul>
-<li>优点：比BIO高效</li>
-<li>缺点：轮询消耗CPU资源</li>
-</ul>
-</li>
-<li><strong>多路复用</strong>（Java使用这个）：所有请求都会注册到<code>Selector</code>选择器上，该线程不断轮询，只有真正有数据到达时，线程才会读取<ul>
-<li>优点：通过减少无效的系统调用，减少了对 CPU 资源的消耗</li>
-</ul>
-</li>
-</ul>
-<p><strong>NIO核心组件</strong>：</p>
-<ul>
-<li><strong>Buffer（缓冲区）</strong>：NIO 读写数据都是通过缓冲区进行操作的。读操作的时候将 Channel 中的数据填充到 Buffer 中，而写操作时将 Buffer 中的数据写入到 Channel 中。</li>
-<li><strong>Channel（通道）</strong>：Channel 是一个双向的、可读可写的数据传输通道，NIO 通过 Channel 来实现数据的输入输出。通道是一个抽象的概念，它可以代表文件、套接字或者其他数据源之间的连接。</li>
-<li><strong>Selector（选择器）</strong>：允许一个线程处理多个 Channel，基于事件驱动的 I&#x2F;O 多路复用模型。所有的 Channel 都可以注册到 Selector 上，由 Selector 来分配线程来处理事件。</li>
-</ul>
-<h4 id="AIO"><a href="#AIO" class="headerlink" title="AIO"></a>AIO</h4><blockquote>
-<p>异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作</p>
-</blockquote>
 <h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><h4 id="5种实现方式"><a href="#5种实现方式" class="headerlink" title="5种实现方式"></a>5种实现方式</h4><h5 id="1-饿汉式"><a href="#1-饿汉式" class="headerlink" title="1.饿汉式"></a>1.饿汉式</h5><blockquote>
 <p>要点：构造方法私有、静态成员变量、静态方法</p>
 </blockquote>
