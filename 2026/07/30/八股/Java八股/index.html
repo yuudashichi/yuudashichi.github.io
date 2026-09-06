@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://yuudashichi.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="https://yuudashichi.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.316Z">
-<meta property="article:modified_time" content="2026-09-03T02:30:25.691Z">
+<meta property="article:modified_time" content="2026-09-06T07:47:19.079Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -925,15 +925,12 @@
 
 <p>  将高 16 位信息混入低 16 位，使低位分布更均匀，减少 Hash 冲突。</p>
 </li>
-<li><p><strong>11. 为什么 HashMap 容量必须是 2 的幂？</strong></p>
+<li><p><strong>11. 为什么 HashMap 容量是 2 的幂？</strong></p>
 <ol>
-<li><p>可以使用<code>hash &amp; (n - 1)</code>代替 <code>% n</code> 计算索引</p>
+<li><p>位运算效率更高：可以使用<code>hash &amp; (n - 1)</code>代替 <code>% n</code> 计算索引</p>
 </li>
-<li><p>扩容为 2 倍后，节点位置只可能是：</p>
- <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">原位置<br>原位置 + oldCap<br></code></pre></td></tr></table></figure>
-
-<p> 只需判断：</p>
- <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">hash <span class="hljs-meta">&amp; oldCap</span><br></code></pre></td></tr></table></figure></li>
+<li><p>简化扩容机制：扩容为 2 倍后，节点位置只可能是<code>原位置</code>或<code>原位置 + oldCap</code>，扩容只需判断<code>hash &amp; oldCap</code>就能知道节点是位置</p>
+</li>
 </ol>
 </li>
 <li><p><strong>12. JDK 8 的 put() 流程是什么？</strong></p>
@@ -1134,6 +1131,24 @@
 <p>  JDK 8 扩容迁移：</p>
   <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs 1c">(hash <span class="hljs-meta">&amp; oldCap) == 0</span><br>    → 原位置<br><br>(hash <span class="hljs-meta">&amp; oldCap) != 0</span><br>    → 原位置 + oldCap<br></code></pre></td></tr></table></figure></li>
 </ul>
+<h4 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h4><p><strong>线程安全机制</strong>：</p>
+<ul>
+<li><p>**<code>put</code>**：</p>
+<ul>
+<li><p><strong>桶为空时</strong>：使用**<code>CAS</code>**操作</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 原子操作，失败会重新进入外层循环，重新读取 table 和桶状态，再决定怎么插入。</span><br>casTabAt(tab, i, <span class="hljs-literal">null</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>&lt;&gt;(hash, key, value))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>桶不为空时</strong>：使用**<code>synchronized</code>**锁住桶的头节点</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">synchronized</span> (f) &#123;<br>    <span class="hljs-comment">// 遍历链表</span><br>    <span class="hljs-comment">// 修改/插入节点</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code>get</code><strong>：不加锁，使用</strong><code>volatile</code>**保证可见性</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 在节点的关键字段以及数组槽位访问会使用volatile</span><br><span class="hljs-keyword">volatile</span> V val;<br><span class="hljs-keyword">volatile</span> Node&lt;K,V&gt; next;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>扩容<code>resize()</code><strong>：</strong>多个线程</strong>通过<code>CAS</code>从<code>transferIndex</code>中领取不同区间，各自搬一部分桶。</p>
+<p>  <code>size</code>分成<code>baseCount</code>和多个<code>counterCells</code>分段计数，会先CAS修改<code>baseCount</code>，失败了则修改某个<code>counterCell</code>；获取时则<code>baseCount + counterCells</code></p>
+  <figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">// 多线程扩容流程</span><br><br>线程A触发 <span class="hljs-built_in">resize</span><br>      ↓<br>创建 nextTable<br>      ↓<br>transferIndex = oldCap，还未扩容的最大桶下标。假设旧容量为<span class="hljs-number">64</span><br>      ↓<br>写操作发现ForwardingNode会帮忙扩容，读操作则去新数组获取。<br>      ↓<br>多个线程 CAS 抢迁移区间<br>A：<span class="hljs-number">48</span>~<span class="hljs-number">63</span><br>B：<span class="hljs-number">32</span>~<span class="hljs-number">47</span><br>C：<span class="hljs-number">16</span>~<span class="hljs-number">31</span><br>D：<span class="hljs-number">0</span>~<span class="hljs-number">15</span><br>各自迁移桶<br>      ↓<br>迁移完成的桶放ForwardingNode（<span class="hljs-built_in">hash</span> = <span class="hljs-number">-1</span>的节点）<br>      ↓<br>所有桶完成<br>      ↓<br>table = nextTable<br></code></pre></td></tr></table></figure></li>
+</ul>
 <h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><h4 id="5种实现方式"><a href="#5种实现方式" class="headerlink" title="5种实现方式"></a>5种实现方式</h4><h5 id="1-饿汉式"><a href="#1-饿汉式" class="headerlink" title="1.饿汉式"></a>1.饿汉式</h5><blockquote>
 <p>要点：构造方法私有、静态成员变量、静态方法</p>
 </blockquote>
@@ -1174,19 +1189,28 @@
 <li><p>Collections中用到一些空集合时，这个空的集合用到了单例，如EmptyNavigableSet，为内部类式</p>
 </li>
 </ol>
-<h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><h3 id="线程有哪些状态"><a href="#线程有哪些状态" class="headerlink" title="线程有哪些状态"></a>线程有哪些状态</h3><ul>
-<li><p>java线程分成六种状态</p>
+<h2 id="并发核心问题"><a href="#并发核心问题" class="headerlink" title="并发核心问题"></a>并发核心问题</h2><h3 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h3><p><strong>线程</strong>是进程划分的更小的运行单位。一个进程可以有多个线程，<strong>多个线程共享进程的堆和元空间</strong></p>
+<ul>
+<li><strong>堆</strong>：存放运行时创建的对象</li>
+<li><strong>元空间</strong>：存放类的元数据（类结构、方法信息、字段信息和常量池等）</li>
+</ul>
+<p>每个线程有自己的：</p>
+<ul>
+<li><strong>程序计数器</strong>：记录当前线程下一条要执行的字节码指令的地址</li>
+<li><strong>虚拟机栈</strong>：存储Java方法执行时创建的栈帧</li>
+<li><strong>本地方法栈</strong>：存储native方法执行时的栈帧</li>
+</ul>
+<h3 id="线程有哪些状态"><a href="#线程有哪些状态" class="headerlink" title="线程有哪些状态"></a>线程有哪些状态</h3><p>Java线程分成六种状态</p>
 <ol>
 <li><strong>NEW-新建</strong>：线程刚刚创建出来，还没有跟操作系统底层的线程关联起来</li>
-<li><strong>RUNNABLE-可运行</strong>：java线程调用start()后，跟操作系统的线程相关联，代码由操作系统交给CPU执行</li>
-<li><strong>TERMINATED-终结</strong>：代码执行完毕</li>
+<li><strong>RUNNABLE-可运行</strong>：Java线程调用<code>start()</code>后，跟操作系统的线程相关联，代码由操作系统交给CPU执行</li>
 <li><strong>BLOCKED-阻塞</strong>：线程没获取到锁时进入阻塞状态</li>
 <li><strong>WAITING-等待</strong>：获取到锁了，但发现运行所需条件不满足，调用wait()进入等待状态，会释放锁；当条件满足时，由其他线程调用notify()唤醒线程</li>
 <li><strong>TIMED_WAITING-有时限等待</strong>：是等待状态的有时限版。还有调用sleep()也是进入有时限等待状态</li>
+<li><strong>TERMINATED-终结</strong>：该线程的代码执行完毕</li>
 </ol>
 <p><img src="/img/else_img/java%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>操作系统层面分为五种状态</p>
+<p>操作系统层面分为五种状态</p>
 <ol>
 <li><strong>运行</strong>：分到CPU时间片</li>
 <li><strong>就绪</strong>：可以分到CPU时间片</li>
@@ -1196,8 +1220,6 @@
 <p>Java中的RUNNABLE涵盖就绪、运行、阻塞I&#x2F;O</p>
 </blockquote>
 <p><img src="/img/else_img/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ul>
 <h3 id="线程池的核心参数"><a href="#线程池的核心参数" class="headerlink" title="线程池的核心参数"></a>线程池的核心参数</h3><p>​	<img src="/img/else_img/%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8F%82%E6%95%B0.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>线程池</strong>：管理一组线程，执行提交给线程池的任务</p>
 <p><strong>线程池主要参数</strong>：</p>
@@ -1251,27 +1273,23 @@
 </li>
 </ol>
 <p>​	</p>
-<h3 id="sleep-amp-wait"><a href="#sleep-amp-wait" class="headerlink" title="sleep &amp; wait"></a>sleep &amp; wait</h3><p><strong>共同点</strong>：</p>
-<ul>
-<li>wait()、wait(long)、sleep(long) 都是让线程放弃CPU的使用权，进入阻塞状态</li>
-</ul>
+<h3 id="sleep-amp-wait"><a href="#sleep-amp-wait" class="headerlink" title="sleep() &amp; wait()"></a>sleep() &amp; wait()</h3><p><strong>共同点</strong>：都是让线程放弃CPU的使用权，进入阻塞状态</p>
 <p><strong>不同点</strong>：</p>
 <ul>
 <li>方法归属不同<ol>
-<li>sleep(long)是Thread的静态方法</li>
-<li>wait()、wait(long)是Object的成员方法</li>
+<li><code>sleep(long)</code>是<code>Thread</code>的静态方法</li>
+<li><code>wait()</code>、<code>wait(long)</code>是<code>Object</code>的成员方法</li>
 </ol>
 </li>
 <li>醒来时机不同<ol>
-<li>sleep(long)和wait(long)在等够时间后被唤醒</li>
-<li>wait()和wait(long)还可以被notify()&#x2F;notifyAll()唤醒</li>
-<li>都可以通过interrupt()打断来唤醒（唤醒，抛出异常）</li>
+<li><code>sleep(long)</code>和<code>wait(long)</code>在等够时间后被唤醒</li>
+<li><code>wait()</code>和<code>wait(long)</code>还可以被<code>notify()/notifyAll()</code>唤醒</li>
+<li>都可以通过<code>interrupt()</code>打断来唤醒（唤醒，抛出异常）</li>
 </ol>
 </li>
 <li>锁特性不同<ol>
-<li>调用wait()方法必须先获取到锁</li>
-<li>wait()方法执行后会释放锁</li>
-<li>而sleep()和synchronized代码块一起使用则不会释放锁</li>
+<li>调用<code>wait()</code>方法必须先获取到锁</li>
+<li><code>wait()</code>方法执行后会释放锁，而<code>sleep()</code>和<code>synchronized</code>代码块一起使用则不会释放锁</li>
 </ol>
 </li>
 </ul>
@@ -1298,6 +1316,19 @@
 <ul>
 <li>在竞争少时synchronized做了很多优化，性能好</li>
 <li>竞争多时Lock性能更好</li>
+</ul>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p><strong>产生死锁的必要条件</strong>：</p>
+<ul>
+<li>互斥：该资源任意一个时刻只由一个线程占用</li>
+<li>请求与保持：一个线程因请求资源而阻塞时，对已获得的资源保持不放</li>
+<li>不剥夺：线程已获得的资源在未使用完之前不能被其他线程强行剥夺</li>
+<li>循环等待：若干线程之间形成一种头尾相接的循环等待资源关系</li>
+</ul>
+<p><strong>预防和避免死锁</strong>：</p>
+<ul>
+<li>破坏请求与保持：一次性申请所有资源</li>
+<li>破坏不剥夺：申请不到资源时，主动释放它占有的资源</li>
+<li>破坏循环等待：按某一顺序申请资源</li>
 </ul>
 <h3 id="volatile能否保证线程安全"><a href="#volatile能否保证线程安全" class="headerlink" title="volatile能否保证线程安全"></a>volatile能否保证线程安全</h3><p>线程安全要考虑三个方法：</p>
 <ol>
@@ -1328,34 +1359,6 @@
 </ol>
 </li>
 </ol>
-<h3 id="Hashtable-vs-ConcurrentHashMap"><a href="#Hashtable-vs-ConcurrentHashMap" class="headerlink" title="Hashtable vs ConcurrentHashMap"></a>Hashtable vs ConcurrentHashMap</h3><ol>
-<li>都是线程安全的Map集合</li>
-<li>Hashtable并发度低，整个Hashtable只有一把锁，同时只能一个线程操作它</li>
-<li>1.8开始ConcurrentHashMap将每个数组的头结点作为锁，多个线程访问不同的头结点不会产生冲突</li>
-</ol>
-<p><strong>ConcurrentHashMap</strong>：</p>
-<ol>
-<li><p>结构：数组+链表|红黑树</p>
-</li>
-<li><p>到达容量的0.75就会扩容</p>
-</li>
-<li><p>属性：</p>
-<ul>
-<li>capacity：假定capacity为要放进来的元素的个数，通过capacity来计算数组的长度。（HashMap的capacity意思为初始数组长度）</li>
-<li>factor：扩容的阈值，只在初始化时使用，之后都按0.75计算</li>
-</ul>
-</li>
-<li><p>因为每个数组的头结点都分别有一把锁，故并发度高</p>
-</li>
-<li><p>扩容流程：</p>
-<ul>
-<li>从最后一个数组节点开始扩容；</li>
-<li>链表迁移是通过复制<em><strong>新的</strong></em>链表元素到新数组中，防止迁移过程中链表的next指针发生变动造成的影响影响;</li>
-<li>扩容完后给原数组节点的头结点置<code>forwardingNode</code>，表示已经扩容完毕。</li>
-<li>必须等整个map扩容完才能执行put操作，如果来put的线程发现map正在扩容，可以来帮忙扩容。</li>
-</ul>
-</li>
-</ol>
 <h3 id="谈谈对ThreadLocal的理解"><a href="#谈谈对ThreadLocal的理解" class="headerlink" title="谈谈对ThreadLocal的理解"></a>谈谈对ThreadLocal的理解</h3><p><strong>作用</strong>：可以实现资源对象线程间的隔离，线程内的共享</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Utils</span>&#123;<br>    <span class="hljs-comment">// 线程间使用不同的资源，线程间隔离</span><br>    <span class="hljs-comment">// 线程内共享同一个资源</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;Connection&gt; t1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>&lt;&gt;();<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> t1.get();<br>        <span class="hljs-keyword">if</span> (conn == <span class="hljs-literal">null</span>) &#123;<br>            conn = innerGetConnection();	<span class="hljs-comment">// 创建新的连接对象</span><br>            t1.set(conn);<br>        &#125;<br>        <span class="hljs-keyword">return</span> conn;<br>    &#125;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">innerGetConnection</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> DriverManager.getConnection(<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/test?userSSL=false&quot;</span>, <span class="hljs-string">&quot;root&quot;</span>, <span class="hljs-string">&quot;123456&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -1374,20 +1377,6 @@
 </ul>
 </li>
 </ul>
-<h3 id="快速失败-fail-fast-和安全失败-fail-safe"><a href="#快速失败-fail-fast-和安全失败-fail-safe" class="headerlink" title="快速失败(fail-fast)和安全失败(fail-safe)"></a>快速失败(fail-fast)和安全失败(fail-safe)</h3><p><strong>快速失败</strong></p>
-<ul>
-<li>java.util包下的集合类都是快速失败的，如ArrayList</li>
-<li>迭代器中使用modCount记录原集合被修改的次数，每遍历一个元素时，都会和原数组中的modCount值进行比较，不一致直接抛出<code>Concurrent Modification Exception</code>异常</li>
-</ul>
-<p><strong>安全失败</strong></p>
-<ul>
-<li>java.util.concurrent包下的容器都是安全失败，如CopyOnWriteArrayList</li>
-<li>遍历时不是直接在集合内容上访问的，而是先 复制原有集合内容，在拷贝的集合上进行遍历</li>
-<li>缺点：迭代器遍历的是开始遍历那一刻拿 到的集合拷贝，在遍历期间原集合发生的修改迭代器是不知道的</li>
-</ul>
-<blockquote>
-<p>CopyOnWriteArrayList采用了一种<strong>读写分离</strong>的并发策略。CopyOnWriteArrayList容器 允许并发读，读操作是无锁的，性能较高。至于写操作，比如向容器中添加一个元 素，则首先将当前容器复制一份，然后在新副本上执行写操作，结束之后再将原容 器的引用指向新容器。</p>
-</blockquote>
 <h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h3><ul>
 <li>Java Source：源代码</li>
 <li>Java Class：字节码</li>
