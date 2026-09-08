@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://yuudashichi.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="https://yuudashichi.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.316Z">
-<meta property="article:modified_time" content="2026-09-06T07:47:19.079Z">
+<meta property="article:modified_time" content="2026-09-07T09:31:38.194Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          93 分钟
+          97 分钟
         
       </span>
     
@@ -1329,6 +1329,25 @@
 <li>破坏请求与保持：一次性申请所有资源</li>
 <li>破坏不剥夺：申请不到资源时，主动释放它占有的资源</li>
 <li>破坏循环等待：按某一顺序申请资源</li>
+</ul>
+<h3 id="JMM"><a href="#JMM" class="headerlink" title="JMM"></a>JMM</h3><blockquote>
+<p>Java Memory Model，<strong>Java内存模型</strong>， 可以看作是 Java 定义的<strong>并发编程相关的一组规范</strong>，除了<strong>抽象了线程和主内存之间的关系</strong>之外，其还 <strong>规定了从Java 源代码到 CPU 可执行指令的这个转化过程要遵守哪些和并发相关的原则和规范</strong></p>
+</blockquote>
+<p><strong>JMM定义的抽象规范</strong>：</p>
+<ul>
+<li><strong>主内存</strong>：线程之间可以共享的变量，包括实例字段、静态字段和数组元素</li>
+<li><strong>本地内存</strong>：每个线程的私有内存</li>
+</ul>
+<p><strong>happens-before 原则</strong>：只要不改变程序的执行结果，编译器和处理器怎么进行重排序优化都行</p>
+<ul>
+<li>如果一个操作 happens-before 另一个操作，那么第一个操作的执行结果将对第二个操作可见，并且第一个操作的执行顺序排在第二个操作之前</li>
+<li>两个操作之间存在 happens-before 关系，并不意味着 Java 平台的具体实现必须要按照 happens-before 关系指定的顺序来执行。如果重排序之后的执行结果，与按 happens-before 关系来执行的结果一致，那么 JMM 也允许这样的重排序</li>
+</ul>
+<p><strong>并发编程重要特性</strong>：</p>
+<ul>
+<li><strong>原子性</strong>：<strong>一次操作或者多次操作，要么所有的操作全部都得到执行要么全不执行</strong>。可以借助 <code>synchronized</code>、各种 <code>Lock</code> 以及各种原子类实现原子性。</li>
+<li><strong>可见性</strong>：<strong>对共享变量的修改，对其它线程都立即可见到最新值</strong>。可以借助 <code>synchronized</code>、<code>volatile</code> 以及各种 <code>Lock</code> 实现可见性。</li>
+<li><strong>有序性</strong>：<strong>代码的执行顺序是编写代码时候的顺序</strong>。指令重排和多线程会破坏有序性</li>
 </ul>
 <h3 id="volatile能否保证线程安全"><a href="#volatile能否保证线程安全" class="headerlink" title="volatile能否保证线程安全"></a>volatile能否保证线程安全</h3><p>线程安全要考虑三个方法：</p>
 <ol>
