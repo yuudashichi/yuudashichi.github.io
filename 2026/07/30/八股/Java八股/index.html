@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://yuudashichi.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="https://yuudashichi.github.io/img/else_img/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2026-07-30T02:34:03.316Z">
-<meta property="article:modified_time" content="2026-09-08T09:30:12.995Z">
+<meta property="article:modified_time" content="2026-09-14T08:32:36.515Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="八股">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
         
-          96 分钟
+          97 分钟
         
       </span>
     
@@ -1382,29 +1382,63 @@
 <h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><blockquote>
 <p>volatile可以保证变量的<strong>可见性</strong>和<strong>有序性</strong></p>
 </blockquote>
-<p>通过读写屏障实现可见性和有序性</p>
+<p>通过<strong>读写屏障</strong>实现可见性和有序性</p>
 <p><strong>volatile写</strong>：</p>
+<blockquote>
+<p>保证了在读取volatile变量时，volatile及之前的写操作都是可见的</p>
+</blockquote>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">普通写<br> ↓<br>StoreStore		<span class="hljs-regexp">//</span> 禁止前面的写跑到volatile后面<br> ↓<br>volatile 写<br> ↓<br>StoreLoad		<span class="hljs-regexp">//</span> 禁止volatile写和后面的读写发生关键重排序<br></code></pre></td></tr></table></figure>
 
 <p><strong>volatile读</strong>：</p>
+<blockquote>
+<p>保证了在读取volatile变量时，之后的写操作都是不可见的</p>
+</blockquote>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">volatile</span> 读<br> ↓<br>LoadLoad<br>LoadStore<br> ↓<br>后续普通读写<br></code></pre></td></tr></table></figure>
 
-
-
-<h3 id="乐观锁-amp-悲观锁"><a href="#乐观锁-amp-悲观锁" class="headerlink" title="乐观锁 &amp; 悲观锁"></a>乐观锁 &amp; 悲观锁</h3><ol>
-<li><strong>悲观锁</strong>的代表是synchronized和Lock<ol>
-<li>核心是只有占有了锁才能操作共享变量</li>
-<li>线程从运行-&gt;阻塞-&gt;唤醒涉及上下文切换，频繁的话影响性能</li>
-<li>获取锁时判断已被上锁，会尝试重试几次，减少阻塞的机会（自旋）</li>
-</ol>
-</li>
-<li><strong>乐观锁</strong>的代表是AtomicInteger（原子整数），使用cas保证原子性<ol>
-<li>核心是无需加锁，每次只有一个线程成功修改共享变量，其他线程不断重试直至成功（CAS的赋值操作是原子性的）</li>
-<li>没有阻塞，不涉及上下文切换</li>
-<li>需要多核cpu支持，且线程数不应超过cpu核数（超过了仍然会出现上下文切换）</li>
-</ol>
-</li>
-</ol>
+<h3 id="悲观锁-amp-乐观锁"><a href="#悲观锁-amp-乐观锁" class="headerlink" title="悲观锁 &amp; 乐观锁"></a>悲观锁 &amp; 乐观锁</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>乐观锁</th>
+<th>悲观锁</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>核心思想</td>
+<td>总是<strong>假设最好的情况</strong>，认为共享资源每次被访问的时候不会出现问题，线程可以不停地执行，无需加锁也无需等待，只是在提交修改的时候去验证对应的资源是否被其它线程修改了</td>
+<td>总是<strong>假设最坏的情况</strong>，认为共享资源每次被访问的时候就会出现问题，所以每次在获取资源操作的时候都会上锁</td>
+</tr>
+<tr>
+<td>优点</td>
+<td>不阻塞线程，并发性能高</td>
+<td>冲突处理简单，数据一致性强</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>冲突频繁时会大量重试，性能下降</td>
+<td>加锁和阻塞开销大，并发能力较低</td>
+</tr>
+<tr>
+<td>是否阻塞</td>
+<td>通常不阻塞</td>
+<td>会阻塞其他线程</td>
+</tr>
+<tr>
+<td>适合场景</td>
+<td>读多写少、冲突较少</td>
+<td>写多、冲突频繁</td>
+</tr>
+<tr>
+<td>常见实现</td>
+<td>CAS、版本号 <code>version</code></td>
+<td><code>synchronized</code>、<code>ReentrantLock</code>、数据库 <code>SELECT ... FOR UPDATE</code></td>
+</tr>
+<tr>
+<td>典型问题</td>
+<td>ABA问题、CAS自旋消耗CPU</td>
+<td>死锁、锁竞争、线程上下文切换开销</td>
+</tr>
+</tbody></table>
 <h3 id="谈谈对ThreadLocal的理解"><a href="#谈谈对ThreadLocal的理解" class="headerlink" title="谈谈对ThreadLocal的理解"></a>谈谈对ThreadLocal的理解</h3><p><strong>作用</strong>：可以实现资源对象线程间的隔离，线程内的共享</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Utils</span>&#123;<br>    <span class="hljs-comment">// 线程间使用不同的资源，线程间隔离</span><br>    <span class="hljs-comment">// 线程内共享同一个资源</span><br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;Connection&gt; t1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>&lt;&gt;();<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">getConnection</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> t1.get();<br>        <span class="hljs-keyword">if</span> (conn == <span class="hljs-literal">null</span>) &#123;<br>            conn = innerGetConnection();	<span class="hljs-comment">// 创建新的连接对象</span><br>            t1.set(conn);<br>        &#125;<br>        <span class="hljs-keyword">return</span> conn;<br>    &#125;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Connection <span class="hljs-title function_">innerGetConnection</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> DriverManager.getConnection(<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/test?userSSL=false&quot;</span>, <span class="hljs-string">&quot;root&quot;</span>, <span class="hljs-string">&quot;123456&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
