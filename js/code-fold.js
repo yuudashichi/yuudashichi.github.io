@@ -1,21 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-  const codeBlocks = document.querySelectorAll(
-    "figure.highlight, pre.highlight, .markdown-body pre"
-  );
+  const codeBlocks = document.querySelectorAll("figure.highlight");
 
   codeBlocks.forEach(function (codeBlock) {
 
-    if (codeBlock.parentElement.classList.contains("code-fold-wrapper")) {
+    // 防止重复初始化
+    if (codeBlock.dataset.foldInitialized === "true") {
       return;
     }
 
-    // 获取代码内容
-    const code = codeBlock.innerText;
+    codeBlock.dataset.foldInitialized = "true";
 
-    // 不超过 8 行，不折叠
-    const lineCount = code.split("\n").length;
+    // 代码行数
+    const lineCount = codeBlock.querySelectorAll(".code .line").length;
 
+    // 8 行及以下不折叠
     if (lineCount <= 8) {
       return;
     }
@@ -28,20 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const button = document.createElement("button");
     button.className = "code-fold-btn";
-    button.innerText = "展开代码 ▼";
+    button.type = "button";
+    button.innerHTML = "展开代码 ▼";
 
     wrapper.appendChild(button);
 
     button.addEventListener("click", function () {
-
       const collapsed = wrapper.classList.toggle("collapsed");
 
-      button.innerText = collapsed
+      button.innerHTML = collapsed
         ? "展开代码 ▼"
         : "收起代码 ▲";
-
     });
-
   });
-
 });
