@@ -5,20 +5,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
   codeBlocks.forEach(function (codeBlock) {
 
-    // 防止重复初始化
     if (codeBlock.dataset.foldInitialized === "true") {
       return;
     }
 
-    codeBlock.dataset.foldInitialized = "true";
+    // 优先通过 .line 统计
+    let lineCount = codeBlock.querySelectorAll(".code .line").length;
 
-    // 代码行数
-    const lineCount = codeBlock.querySelectorAll(".code .line").length;
+    // 如果没有 .line，则尝试通过行号统计
+    if (lineCount === 0) {
+      lineCount = codeBlock.querySelectorAll(".gutter .line").length;
+    }
+
+    // 再兜底用文本换行统计
+    if (lineCount === 0) {
+      const codeElement =
+        codeBlock.querySelector("td.code pre") ||
+        codeBlock.querySelector("pre");
+
+      if (codeElement) {
+        lineCount = codeElement.textContent
+          .trimEnd()
+          .split("\n")
+          .length;
+      }
+    }
+
+    console.log("代码行数:", lineCount);
 
     // 8 行及以下不折叠
     if (lineCount <= 8) {
       return;
     }
+
+    // 确定需要折叠后，再标记
+    codeBlock.dataset.foldInitialized = "true";
 
     const wrapper = document.createElement("div");
     wrapper.className = "code-fold-wrapper collapsed";
@@ -29,14 +50,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const button = document.createElement("button");
     button.className = "code-fold-btn";
     button.type = "button";
-    button.innerHTML = "展开代码 ▼";
+    button.textContent = "展开代码 ▼";
 
     wrapper.appendChild(button);
 
     button.addEventListener("click", function () {
       const collapsed = wrapper.classList.toggle("collapsed");
 
-      button.innerHTML = collapsed
+      button.textContent = collapsed
         ? "展开代码 ▼"
         : "收起代码 ▲";
     });
