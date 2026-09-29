@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const codeBlocks = document.querySelectorAll("figure.highlight");
+  const codeBlocks = document.querySelectorAll(
+    ".markdown-body figure.highlight"
+  );
 
   codeBlocks.forEach(function (codeBlock) {
 
