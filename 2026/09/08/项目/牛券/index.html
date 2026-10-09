@@ -23,10 +23,17 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="后台管理创建优惠券表结构123456789101112131415161718192021CREATE TABLE &#96;t_coupon_template&#96;(    &#96;id&#96;               bigint(20) NOT NULL AUTO_INCREMENT COMMENT &amp;#x27;ID&amp;#x27;,    &#96;name&#96;             varchar(256) DEFAU">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yuudashichi.github.io/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B1.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B2.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B3.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B4.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B5.png">
+<meta property="og:image" content="https://yuudashichi.github.io/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B6.png">
 <meta property="article:published_time" content="2026-09-08T01:30:04.779Z">
-<meta property="article:modified_time" content="2026-09-30T08:59:59.149Z">
+<meta property="article:modified_time" content="2026-10-09T06:18:44.890Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yuudashichi.github.io/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B1.png">
   
   
   
@@ -228,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          20k 字
+          21k 字
         
       </span>
     
@@ -239,7 +246,7 @@
         
         
         
-          166 分钟
+          177 分钟
         
       </span>
     
@@ -848,9 +855,82 @@
 
 
 
+<h1 id="结算服务"><a href="#结算服务" class="headerlink" title="结算服务"></a>结算服务</h1><h2 id="查询可用优惠券"><a href="#查询可用优惠券" class="headerlink" title="查询可用优惠券"></a>查询可用优惠券</h2><blockquote>
+<p>请求参数：订单金额，店铺编号，商品集合</p>
+<p>响应：优惠券可用和不可用列表，优惠券包括明细和减免金额</p>
+<p>流程：</p>
+<ol>
+<li>从redis中查询用户可用优惠券，再批量获取优惠券模板（<strong>pipeline批量读取，减少多次查询的往返时间</strong>）</li>
+<li>按照店铺通用券和指定商品券分类，分开计算优惠金额和是否可用（<strong>多线程并行计算</strong>）</li>
+<li>按照优惠金额降序排序</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> QueryCouponsRespDTO <span class="hljs-title function_">listQueryUserCoupons</span><span class="hljs-params">(QueryCouponsReqDTO requestParam)</span> &#123;<br>    <span class="hljs-comment">// Step 1: 获取 Redis 中的用户优惠券列表</span><br>    Set&lt;String&gt; rangeUserCoupons = stringRedisTemplate.opsForZSet().range(<br>            String.format(USER_COUPON_TEMPLATE_LIST_KEY, UserContext.getUserId()), <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>);<br><br>    <span class="hljs-keyword">if</span> (rangeUserCoupons == <span class="hljs-literal">null</span> || rangeUserCoupons.isEmpty()) &#123;<br>        <span class="hljs-keyword">return</span> QueryCouponsRespDTO.builder()<br>                .availableCouponList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;())<br>                .notAvailableCouponList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;())<br>                .build();<br>    &#125;<br><br>    <span class="hljs-comment">// 构建 Redis Key 列表</span><br>    List&lt;String&gt; couponTemplateIds = rangeUserCoupons.stream()<br>            .map(each -&gt; StrUtil.split(each, <span class="hljs-string">&quot;_&quot;</span>).get(<span class="hljs-number">0</span>))<br>            .map(each -&gt; redisDistributedProperties.getPrefix() + String.format(COUPON_TEMPLATE_KEY, each))<br>            .toList();<br><br>    <span class="hljs-comment">// 使用 Pipeline 批量查询优惠券模板</span><br>    List&lt;Object&gt; rawCouponDataList = stringRedisTemplate.executePipelined((RedisCallback&lt;Object&gt;) connection -&gt; &#123;<br>        couponTemplateIds.forEach(each -&gt; connection.hashCommands().hGetAll(each.getBytes()));<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;);<br><br>    <span class="hljs-comment">// 将结果转换为CouponTemplateQueryRespDTO，并按照 goods 字段分成两个列表</span><br>    Map&lt;Boolean, List&lt;CouponTemplateQueryRespDTO&gt;&gt; partitioned = JSON.parseArray(JSON.toJSONString(rawCouponDataList), CouponTemplateQueryRespDTO.class)<br>            .stream()<br>            .collect(Collectors.partitioningBy(coupon -&gt; StrUtil.isEmpty(coupon.getGoods())));<br><br>    <span class="hljs-comment">// 拆分后的两个列表</span><br>    List&lt;CouponTemplateQueryRespDTO&gt; goodsEmptyList = partitioned.get(<span class="hljs-literal">true</span>); <span class="hljs-comment">// goods 为空的列表</span><br>    List&lt;CouponTemplateQueryRespDTO&gt; goodsNotEmptyList = partitioned.get(<span class="hljs-literal">false</span>); <span class="hljs-comment">// goods 不为空的列表</span><br><br>    <span class="hljs-comment">// 针对当前订单可用/不可用的优惠券列表，使用线程安全的列表供后面并行判断</span><br>    List&lt;QueryCouponsDetailRespDTO&gt; availableCouponList = Collections.synchronizedList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;());<br>    List&lt;QueryCouponsDetailRespDTO&gt; notAvailableCouponList = Collections.synchronizedList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;());<br><br>    <span class="hljs-comment">// Step 2: 并行处理 goodsEmptyList 和 goodsNotEmptyList 中的每个元素</span><br>    CompletableFuture&lt;Void&gt; emptyGoodsTasks = CompletableFuture.allOf(<br>            goodsEmptyList.stream()<br>                    .map(each -&gt; CompletableFuture.runAsync(() -&gt; &#123;<br>                        <span class="hljs-type">QueryCouponsDetailRespDTO</span> <span class="hljs-variable">resultCouponDetail</span> <span class="hljs-operator">=</span> BeanUtil.toBean(each, QueryCouponsDetailRespDTO.class);<br>                        <span class="hljs-type">JSONObject</span> <span class="hljs-variable">jsonObject</span> <span class="hljs-operator">=</span> JSON.parseObject(each.getConsumeRule());<br>                        <span class="hljs-comment">// 使用handleCouponLogic继续判断是否可用, 并计算优惠金额</span><br>                        handleCouponLogic(resultCouponDetail, jsonObject, requestParam.getOrderAmount(), availableCouponList, notAvailableCouponList);<br>                    &#125;, executorService))<br>                    .toArray(CompletableFuture[]::<span class="hljs-keyword">new</span>)<br>    );<br><br>    <span class="hljs-comment">// 获取订单里的商品，key为商品编号</span><br>    Map&lt;String, QueryCouponGoodsReqDTO&gt; goodsRequestMap = requestParam.getGoodsList().stream()<br>            .collect(Collectors.toMap(QueryCouponGoodsReqDTO::getGoodsNumber, Function.identity()));<br>    CompletableFuture&lt;Void&gt; notEmptyGoodsTasks = CompletableFuture.allOf(<br>            goodsNotEmptyList.stream()<br>                    .map(each -&gt; CompletableFuture.runAsync(() -&gt; &#123;<br>                        <span class="hljs-type">QueryCouponsDetailRespDTO</span> <span class="hljs-variable">resultCouponDetail</span> <span class="hljs-operator">=</span> BeanUtil.toBean(each, QueryCouponsDetailRespDTO.class);<br>                        <span class="hljs-type">QueryCouponGoodsReqDTO</span> <span class="hljs-variable">couponGoods</span> <span class="hljs-operator">=</span> goodsRequestMap.get(each.getGoods());<br>                        <span class="hljs-comment">// 如果订单中商品不包含优惠券指定的商品，则直接加入不可用列表中</span><br>                        <span class="hljs-keyword">if</span> (couponGoods == <span class="hljs-literal">null</span>) &#123;<br>                            notAvailableCouponList.add(resultCouponDetail);<br>                        &#125; <span class="hljs-keyword">else</span> &#123;<br>                            <span class="hljs-comment">// 使用handleCouponLogic继续判断是否可用, 并计算优惠金额</span><br>                            <span class="hljs-type">JSONObject</span> <span class="hljs-variable">jsonObject</span> <span class="hljs-operator">=</span> JSON.parseObject(each.getConsumeRule());<br>                            handleCouponLogic(resultCouponDetail, jsonObject, couponGoods.getGoodsAmount(), availableCouponList, notAvailableCouponList);<br>                        &#125;<br>                    &#125;, executorService))<br>                    .toArray(CompletableFuture[]::<span class="hljs-keyword">new</span>)<br>    );<br><br>    <span class="hljs-comment">// Step 3: 等待两个异步任务集合完成</span><br>    CompletableFuture.allOf(emptyGoodsTasks, notEmptyGoodsTasks)<br>            .thenRun(() -&gt; &#123;<br>                <span class="hljs-comment">// 与业内标准一致，按最终优惠力度从大到小排序</span><br>                availableCouponList.sort((c1, c2) -&gt; c2.getCouponAmount().compareTo(c1.getCouponAmount()));<br>            &#125;)<br>            .join();<br><br>    <span class="hljs-comment">// 构建最终结果并返回</span><br>    <span class="hljs-keyword">return</span> QueryCouponsRespDTO.builder()<br>            .availableCouponList(availableCouponList)<br>            .notAvailableCouponList(notAvailableCouponList)<br>            .build();<br>&#125;<br><br><span class="hljs-comment">// 优惠券判断逻辑，根据条件判断放入可用或不可用列表</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleCouponLogic</span><span class="hljs-params">(QueryCouponsDetailRespDTO resultCouponDetail, JSONObject jsonObject, BigDecimal amount,</span><br><span class="hljs-params">                               List&lt;QueryCouponsDetailRespDTO&gt; availableCouponList, List&lt;QueryCouponsDetailRespDTO&gt; notAvailableCouponList)</span> &#123;<br>    <span class="hljs-type">BigDecimal</span> <span class="hljs-variable">termsOfUse</span> <span class="hljs-operator">=</span> jsonObject.getBigDecimal(<span class="hljs-string">&quot;termsOfUse&quot;</span>);<br>    <span class="hljs-type">BigDecimal</span> <span class="hljs-variable">maximumDiscountAmount</span> <span class="hljs-operator">=</span> jsonObject.getBigDecimal(<span class="hljs-string">&quot;maximumDiscountAmount&quot;</span>);<br><br>    <span class="hljs-keyword">switch</span> (resultCouponDetail.getType()) &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: <span class="hljs-comment">// 立减券</span><br>            <span class="hljs-comment">// 直接可用，设置优惠金额</span><br>            resultCouponDetail.setCouponAmount(maximumDiscountAmount);<br>            availableCouponList.add(resultCouponDetail);<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>: <span class="hljs-comment">// 满减券</span><br>            <span class="hljs-comment">// 消费金额 &gt;= termsOfUse 才可用</span><br>            <span class="hljs-keyword">if</span> (amount.compareTo(termsOfUse) &gt;= <span class="hljs-number">0</span>) &#123;<br>                resultCouponDetail.setCouponAmount(maximumDiscountAmount);<br>                availableCouponList.add(resultCouponDetail);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                notAvailableCouponList.add(resultCouponDetail);<br>            &#125;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>: <span class="hljs-comment">// 折扣券</span><br>            <span class="hljs-comment">// 消费金额 &gt;= termsOfUse 才可用</span><br>            <span class="hljs-keyword">if</span> (amount.compareTo(termsOfUse) &gt;= <span class="hljs-number">0</span>) &#123;<br>                <span class="hljs-comment">// 计算折扣券的优惠金额 min(消费金额 * discountRate, 最大优惠金额)</span><br>                <span class="hljs-type">BigDecimal</span> <span class="hljs-variable">discountRate</span> <span class="hljs-operator">=</span> jsonObject.getBigDecimal(<span class="hljs-string">&quot;discountRate&quot;</span>);<br>                <span class="hljs-type">BigDecimal</span> <span class="hljs-variable">multiply</span> <span class="hljs-operator">=</span> amount.multiply(discountRate);<br>                <span class="hljs-keyword">if</span> (multiply.compareTo(maximumDiscountAmount) &gt;= <span class="hljs-number">0</span>) &#123;<br>                    resultCouponDetail.setCouponAmount(maximumDiscountAmount);<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    resultCouponDetail.setCouponAmount(multiply);<br>                &#125;<br>                availableCouponList.add(resultCouponDetail);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                notAvailableCouponList.add(resultCouponDetail);<br>            &#125;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">default</span>:<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClientException</span>(<span class="hljs-string">&quot;无效的优惠券类型&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
+<h1 id="压测"><a href="#压测" class="headerlink" title="压测"></a>压测</h1><h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><ul>
+<li>QPS：系统每秒能处理的<strong>请求数</strong>。通常与 Web 服务、数据库查询等相关</li>
+<li>TPS：系统每秒能处理的<strong>事务数</strong>。常用于描述涉及数据库操作或复杂业务场景的系统</li>
+</ul>
+<h2 id="Jmeter"><a href="#Jmeter" class="headerlink" title="Jmeter"></a>Jmeter</h2><blockquote>
+<p>Apache JMeter 是 Apache 开源的性能测试工具，主要用于对 HTTP 接口、Web 服务、数据库等进行压力测试。<strong>需要JDK 8+</strong></p>
+</blockquote>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li>官网下载Binary版本：<a target="_blank" rel="noopener" href="https://jmeter.apache.org/download_jmeter.cgi">https://jmeter.apache.org/download_jmeter.cgi</a></li>
+<li>解压，启动<code>bin</code>目录下的<code>jmeter.bat</code></li>
+</ol>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li><strong>Test Plan（测试计划）</strong>：整个测试任务的配置</li>
+<li><strong>Thread Group（线程组）</strong>：配置模拟用户数量、启动速度、循环次数</li>
+<li><strong>HTTP Request（HTTP 请求）</strong>：配置要测试的接口</li>
+<li><strong>HTTP Header Manager</strong>：配置请求头，如 Token、Content-Type</li>
+<li><strong>Listener（监听器）</strong>：查看响应结果、错误率、吞吐量等</li>
+<li><strong>Assertion（断言）</strong>：判断接口返回结果是否符合预期</li>
+</ul>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><ol>
+<li><p><strong>添加线程组</strong>：右键 <code>Test Plan</code> → <code>Add</code> → <code>Threads (Users)</code> → <code>Thread Group</code></p>
+</li>
+<li><p><strong>配置线程属性</strong>：如线程数：50、Ramp-Up：10、循环次数：20。表示在 10 秒内逐渐启动 50 个线程，每个线程执行 20 次</p>
+</li>
+<li><p><strong>添加Http请求</strong>：右键 <code>Thread Group</code> → <code>Add</code> → <code>Sampler</code> → <code>HTTP Request</code></p>
+</li>
+<li><p><strong>配置请求路径</strong>：如协议：http、服务器或IP：localhost、端口号：8080、HTTP请求：GET、路径：&#x2F;api&#x2F;coupons。</p>
+</li>
+<li><p><strong>添加请求头（可选）</strong>：右键 <code>Thread Group</code> → <code>Add</code> → <code>Config Element</code> → <code>HTTP Header Manager</code></p>
+</li>
+<li><p><strong>添加监听器</strong>：右键 <code>Thread Group</code> → <code>Add</code> → <code>Listener</code></p>
+<ul>
+<li>View Results Tree（查看结果树）：查看每个请求的状态码、响应内容以及失败原因</li>
+<li>Summary Report（汇总报告）：查看请求数、平均响应时间、吞吐量和错误率</li>
+<li>Aggregate Report（聚合报告）：查看平均值、中位数、百分位响应时间等</li>
+</ul>
+</li>
+<li><p><strong>启动</strong>：点击顶部绿色启动按钮。</p>
+<blockquote>
+<p>真实测试时推荐使用命令行，因为GUI本身会占用系统资源</p>
+<p>命令行命令：<code>.\jmeter.bat -n -t D:\jmeter-test\test.jmx -l D:\jmeter-test\result.jtl -e -o D:\jmeter-test\report</code></p>
+<ul>
+<li>-n：非GUI模式</li>
+<li>-t：指定测试计划<code>.jmx</code>文件</li>
+<li>-l：保存测试结果到<code>.jtl</code>文件</li>
+<li>-e：测试结束后生成HTML报告</li>
+<li>-o：HTML报告输出目录</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<h2 id="压测查询可用优惠券接口"><a href="#压测查询可用优惠券接口" class="headerlink" title="压测查询可用优惠券接口"></a>压测查询可用优惠券接口</h2><p><strong>串行执行接口测试</strong></p>
+<p><img src="/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B3.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>并行执行接口测试</strong></p>
+<blockquote>
+<p>相比串行，吞吐量和响应时间都有明显提升</p>
+</blockquote>
+<p><img src="/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B4.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B5.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/img/one_coupon_img/%E6%9F%A5%E8%AF%A2%E4%BC%98%E6%83%A0%E5%88%B8%E5%8E%8B%E6%B5%8B6.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ol>
 <li>数据库和缓存的一致性问题</li>
 <li>通过excel总条数来校验分发是否有遗漏</li>
